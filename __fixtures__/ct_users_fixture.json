@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "user_login": "testbronze2",
+      "user_email": "bry@caioterra.com",
+      "display_name": "Test Bronze",
+      "access_role": "s2member_level1",
+      "access_level": 1,
+      "access_label": "Bronze Member"
+    },
+    {
+      "user_id": 2,
+      "user_login": "testbronze1",
+      "user_email": "test@caioterra.com",
+      "display_name": "Test Bronze",
+      "access_role": "s2member_level1",
+      "access_level": 1,
+      "access_label": "Bronze Member"
+    }
+  ]
+}

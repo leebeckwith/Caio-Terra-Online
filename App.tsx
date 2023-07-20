@@ -1,66 +1,63 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Caio Terra Online
+ * Author: Mateo Nares
  *
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import type {PropsWithChildren} from 'react';
 import {
+  Alert,
+  Button,
+  ImageBackground,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
+  TextInput,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  // Data for login
+  const [log, setUsername] = useState('');
+  const [pwd, setPassword] = useState('');
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // use API to validate username and password
+  const handleLogin = async () => {
+    console.log(log + " " + pwd);
+    if (!log || !pwd) {
+      Alert.alert('Invalid Login', 'Please enter a username and password.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('log', log);
+      formData.append('pwd', pwd);
+      formData.append('lwa', '1');
+      formData.append('login-with-ajax', 'login');
+
+      const response = await fetch(
+        'https://caioterra.com/wp-admin/admin-ajax.php',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
+
+      const responseData = await response.json();
+      console.log(response);
+
+      if (response.ok) {
+        if (responseData.result === false) {
+          Alert.alert('Error', responseData.error);
+        } else {
+          Alert.alert('Login Successful', 'Welcome!');
+        }
+      }
+    } catch (error) {
+      Alert.alert('Error', 'There was an error logging in.');
+    }
   };
 
   // show splash screen and hide when app is loaded
@@ -69,55 +66,53 @@ function App(): React.JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView>
+      <ImageBackground
+        source={require('./assets/images/caio-terra-app.jpg')}
+        style={styles.background}>
+        <View style={styles.container}>
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Username"
+            style={styles.input}
+            onChangeText={text => setUsername(text)}
+            placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+            value={log}
+          />
+          <TextInput
+            autoCapitalize="none"
+            placeholder="Password"
+            secureTextEntry
+            style={styles.input}
+            onChangeText={text => setPassword(text)}
+            placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+            value={pwd}
+          />
+          <Button title="Login" onPress={handleLogin} />
         </View>
-      </ScrollView>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  background: {
+    height: '100%',
+    width: '100%',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  input: {
+    color: '#ffffff',
+    width: '80%',
+    marginBottom: 20,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
   },
 });
 
