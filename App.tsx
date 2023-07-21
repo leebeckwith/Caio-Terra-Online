@@ -24,7 +24,6 @@ function App(): React.JSX.Element {
 
   // use API to validate username and password
   const handleLogin = async () => {
-    console.log(log + " " + pwd);
     if (!log || !pwd) {
       Alert.alert('Invalid Login', 'Please enter a username and password.');
       return;
@@ -46,7 +45,7 @@ function App(): React.JSX.Element {
       );
 
       const responseData = await response.json();
-      console.log(response);
+      console.log(responseData);
 
       if (response.ok) {
         if (responseData.result === false) {
