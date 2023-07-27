@@ -47,14 +47,14 @@ function LoginScreen(): React.JSX.Element {
       );
 
       const responseData = await response.json();
-      console.log(responseData);
+      //console.log(responseData);
 
       if (response.ok) {
         if (responseData.result === false) {
           Alert.alert('Error', responseData.error);
         } else {
           //Alert.alert('Login Successful', 'Welcome!');
-          navigation.navigate('Videos'); // Navigate to VideoListing after successful login
+          navigation.navigate('Videos' as never); // Navigate to Videos after successful login
         }
       }
     } catch (error) {
@@ -73,7 +73,7 @@ function LoginScreen(): React.JSX.Element {
             placeholder="Username"
             style={styles.input}
             onChangeText={text => setUsername(text)}
-            placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
             value={log}
           />
           <TextInput
@@ -82,7 +82,7 @@ function LoginScreen(): React.JSX.Element {
             secureTextEntry
             style={styles.input}
             onChangeText={text => setPassword(text)}
-            placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
             value={pwd}
           />
           <Button title="Login" onPress={handleLogin} />
@@ -103,12 +103,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    color: '#ffffff',
+    backgroundColor: '#fff',
+    color: '#000',
     width: '80%',
     marginBottom: 20,
     padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 5,
   },
 });
