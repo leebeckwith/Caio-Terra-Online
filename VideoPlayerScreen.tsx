@@ -41,6 +41,7 @@ const VideoPlayerScreen = ({ route }: { route: any }) => {
                     <Video
                         source={{ uri: selectedVideo }}
                         ref={(ref) => {
+                            // @ts-ignore
                             this.player = ref
                         }}                                      // Store reference
                         style={styles.videoPlayer}
