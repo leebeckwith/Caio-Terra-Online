@@ -2,9 +2,8 @@ import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import LoginScreen from './LoginScreen';
-import VideoListingScreen from './VideoListingScreen';
-import VideoPlayerScreen from './VideoPlayerScreen';
+import LoginManagerScreen from './screens/LoginManagerScreen';
+import MainManagerScreen from './screens/MainManagerScreen';
 
 const Stack = createStackNavigator();
 
@@ -13,12 +12,20 @@ function App(): React.JSX.Element {
     SplashScreen.hide();
   }, []);
 
+  <style type="text/css">{`
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url(${require('react-native-vector-icons/Fonts/FontAwesome.ttf')}) format('truetype');
+    }
+  `}</style>;
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Videos" component={VideoListingScreen} />
-        <Stack.Screen name="VideoPlayer" component={VideoPlayerScreen} />
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Group>
+          <Stack.Screen name="Login" component={LoginManagerScreen} />
+          <Stack.Screen name="Home" component={MainManagerScreen} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
