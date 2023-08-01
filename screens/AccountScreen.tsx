@@ -9,15 +9,15 @@ import React, {useState} from 'react';
 import {
   Alert,
   Button,
-  ImageBackground,
   SafeAreaView,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Password from '../components/PasswordTextBox';
 
-function LoginScreen(): React.JSX.Element {
+function AccountScreen(): React.JSX.Element {
   // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
@@ -62,11 +62,10 @@ function LoginScreen(): React.JSX.Element {
     }
   };
 
+  // @ts-ignore
   return (
     <SafeAreaView>
-      <ImageBackground
-        source={require('./assets/images/caio-terra-app.jpg')}
-        style={styles.background}>
+      <View style={styles.background}>
         <View style={styles.container}>
           <TextInput
             autoCapitalize="none"
@@ -76,29 +75,34 @@ function LoginScreen(): React.JSX.Element {
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
             value={log}
           />
-          <TextInput
+          <Password
             autoCapitalize="none"
-            placeholder="Password"
-            secureTextEntry
-            style={styles.input}
-            onChangeText={text => setPassword(text)}
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+            label="Password"
             value={pwd}
+            onChange={text => setPassword(text)}
+            style={styles.input}
           />
-          <Button title="Login" onPress={handleLogin} />
+          <Button
+            accessibilityLabel="Proceed to login"
+            color="#00a6ff"
+            title="Login"
+            onPress={handleLogin}
+          />
         </View>
-      </ImageBackground>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   background: {
+    backgroundColor: 'transparent',
     height: '100%',
     width: '100%',
   },
   container: {
     flex: 1,
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -108,8 +112,7 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 20,
     padding: 10,
-    borderRadius: 5,
   },
 });
 
-export default LoginScreen;
+export default AccountScreen;

@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 interface VideoData {
@@ -22,7 +30,9 @@ const VideoListing: React.FC = () => {
     const fetchVideos = async () => {
       try {
         // Make the API call and get the videos data
-        const response = await fetch('https://caioterra.com/app-api/get-videos.php');
+        const response = await fetch(
+          'https://caioterra.com/app-api/get-videos.php',
+        );
         const data = await response.json();
 
         // Assuming the API response is an array of videos
@@ -44,7 +54,7 @@ const VideoListing: React.FC = () => {
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
 
     // @ts-ignore Because this navigation resolves fine with the props sent
-    navigation.navigate('VideoPlayer', {
+    navigation.navigate('Player', {
       vimeoId,
       vimeoToken,
     });
@@ -52,40 +62,39 @@ const VideoListing: React.FC = () => {
 
   const handleSearch = (text: string) => {
     // Filter videos based on the search term
-    const filtered = videos.filter((video) =>
-        video.title.toLowerCase().includes(text.toLowerCase())
+    const filtered = videos.filter(video =>
+      video.title.toLowerCase().includes(text.toLowerCase()),
     );
     setSearchTerm(text);
     setFilteredVideos(filtered);
   };
 
-  const renderVideoItem = ({ item }: { item: VideoData }) => {
-
+  const renderVideoItem = ({item}: {item: VideoData}) => {
     return (
-        <View style={styles.videoItemContainer}>
-          <Text style={styles.title}>{item.title}</Text>
-          <TouchableOpacity onPress={() => handleVideoPress(item.vimeoid)}>
-            <Image source={{ uri: item.thumburl }} style={styles.thumbnail} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.videoItemContainer}>
+        <TouchableOpacity onPress={() => handleVideoPress(item.vimeoid)}>
+          <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
+        </TouchableOpacity>
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
     );
   };
 
   return (
-      <View style={styles.container}>
-        <TextInput
-            style={styles.searchInput}
-            placeholder="Search videos..."
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-            onChangeText={handleSearch}
-            value={searchTerm}
-        />
-        <FlatList
-            data={filteredVideos}
-            renderItem={renderVideoItem}
-            keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search videos..."
+        placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+        onChangeText={handleSearch}
+        value={searchTerm}
+      />
+      <FlatList
+        data={filteredVideos}
+        renderItem={renderVideoItem}
+        keyExtractor={item => item.id.toString()}
+      />
+    </View>
   );
 };
 
@@ -108,14 +117,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    color: "#fff",
-    fontSize: 18,
+    color: '#fff',
+    fontSize: 12,
     fontWeight: 'bold',
+    marginTop: 5,
     marginBottom: 10,
   },
   thumbnail: {
     width: '100%',
     height: 200,
+    borderRadius: 5,
   },
 });
 

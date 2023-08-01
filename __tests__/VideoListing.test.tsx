@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, waitFor} from '@testing-library/react-native';
-import VideoListing from '../VideoListingScreen';
+import VideoListing from '../screens/VideoListingScreen';
 
 const mockData = [
   {
