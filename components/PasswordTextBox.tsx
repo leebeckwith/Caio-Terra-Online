@@ -1,5 +1,5 @@
 import React, {useState, FC} from 'react';
-import {TextInput, View, StyleSheet} from 'react-native';
+import {StyleSheet, Platform, TextInput, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface PasswordProps {
@@ -17,7 +17,6 @@ const Password: FC<PasswordProps> = props => {
 
   const icon = !visible ? 'eye' : 'eye-slash';
   const iconColor = !visible ? '#333' : '#333';
-  const height = props.height || 20;
 
   return (
     <View style={styles.wrapper}>
@@ -61,10 +60,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e3e3e3',
-    borderWidth: 1,
-    padding: 10,
+    ...Platform.select({
+      ios: {
+        padding: 10,
+      },
+      android: {
+        height: 50,
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingLeft: 8,
+        paddingRight: 10,
+      },
+    }),
     width: '81%',
     marginBottom: 20,
   },
@@ -78,6 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     textAlign: 'center',
     textAlignVertical: 'center',
+    marginTop: 1,
   },
 });
 

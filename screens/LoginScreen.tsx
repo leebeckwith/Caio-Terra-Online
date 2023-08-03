@@ -4,26 +4,31 @@
  *
  * @format
  */
-
 import React, {useState} from 'react';
 import {
   Alert,
   Button,
+  Linking,
   SafeAreaView,
+  Switch,
   StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function LoginScreen({route}: {route: any}): React.JSX.Element {
+function LoginScreen(): React.JSX.Element {
   // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   // useNavigation hook to access navigation object
   const navigation = useNavigation();
-  //const {setUserToken} = route.params;
 
   // use API to validate username and password
   const handleLogin = async () => {
@@ -55,7 +60,12 @@ function LoginScreen({route}: {route: any}): React.JSX.Element {
           Alert.alert('Error', responseData.error);
         } else {
           //Alert.alert('Login Successful', 'Welcome!');
-          navigation.navigate('Home' as never); // Navigate to Home after successful login
+          await AsyncStorage.setItem('userToken', 'blahblahblah');
+          // @ts-ignore
+          navigation.navigate('Main', {
+            screen: 'Videos',
+            initial: false,
+          });
         }
       }
     } catch (error) {
@@ -77,12 +87,26 @@ function LoginScreen({route}: {route: any}): React.JSX.Element {
             value={log}
           />
           <Password
-            autoCapitalize="none"
             label="Password"
             value={pwd}
             onChange={text => setPassword(text)}
-            style={styles.input}
           />
+          <TouchableOpacity
+            onPress={() => Linking.openURL('http://google.com')}
+            style={styles.forgot}>
+            <Text style={styles.label}>Forgot password?</Text>
+          </TouchableOpacity>
+          <View style={styles.switchContainer}>
+            <Text style={styles.label}>Keep me signed in</Text>
+            <Switch
+              //trackColor={{false: '#767577', true: '#81b0ff'}}
+              //thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              ios_backgroundColor="#222"
+              onValueChange={toggleSwitch}
+              style={styles.switch}
+              value={isEnabled}
+            />
+          </View>
           <Button
             accessibilityLabel="Proceed to login"
             color="#00a6ff"
@@ -113,6 +137,26 @@ const styles = StyleSheet.create({
     width: '80%',
     marginBottom: 20,
     padding: 10,
+  },
+  label: {
+    color: '#fff',
+  },
+  forgot: {
+    color: '#fff',
+    width: '80%',
+    marginTop: -10,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    textAlign: 'right',
+    width: '80%',
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  switch: {
+    marginLeft: 5,
   },
 });
 
