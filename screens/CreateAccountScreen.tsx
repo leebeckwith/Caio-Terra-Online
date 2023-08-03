@@ -17,7 +17,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 
-function CreatAccountScreen(): React.JSX.Element {
+function CreateAccountScreen(): React.JSX.Element {
   // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     height: '100%',
     width: '100%',
-    marginTop: 30,
+    marginTop: 35,
   },
   container: {
     backgroundColor: 'transparent',
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatAccountScreen;
+export default CreateAccountScreen;

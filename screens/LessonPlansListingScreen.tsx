@@ -9,31 +9,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface VideoData {
   id: number;
-  vimeoid: number;
-  title: string;
-  thumburl: string;
-  link: string;
 }
 
-const VideoListing: React.FC = () => {
+const LessonPlansListing: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const navigation = useNavigation();
 
   useEffect(() => {
     // Your code to fetch the videos and set the state goes here
     // For example, if you're fetching videos from an API, you can do something like this:
     const fetchVideos = async () => {
       try {
+        const params = new URLSearchParams({
+          username: 'testbronze2',
+          password: 'Bjj101',
+        });
         // Make the API call and get the videos data
-        const response = await fetch(
-          'https://caioterra.com/app-api/get-videos.php',
-        );
+        const apiUrl =
+          'https://caioterra.com/app-api/get-favorites.php?' +
+          params.toString();
+        const response = await fetch(apiUrl);
         const data = await response.json();
 
         // Assuming the API response is an array of videos
@@ -50,34 +49,11 @@ const VideoListing: React.FC = () => {
     fetchVideos();
   }, []);
 
-  const handleVideoPress = async (vimeoId: number) => {
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-
-    // @ts-ignore Because this navigation resolves fine with the props sent
-    navigation.navigate('Player', {
-      vimeoId,
-      vimeoToken,
-    });
-  };
-
-  const handleSearch = (text: string) => {
-    // Filter videos based on the search term
-    const filtered = videos.filter(video =>
-      video.title.toLowerCase().includes(text.toLowerCase()),
-    );
-    setSearchTerm(text);
-    setFilteredVideos(filtered);
-  };
-
   const renderVideoItem = ({item}: {item: VideoData}) => {
     return (
       <View style={styles.videoItemContainer}>
-        <TouchableOpacity onPress={() => handleVideoPress(item.vimeoid)}>
-          <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-        </TouchableOpacity>
         <View style={styles.wrapper}>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title}>{item.id}</Text>
           <Icon
             name="star-o"
             color="white"
@@ -92,13 +68,6 @@ const VideoListing: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search videos..."
-        placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-        onChangeText={handleSearch}
-        value={searchTerm}
-      />
       <FlatList
         data={filteredVideos}
         renderItem={renderVideoItem}
@@ -150,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoListing;
+export default LessonPlansListing;

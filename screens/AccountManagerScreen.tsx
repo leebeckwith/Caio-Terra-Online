@@ -1,15 +1,13 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import VideoListing from './VideoListingScreen';
-import VideoPlayer from './VideoPlayerScreen';
+import AccountScreen from './AccountScreen';
 
 const Stack = createStackNavigator();
 
 function VideoManagerScreen(): React.JSX.Element {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="VideoListing" component={VideoListing} />
-      <Stack.Screen name="Player" component={VideoPlayer} />
+      <Stack.Screen name="Account Manager" component={AccountScreen} />
     </Stack.Navigator>
   );
 }
