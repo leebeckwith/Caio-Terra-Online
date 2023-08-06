@@ -4,7 +4,7 @@ import AccountScreen from './AccountScreen';
 
 const Stack = createStackNavigator();
 
-function VideoManagerScreen(): React.JSX.Element {
+function AccountManagerScreen(): React.JSX.Element {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Account Manager" component={AccountScreen} />
@@ -12,4 +12,4 @@ function VideoManagerScreen(): React.JSX.Element {
   );
 }
 
-export default VideoManagerScreen;
+export default AccountManagerScreen;

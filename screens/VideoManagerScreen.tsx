@@ -1,17 +1,17 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import VideoListing from './VideoListingScreen';
 import VideoPlayer from './VideoPlayerScreen';
+import VideoListing from './VideoListingScreen';
 
 const Stack = createStackNavigator();
 
-function VideoManagerScreen(): React.JSX.Element {
+const VideoManagerScreen = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="VideoListing" component={VideoListing} />
       <Stack.Screen name="Player" component={VideoPlayer} />
     </Stack.Navigator>
   );
-}
+};
 
 export default VideoManagerScreen;

@@ -7,13 +7,13 @@
 import React, {useState} from 'react';
 import {
   Alert,
-  Button,
+  Button, Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View,
-} from 'react-native';
+  View
+} from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 
@@ -99,12 +99,16 @@ function CreateAccountScreen(): React.JSX.Element {
             onChange={text => setPassword(text)}
             style={styles.input}
           />
-          <Button
-            accessibilityLabel="Create Account"
-            color="#00a6ff"
-            title="Create Account"
-            onPress={handleLogin}
-          />
+          <Pressable
+            //onPress={handleBrowse}
+            style={[styles.button, styles.shadowProp]}>
+            <Text style={styles.label}>Annual Subscription ($249.99)</Text>
+          </Pressable>
+          <Pressable
+            //onPress={handleBrowse}
+            style={[styles.button, styles.shadowProp]}>
+            <Text style={styles.label}>Monthly Subscription ($24.99)</Text>
+          </Pressable>
         </View>
       </View>
     </ScrollView>
@@ -117,6 +121,14 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     marginTop: 35,
+  },
+  button: {
+    backgroundColor: '#00a6ff',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 20,
   },
   container: {
     backgroundColor: 'transparent',
@@ -131,6 +143,9 @@ const styles = StyleSheet.create({
     marginRight: 30,
     paddingBottom: 20,
   },
+  label: {
+    color: '#fff',
+  },
   input: {
     backgroundColor: '#fff',
     color: '#000',
@@ -138,12 +153,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
   },
-  button: {
-    borderColor: 'white',
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    width: '30%',
+  secondary: {
+    backgroundColor: '#666',
+  },
+  shadowProp: {
+    shadowColor: '#000',
+    shadowOffset: {width: -3, height: 5},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
 });
 

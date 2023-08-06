@@ -15,6 +15,7 @@
     "@react-navigation/material-top-tabs": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
+    "@reduxjs/toolkit": "^1.9.5",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
     "react": "18.2.0",
@@ -25,9 +26,13 @@
     "react-native-screens": "^3.22.1",
     "react-native-splash-screen": "^3.3.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-tableview-simple": "^4.4.0",
     "react-native-vector-icons": "^10.0.0",
     "react-native-video": "^5.2.1",
-    "react-native-vimeo-iframe": "^1.2.1"
+    "react-native-vimeo-iframe": "^1.2.1",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -40,6 +45,7 @@
     "@types/jest": "^29.5.3",
     "@types/react": "^18.0.24",
     "@types/react-native-video": "^5.0.15",
+    "@types/react-redux": "^7.1.25",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.2.1",
     "eslint": "^8.19.0",

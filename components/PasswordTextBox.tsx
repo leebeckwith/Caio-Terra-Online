@@ -28,13 +28,13 @@ const Password: FC<PasswordProps> = props => {
             onChangeText(text);
             props.onChange(text);
           }}
-          // onBlur={() => {
-          //     displayErrors(true);
-          // }}
+          autoCorrect={false}
+          returnKeyType="send"
           value={value}
           placeholder={props.label}
           placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           secureTextEntry={!visible}
+          blurOnSubmit={true}
         />
         <Icon
           name={icon}

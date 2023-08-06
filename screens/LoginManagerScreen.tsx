@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, ImageBackground, StyleSheet, View} from 'react-native';
+import {ImageBackground, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import LoginScreen from './LoginScreen';
 import CreateAccountScreen from './CreateAccountScreen';
@@ -34,12 +34,12 @@ function LoginManagerScreen(): React.JSX.Element {
         <Tab.Screen name="Sign In" component={LoginScreen} />
         <Tab.Screen name="Create Account" component={CreateAccountScreen} />
       </Tab.Navigator>
-      <View style={styles.container}>
-        <Image
-          source={require('../assets/images/logo.png')}
-          style={styles.logo}
-        />
-      </View>
+      {/*<View style={styles.container}>*/}
+      {/*  <Image*/}
+      {/*    source={require('../assets/images/logo.png')}*/}
+      {/*    style={styles.logo}*/}
+      {/*  />*/}
+      {/*</View>*/}
     </ImageBackground>
   );
 }
@@ -58,14 +58,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
   tabContainer: {
-    minHeight: '60%',
+    minHeight: '50%',
+    maxHeight: '90%',
     marginLeft: 20,
     marginRight: 20,
-  },
-  logo: {
-    padding: 0,
-    marginTop: -60,
-    height: 36,
   },
 });
 
