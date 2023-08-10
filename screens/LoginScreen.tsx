@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {storeCredentials} from '../storage'; // Import the storage utility
 
 function LoginScreen(): React.JSX.Element {
   // Data for login
@@ -53,7 +53,7 @@ function LoginScreen(): React.JSX.Element {
           Alert.alert('Error', responseData.error);
         } else {
           //Alert.alert('Login Successful', 'Welcome!');
-          await AsyncStorage.setItem('userToken', 'blahblahblah');
+          storeCredentials(log, pwd);
           // @ts-ignore
           navigation.navigate('Main', {
             screen: 'Videos',

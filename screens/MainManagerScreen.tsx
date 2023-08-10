@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Tab = createBottomTabNavigator();
 
 function MainManagerScreen() {
+  // @ts-ignore
   const loading = useSelector(state => state.loader.value);
 
   return (
@@ -55,24 +56,24 @@ function MainManagerScreen() {
               ),
             }}
           />
-          <Tab.Screen
-            name="Favorites"
-            component={FavoritesListingScreen}
-            options={{
-              tabBarIcon: ({color, size}) => (
-                <Icon name="star" color={color} size={size} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Lesson Plans"
-            component={LessonPlansListingScreen}
-            options={{
-              tabBarIcon: ({color, size}) => (
-                <Icon name="tasks" color={color} size={size} />
-              ),
-            }}
-          />
+          {/*<Tab.Screen*/}
+          {/*  name="Favorites"*/}
+          {/*  component={FavoritesListingScreen}*/}
+          {/*  options={{*/}
+          {/*    tabBarIcon: ({color, size}) => (*/}
+          {/*      <Icon name="star" color={color} size={size} />*/}
+          {/*    ),*/}
+          {/*  }}*/}
+          {/*/>*/}
+          {/*<Tab.Screen*/}
+          {/*  name="Lesson Plans"*/}
+          {/*  component={LessonPlansListingScreen}*/}
+          {/*  options={{*/}
+          {/*    tabBarIcon: ({color, size}) => (*/}
+          {/*      <Icon name="tasks" color={color} size={size} />*/}
+          {/*    ),*/}
+          {/*  }}*/}
+          {/*/>*/}
           <Tab.Screen
             name="Curriculum"
             component={CurriculumListingScreen}

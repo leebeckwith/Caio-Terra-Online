@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import Video from 'react-native-video';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Loader from '../components/Loader';
 
 const VideoPlayer = ({route}: {route: any}) => {
   // Extract the parameters passed from navigation
@@ -10,6 +11,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null); // Store the video URL
   const videoRef = useRef<Video | null>(null);
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
 
   useEffect(() => {
     getVimeoVideo(vimeoId);
@@ -17,6 +19,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     // Cleanup function to unload the video when the component is unmounted
     return () => {
       if (videoRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         videoRef.current.stop();
       }
     };
@@ -47,6 +50,14 @@ const VideoPlayer = ({route}: {route: any}) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.customHeader}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <Icon name="arrow-left" color="#fff" size={20} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Video Playback</Text>
+      </View>
       {selectedVideo ? (
         <View>
           <Video
@@ -61,18 +72,20 @@ const VideoPlayer = ({route}: {route: any}) => {
             paused={!isFocused} // Pause the video when the screen loses focus
           />
           <View style={styles.wrapper}>
-            <Icon
-              name="list"
-              color="white"
-              size={30}
-              style={styles.iconsLeft}
-            />
-            <Icon
-              name="download"
-              color="white"
-              size={30}
-              style={styles.iconsLeft}
-            />
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Icon
+                name="list"
+                color="white"
+                size={30}
+                style={styles.iconsLeft}
+              />
+              <Icon
+                name="download"
+                color="white"
+                size={30}
+                style={styles.iconsLeft}
+              />
+            </View>
             <Icon
               name="star-o"
               color="white"
@@ -82,11 +95,12 @@ const VideoPlayer = ({route}: {route: any}) => {
           </View>
         </View>
       ) : (
-        <View>
-          <Text style={styles.text}>Vimeo ID: {vimeoId}</Text>
-          <Text style={styles.text}>Vimeo Token: {vimeoToken}</Text>
-          <Text style={styles.text}>Loading video...</Text>
-        </View>
+        // <View>
+        //   <Text style={styles.text}>Vimeo ID: {vimeoId}</Text>
+        //   <Text style={styles.text}>Vimeo Token: {vimeoToken}</Text>
+        //   <Text style={styles.text}>Loading video...</Text>
+        // </View>
+        <Loader />
       )}
     </View>
   );
@@ -109,8 +123,9 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     width: '100%',
-    borderWidth: 1,
-    borderColor: 'red',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginTop: 10,
   },
   title: {
     width: '95%',
@@ -132,6 +147,23 @@ const styles = StyleSheet.create({
   },
   iconsLeft: {
     alignItems: 'flex-start',
+    marginRight: 10,
+  },
+  customHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#000', // Set the background color of the header
+  },
+  backButton: {
+    position: 'absolute',
+    left: 10,
+  },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
