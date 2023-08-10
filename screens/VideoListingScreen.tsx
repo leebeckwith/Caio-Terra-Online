@@ -7,11 +7,14 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch} from 'react-redux';
-import {setLoading} from '../loader/loadingSlice';
+import {setLoading} from '../redux/loadingSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -28,23 +31,43 @@ const VideoListing = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+  const [showFavoritesButton, setShowFavoritesButton] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    const checkCredentials = async () => {
+      const {username, password} = await getCredentials();
+      setShowFavoritesButton(!!username && !!password);
+    };
+
+    checkCredentials();
+  }, []);
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         dispatch(setLoading(true));
-        await delay(5000);
+        const cachedVideos = await AsyncStorage.getItem('cachedVideos');
         //Make the API call and get the videos data
-        const response = await fetch(
-          'https://caioterra.com/app-api/get-videos.php',
-        );
-        const data = await response.json();
+        if (cachedVideos) {
+          const cachedData = JSON.parse(cachedVideos);
+          setVideos(cachedData);
+          setFilteredVideos(cachedData);
+          console.log('Cached video data used');
+        } else {
+          // Make the API call and get the videos data
+          const response = await fetch(
+            'https://caioterra.com/app-api/get-videos.php',
+          );
+          const data = await response.json();
 
-        // Assuming the API response is an array of videos
-        setVideos(data);
-        // You can also set the filteredVideos state to initially show all videos
-        setFilteredVideos(data);
+          // Cache the videos data in AsyncStorage
+          await AsyncStorage.setItem('cachedVideos', JSON.stringify(data));
+
+          setVideos(data);
+          setFilteredVideos(data);
+          console.log('Fresh video data fetched');
+        }
       } catch (error) {
         console.error('Error fetching videos:', error);
       } finally {
@@ -67,6 +90,16 @@ const VideoListing = () => {
       vimeoId,
       vimeoToken,
     });
+  };
+
+  const navigateToFavorites = () => {
+    // @ts-ignore
+    navigation.navigate('Favorites', {cachedVideos: videos});
+  };
+
+  const navigateToOther = () => {
+    // @ts-ignore
+    navigation.navigate('Favorites', {cachedVideos: videos});
   };
 
   const handleSearch = (text: string) => {
@@ -94,23 +127,34 @@ const VideoListing = () => {
 
   return (
     <View style={styles.container}>
-      {filteredVideos.length > 0 ? (
-        <View>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search videos..."
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-            onChangeText={handleSearch}
-            value={searchTerm}
-          />
-          <FlatList
-            data={filteredVideos}
-            renderItem={({item}) => <VideoItem item={item} />} // Use the VideoItem component
-            keyExtractor={item => item.id.toString()}
-          />
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search videos..."
+        placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+        onChangeText={handleSearch}
+        value={searchTerm}
+      />
+      {showFavoritesButton && (
+        <View style={styles.buttonContainer}>
+          <Pressable onPress={navigateToFavorites} style={styles.button}>
+            <View style={styles.buttonContent}>
+              <Icon name="star" color="#fff" size={18} style={styles.icon} />
+              <Text style={styles.buttonText}>Favorites</Text>
+            </View>
+          </Pressable>
+          {/*<Pressable onPress={navigateToOther} style={styles.button}>*/}
+          {/*  <Text style={styles.buttonText}>New Button</Text>*/}
+          {/*</Pressable>*/}
         </View>
+      )}
+      {filteredVideos.length > 0 ? (
+        <FlatList
+          data={filteredVideos}
+          renderItem={({item}) => <VideoItem item={item} />} // Use the VideoItem component
+          keyExtractor={item => item.id.toString()}
+        />
       ) : (
-        <Text>No videos found.</Text>
+        <Text style={styles.title}>No videos found.</Text>
       )}
     </View>
   );
@@ -155,6 +199,31 @@ const styles = StyleSheet.create({
     width: '5%',
     marginTop: 8,
     display: 'flex',
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+    marginLeft: -2.5,
+    marginRight: -2.5,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: '#00a6ff',
+    borderRadius: 8,
+    padding: 10,
+    marginHorizontal: 2.5,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+  icon: {
+    marginRight: 8,
   },
 });
 
