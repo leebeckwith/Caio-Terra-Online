@@ -1,45 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
+  Image,
   View,
   Text,
-  Image,
-  TextInput,
   FlatList,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-interface LessonTechnique {
-  term_id: number;
-  name: string;
-  slug: string;
-}
-
-interface LessonPosition {
-  term_id: number;
-  name: string;
-  slug: string;
-}
-
-interface LessonType {
-  term_id: number;
-  name: string;
-  slug: string;
-}
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import the icon library you're using
 
 interface Lesson {
   id: number;
   title: string;
-  description: string;
   thumburl: string;
-  image_full_url: string;
-  last_modified: string;
-  lesson_techniques: LessonTechnique[];
-  lesson_positions: LessonPosition[];
-  lesson_types: LessonType[];
-  curriculum_position: LessonPosition[];
+  // Other lesson properties...
 }
 
 interface Category {
@@ -49,33 +23,55 @@ interface Category {
   lessons: Lesson[];
 }
 
-interface CurriculumData {
-  [categoryName: string]: Category; // This allows for dynamic category names
-}
-
 const CurriculumListing: React.FC = () => {
-  const navigation = useNavigation();
-  const [curriculumData, setCurriculumData] = useState<CurriculumData | null>(null);
-  const [filteredLessons, setFilteredLessons] = useState<Lesson[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
+  const [lessonData, setLessonData] = useState<Lesson[]>([]);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   useEffect(() => {
-    // Fetch the curriculum data and update state
+    // ... (fetching and sorting categories remain the same)
+  }, []);
+
+  const toggleCategory = (categoryId: number, categoryName: string) => {
+    setExpandedCategory(prevCategoryId =>
+      prevCategoryId === categoryId ? null : categoryId,
+    );
+    console.log(categoryName);
+    if (!isExpanded) {
+      try {
+        /*const response = await fetch(
+          `https://caioterra.com/ct_get/ct_videos/?taxonomy=video_technique&term_slug=${item.slug}`,
+        );
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        const lessonItems: Lesson[] = await response.json();
+        setLessonData(lessonItems);*/
+        setIsExpanded(true);
+      } catch (error) {
+        console.error('Error fetching lesson items:', error);
+      }
+    } else {
+      setIsExpanded(false);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch curriculum data
     const fetchCurriculumData = async () => {
       try {
         const response = await fetch(
-          'https://caioterra.com/app-api/get-curriculum.php'
+          'https://caioterra.com/app-api/get-curriculum.php',
         );
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
 
-        const data: CurriculumData = await response.json();
-        setCurriculumData(data);
-
-        // Assuming you want to show the lessons from the "Standing" category initially
-        if (data && 'Standing' in data) {
-          setFilteredLessons(data['Standing'].lessons);
-        }
+        const data: Record<string, Category> = await response.json();
+        const categoryArray = Object.values(data);
+        const sortedCategories = sortCategories(categoryArray);
+        setCategories(sortedCategories);
       } catch (error) {
         console.error('Error fetching curriculum data:', error);
       }
@@ -84,26 +80,91 @@ const CurriculumListing: React.FC = () => {
     fetchCurriculumData();
   }, []);
 
-  const renderVideoItem = ({ item }: { item: Lesson }) => {
+  const sortCategories = (categoryArray: Category[]): Category[] => {
+    // Sort categories by name
+    const sortedCategories = categoryArray.sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+
+    // Find and move "Introduction" category to the beginning
+    const introductionCategoryIndex = sortedCategories.findIndex(
+      category => category.name === 'Introduction',
+    );
+    if (introductionCategoryIndex !== -1) {
+      const introductionCategory = sortedCategories.splice(
+        introductionCategoryIndex,
+        1,
+      )[0];
+      sortedCategories.unshift(introductionCategory);
+    }
+
+    return sortedCategories;
+  };
+
+  const renderCategoryItem = ({item}: {item: Category}) => {
+    const isExpanded = expandedCategory === item.term_id;
+
     return (
-      <View style={styles.videoItemContainer}>
-        <Image
-          source={{ uri: item.thumburl }}
-          style={styles.thumbnail}
-        />
-        <Text style={styles.title}>{item.title}</Text>
-        {/* Add other elements you want to display for each lesson */}
+      <View style={styles.categoryContainer}>
+        <TouchableOpacity
+          onPress={() => toggleCategory(item.term_id, item.name)}
+          style={styles.categoryHeader}>
+          <Icon
+            name={isExpanded ? 'minus' : 'plus'}
+            size={18}
+            color="white"
+            style={styles.icon}
+          />
+          <View style={styles.iconSpacer} />
+          <Text style={styles.categoryName}>
+            {item.name.toLocaleUpperCase()}
+          </Text>
+        </TouchableOpacity>
+        {isExpanded && (
+          <FlatList
+            data={item.lessons}
+            renderItem={renderLessonItem}
+            keyExtractor={lesson => lesson.id.toString()}
+          />
+        )}
+      </View>
+    );
+  };
+
+  const renderLessonItem = ({item}: {item: Lesson}) => {
+    return (
+      <View style={styles.lessonItemContainer}>
+        {/*<TouchableOpacity onPress={() => toggleLesson(item.title)}>*/}
+        <Image source={{uri: item.thumburl}} style={styles.lessonThumb} />
+        <Text style={styles.lessonTitle}>{item.title}</Text>
+        {/*</TouchableOpacity>*/}
+        {isExpanded && (
+          <FlatList
+            data={lessonData}
+            renderItem={renderLessonSubItem} // Define a new function for rendering sub-items
+            keyExtractor={subItem => subItem.id.toString()}
+          />
+        )}
+      </View>
+    );
+  };
+
+  const renderLessonSubItem = ({item}: {item: Lesson}) => {
+    return (
+      <View>
+        <Text style={styles.lessonTitle}>{item.title}</Text>
+        {/* Display other sub-lesson information */}
       </View>
     );
   };
 
   return (
     <View style={styles.container}>
-      {curriculumData ? (
+      {categories.length > 0 ? (
         <FlatList
-          data={filteredLessons}
-          renderItem={renderVideoItem}
-          keyExtractor={(item) => item.id.toString()}
+          data={categories}
+          renderItem={renderCategoryItem}
+          keyExtractor={category => category.term_id.toString()}
         />
       ) : (
         <Text style={styles.loadingText}>Loading...</Text>
@@ -124,20 +185,41 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  videoItemContainer: {
-    marginBottom: 20,
+  categoryHeader: {
+    backgroundColor: '#00a6ff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
   },
-  title: {
+  categoryContainer: {
+    marginBottom: 8,
+  },
+  categoryName: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 8,
+  },
+  lessonItemContainer: {
+    marginBottom: 10,
+    marginLeft: 10,
+    marginTop: 10,
+  },
+  lessonTitle: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  lessonThumb: {
+    width: '100%',
+    height: 150,
+    borderRadius: 5,
     marginBottom: 10,
   },
-  thumbnail: {
-    width: '100%',
-    height: 200,
-    borderRadius: 5,
+  icon: {
+    marginRight: 5, // Add some margin to separate the icon from the image
+  },
+  iconSpacer: {
+    width: 18, // Adjust the width to match the icon's size
   },
 });
 

@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  Image,
-  TextInput,
   FlatList,
+  Image,
+  Pressable,
+  TextInput,
   StyleSheet,
   TouchableOpacity,
-  Pressable,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +22,7 @@ interface VideoData {
   title: string;
   thumburl: string;
   link: string;
+  favorite: boolean;
 }
 
 // @ts-ignore
@@ -33,6 +34,9 @@ const VideoListing = () => {
   const dispatch = useDispatch();
   const [showFavoritesButton, setShowFavoritesButton] =
     useState<boolean>(false);
+  const [showFavoritesFilter, setShowFavoritesFilter] =
+    useState<boolean>(false);
+  const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
     const checkCredentials = async () => {
@@ -61,12 +65,40 @@ const VideoListing = () => {
           );
           const data = await response.json();
 
-          // Cache the videos data in AsyncStorage
-          await AsyncStorage.setItem('cachedVideos', JSON.stringify(data));
-
           setVideos(data);
           setFilteredVideos(data);
-          console.log('Fresh video data fetched');
+
+          const {username, password} = await getCredentials();
+          if (username && password) {
+            const params = new URLSearchParams({
+              username,
+              password,
+            });
+
+            const apiUrl =
+              'https://caioterra.com/app-api/get-favorites.php?' +
+              params.toString();
+            const favoritesResponse = await fetch(apiUrl);
+            const favoritesData = await favoritesResponse.json();
+
+            if (Array.isArray(favoritesData)) {
+              const favoriteIds = favoritesData.map(item => item.id);
+
+              const updatedData = data.map(video =>
+                favoriteIds.includes(video.id.toString())
+                  ? {...video, favorite: true}
+                  : video,
+              );
+
+              setVideos(updatedData);
+              setFilteredVideos(updatedData);
+              await AsyncStorage.setItem(
+                'cachedVideos',
+                JSON.stringify(updatedData),
+              );
+              console.log('Fresh video data fetched');
+            }
+          }
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -92,9 +124,58 @@ const VideoListing = () => {
     });
   };
 
-  const navigateToFavorites = () => {
-    // @ts-ignore
-    navigation.navigate('Favorites', {cachedVideos: videos});
+  const handleFavoritePress = async (id: number) => {
+    try {
+      const updatedVideos = videos.map(video =>
+        video.id === id ? {...video, favorite: !video.favorite} : video,
+      );
+
+      setVideos(updatedVideos);
+      setFilteredVideos(updatedVideos);
+
+      const video = updatedVideos.find(video => video.id === id);
+      const newFavoriteStatus = video?.favorite ? 1 : 0;
+
+      const {username, password} = await getCredentials();
+
+      if (username && password) {
+        const params = new URLSearchParams({
+          username,
+          password,
+        });
+
+        const apiStr =
+          `https://caioterra.com/app-api/set-favorite.php?post_id=${id}&is_fav=${newFavoriteStatus}&` +
+          params.toString();
+
+        const response = await fetch(apiStr);
+
+        if (response.ok) {
+          // Update cached data with new favorite status
+          const updatedCachedData = updatedVideos.map(video =>
+            video.id === id ? {...video, favorite: !video.favorite} : video,
+          );
+          await AsyncStorage.setItem(
+            'cachedVideos',
+            JSON.stringify(updatedCachedData),
+          );
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling favorite status:', error);
+    } finally {
+      // ... (existing logic)
+    }
+  };
+
+  const showFavorites = () => {
+    setShowFavoritesFilter(prevState => !prevState);
+    // Toggle the filter based on the current state
+    setFilteredVideos(prevFilteredVideos =>
+      showFavoritesFilter
+        ? videos
+        : prevFilteredVideos.filter(video => video.favorite),
+    );
   };
 
   const navigateToOther = () => {
@@ -114,12 +195,22 @@ const VideoListing = () => {
   const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
     return (
       <View style={styles.videoItemContainer}>
-        <TouchableOpacity onPress={() => handleVideoPress(item.vimeoid)}>
+        <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
           <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-        </TouchableOpacity>
+        </Pressable>
         <View style={styles.wrapper}>
           <Text style={styles.title}>{item.title}</Text>
-          <Icon name="star-o" color="white" size={20} style={styles.icons} />
+          {showFavoritesButton && (
+            <TouchableOpacity
+              style={[styles.iconButton, styles.icons]}
+              onPress={() => handleFavoritePress(item.id)}>
+              <Icon
+                name={item.favorite ? 'star' : 'star-o'}
+                color="white"
+                size={20}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -136,7 +227,9 @@ const VideoListing = () => {
       />
       {showFavoritesButton && (
         <View style={styles.buttonContainer}>
-          <Pressable onPress={navigateToFavorites} style={styles.button}>
+          <Pressable
+            onPress={showFavorites}
+            style={[styles.button, showFavoritesFilter ? styles.active : null]}>
             <View style={styles.buttonContent}>
               <Icon name="star" color="#fff" size={18} style={styles.icon} />
               <Text style={styles.buttonText}>Favorites</Text>
@@ -150,7 +243,9 @@ const VideoListing = () => {
       {filteredVideos.length > 0 ? (
         <FlatList
           data={filteredVideos}
-          renderItem={({item}) => <VideoItem item={item} />} // Use the VideoItem component
+          renderItem={({item}) => (
+            <VideoItem key={item.id.toString()} item={item} />
+          )}
           keyExtractor={item => item.id.toString()}
         />
       ) : (
@@ -213,10 +308,13 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: '#00a6ff',
+    backgroundColor: '#555',
     borderRadius: 8,
     padding: 10,
     marginHorizontal: 2.5,
+  },
+  active: {
+    backgroundColor: '#00a6ff',
   },
   buttonText: {
     color: '#fff',
@@ -224,6 +322,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 8,
+  },
+  iconButton: {
+    backgroundColor: 'transparent',
   },
 });
 

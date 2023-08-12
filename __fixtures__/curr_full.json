@@ -1,0 +1,4239 @@
+{
+  "Standing": {
+    "term_id": 17,
+    "name": "Standing",
+    "slug": "standing",
+    "lessons": [
+      {
+        "id": 111292,
+        "title": "JIU-JITSU TAKEDOWNS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1665458042-1d5b3d4a308585f091754e1510f592594746aa0a6c344ebfe311cdf28f1568bb-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1665458042-1d5b3d4a308585f091754e1510f592594746aa0a6c344ebfe311cdf28f1568bb-d_1280x720.jpg",
+        "last_modified": "May 17, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 494,
+            "name": "Takedown",
+            "slug": "takedown"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      },
+      {
+        "id": 109245,
+        "title": "DOUBLE LEG AND BODYLOCK TAKEDOWN",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/standing-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/standing.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 494,
+            "name": "Takedown",
+            "slug": "takedown"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      },
+      {
+        "id": 106233,
+        "title": "SPRAWL, GUILLOTINE & DARCE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/standing-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/standing.jpg",
+        "last_modified": "August 25, 2022",
+        "lesson_techniques": [],
+        "lesson_positions": [],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      },
+      {
+        "id": 106054,
+        "title": "COLLAR DRAG",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/collar-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/collar.jpg",
+        "last_modified": "August 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      },
+      {
+        "id": 106049,
+        "title": "SINGLE LEG TAKEDOWN",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/STANDING-2-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/STANDING-2.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      },
+      {
+        "id": 105616,
+        "title": "DOUBLE LEG TAKEDOWN",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/standing-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/standing-1.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          },
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          },
+          {
+            "term_id": 421,
+            "name": "Turtle Guard",
+            "slug": "turtle-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 17,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ]
+      }
+    ]
+  },
+  "HALF GUARD TOP": {
+    "term_id": 97,
+    "name": "HALF GUARD TOP",
+    "slug": "half-guard-top",
+    "lessons": [
+      {
+        "id": 111215,
+        "title": "LONG STEP PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1665457830-5abb5bc0e70c1b7a0556fa1fac734a592d07ad38b6b17d5a9344607c53a67f65-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1665457830-5abb5bc0e70c1b7a0556fa1fac734a592d07ad38b6b17d5a9344607c53a67f65-d_1280x720.jpg",
+        "last_modified": "May 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          },
+          {
+            "term_id": 446,
+            "name": "Terra Guard",
+            "slug": "terra-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 109961,
+        "title": "SMASH PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/03/SMASH-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/03/SMASH.jpg",
+        "last_modified": "March 13, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 108909,
+        "title": "BRABO CHOKE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/top-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/top-1.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 106043,
+        "title": "KNEE CUT",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/kneecut-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/kneecut-1.jpg",
+        "last_modified": "December 3, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 106037,
+        "title": "MODIFIED HIP SWITCH",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/pass-2-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/pass-2.jpg",
+        "last_modified": "December 3, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 106034,
+        "title": "SWITCHING THE HIPS TO PASS THE GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/hips-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/hips.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 106031,
+        "title": "TRIPOD PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/TRIPOD-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/TRIPOD.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 97,
+            "name": "HALF GUARD TOP",
+            "slug": "half-guard-top"
+          }
+        ]
+      }
+    ]
+  },
+  "OPEN GUARD": {
+    "term_id": 424,
+    "name": "OPEN GUARD",
+    "slug": "open-guard-open-guard",
+    "lessons": [
+      {
+        "id": 111073,
+        "title": "COLLAR SLEEVE GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1651805786-2b140ed7fc3344dd2981b5b317b172b144c49bc50e6a6c24bc0da6d018a8bfb8-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1651805786-2b140ed7fc3344dd2981b5b317b172b144c49bc50e6a6c24bc0da6d018a8bfb8-d_1280x720.jpg",
+        "last_modified": "May 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 445,
+            "name": "Collar Sleeve",
+            "slug": "collar-sleeve"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 109968,
+        "title": "DOUBLE UNDER DEFENSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/03/vimeo_1612581857-ad760cfd481a23863a586a808605947b1a228448e4e6dd48f7e04137c78be638-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/03/vimeo_1612581857-ad760cfd481a23863a586a808605947b1a228448e4e6dd48f7e04137c78be638-d_1280x720.jpg",
+        "last_modified": "March 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 109964,
+        "title": "REVERSE TRIANGLE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/03/vimeo_1615337444-7ce54c4fd4712b05eef6342e27581ca858773ce39b44fc1ad032aed309ec051e-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/03/vimeo_1615337444-7ce54c4fd4712b05eef6342e27581ca858773ce39b44fc1ad032aed309ec051e-d_1280x720.jpg",
+        "last_modified": "March 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 108952,
+        "title": "SIT UP GUARD AND PASSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/FIXED-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/FIXED.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 108949,
+        "title": "SIT UP GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/OPENGU-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/OPENGU.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 106066,
+        "title": "X PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/XPASS-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/XPASS.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      },
+      {
+        "id": 106062,
+        "title": "TRIPOD SWEEP",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/TRIPOD-2-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/TRIPOD-2.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 424,
+            "name": "OPEN GUARD",
+            "slug": "open-guard-open-guard"
+          }
+        ]
+      }
+    ]
+  },
+  "SPIDER GUARD TOP": {
+    "term_id": 474,
+    "name": "SPIDER GUARD TOP",
+    "slug": "spider-guard-top",
+    "lessons": [
+      {
+        "id": 111070,
+        "title": "SPIDER PASSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1651171795-72f4f3980f2464c4ebf28cb3331b5f8522b01cbbc2741502b5f831bab603eb2f-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1651171795-72f4f3980f2464c4ebf28cb3331b5f8522b01cbbc2741502b5f831bab603eb2f-d_1280x720.jpg",
+        "last_modified": "July 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 417,
+            "name": "Spider Guard",
+            "slug": "spider-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 474,
+            "name": "SPIDER GUARD TOP",
+            "slug": "spider-guard-top"
+          }
+        ]
+      },
+      {
+        "id": 106100,
+        "title": "SPIDER PASSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/LASSO-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/LASSO.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 417,
+            "name": "Spider Guard",
+            "slug": "spider-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 474,
+            "name": "SPIDER GUARD TOP",
+            "slug": "spider-guard-top"
+          }
+        ]
+      }
+    ]
+  },
+  "SIDE CONTROL ESCAPES": {
+    "term_id": 95,
+    "name": "SIDE CONTROL ESCAPES",
+    "slug": "side-control-escapes",
+    "lessons": [
+      {
+        "id": 111067,
+        "title": "NORTH SOUTH ESCAPES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1643171025-e7d4a03ad29bfd35d3d135087dfa7dd3b68de472662b215c2cffed5814179fb4-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1643171025-e7d4a03ad29bfd35d3d135087dfa7dd3b68de472662b215c2cffed5814179fb4-d_1280x720.jpg",
+        "last_modified": "May 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 95,
+            "name": "SIDE CONTROL ESCAPES",
+            "slug": "side-control-escapes"
+          }
+        ]
+      },
+      {
+        "id": 109249,
+        "title": "KEYLOCK AND ESCAPE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/ESCAPES-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/ESCAPES.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 95,
+            "name": "SIDE CONTROL ESCAPES",
+            "slug": "side-control-escapes"
+          }
+        ]
+      },
+      {
+        "id": 102047,
+        "title": "ESCAPING SIDE CONTROL WHEN OPPONENT IS BLOCKING THE HIPS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/running-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/running.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 95,
+            "name": "SIDE CONTROL ESCAPES",
+            "slug": "side-control-escapes"
+          }
+        ]
+      },
+      {
+        "id": 102044,
+        "title": "MODERN HIP ESCAPE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/hipescape-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/hipescape.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 95,
+            "name": "SIDE CONTROL ESCAPES",
+            "slug": "side-control-escapes"
+          }
+        ]
+      }
+    ]
+  },
+  "Side Control": {
+    "term_id": 21,
+    "name": "Side Control",
+    "slug": "side-control",
+    "lessons": [
+      {
+        "id": 111064,
+        "title": "KEZA GATAME ESCAPES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1638531966-fbe1e7e045d53f8bb7b6f26d577c2b7eacf4b2874dc3ebf49b86a4b09f122849-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1638531966-fbe1e7e045d53f8bb7b6f26d577c2b7eacf4b2874dc3ebf49b86a4b09f122849-d_1280x720.jpg",
+        "last_modified": "May 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 21,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ]
+      }
+    ]
+  },
+  "BACK ATTACKS": {
+    "term_id": 91,
+    "name": "BACK ATTACKS",
+    "slug": "back-attacks",
+    "lessons": [
+      {
+        "id": 111060,
+        "title": "ATTACKING FROM TURTLE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1638532268-8e415a0cab0d04e53cd54836de1e606e0bad4427db7594b8852af216d4588645-d_1280x720-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/05/vimeo_1638532268-8e415a0cab0d04e53cd54836de1e606e0bad4427db7594b8852af216d4588645-d_1280x720.jpg",
+        "last_modified": "May 4, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          },
+          {
+            "term_id": 421,
+            "name": "Turtle Guard",
+            "slug": "turtle-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 91,
+            "name": "BACK ATTACKS",
+            "slug": "back-attacks"
+          }
+        ]
+      },
+      {
+        "id": 106999,
+        "title": "ARMLOCK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/09/ATTACKS-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/09/ATTACKS.jpg",
+        "last_modified": "September 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 91,
+            "name": "BACK ATTACKS",
+            "slug": "back-attacks"
+          }
+        ]
+      },
+      {
+        "id": 106995,
+        "title": "REAR NAKED CHOKE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/09/RNC-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/09/RNC.jpg",
+        "last_modified": "September 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 91,
+            "name": "BACK ATTACKS",
+            "slug": "back-attacks"
+          }
+        ]
+      },
+      {
+        "id": 106076,
+        "title": "CROSS COLLAR ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/CROSSchoke-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/CROSSchoke.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 91,
+            "name": "BACK ATTACKS",
+            "slug": "back-attacks"
+          }
+        ]
+      }
+    ]
+  },
+  "CLOSED GUARD BOTTOM": {
+    "term_id": 102,
+    "name": "CLOSED GUARD BOTTOM",
+    "slug": "closed-guard-bottom",
+    "lessons": [
+      {
+        "id": 109542,
+        "title": "SLEEVE DRAG ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/02/SLEEVEDRAG-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/02/SLEEVEDRAG.jpg",
+        "last_modified": "March 13, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 109243,
+        "title": "SCISSOR SWEEP",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/SCISSOR-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/SCISSOR.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 108906,
+        "title": "OMOPLATA AND CRUCIFIX",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/BOTTOM-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/BOTTOM.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 108902,
+        "title": "CLOSED GUARD VS STANDING OPPONENT",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/SWEEPS-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/SWEEPS.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 106010,
+        "title": "OVERHOOK ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/overhookchoke-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/overhookchoke.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102261,
+        "title": "CROSS CHOKE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/02/xchoke-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/02/xchoke.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102038,
+        "title": "KIMURA",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/kimura-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/kimura.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102036,
+        "title": "TRIANGLE CHOKE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/trainglechoke-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/trainglechoke.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102032,
+        "title": "SWEEPING FROM CLOSED GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/sweeping-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/sweeping.jpg",
+        "last_modified": "January 5, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102026,
+        "title": "ARMLOCK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/armlockguard-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/armlockguard.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 102023,
+        "title": "PULLING AND ATTACKING FROM CLOSED GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/guardpull-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/guardpull.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          },
+          {
+            "term_id": 103,
+            "name": "Standing",
+            "slug": "standing"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 102,
+            "name": "CLOSED GUARD BOTTOM",
+            "slug": "closed-guard-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "REVERSE DE LA RIVA": {
+    "term_id": 495,
+    "name": "REVERSE DE LA RIVA",
+    "slug": "reverse-de-la-riva",
+    "lessons": [
+      {
+        "id": 109263,
+        "title": "REVERSE DE LA RIVA",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/closer-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/closer.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 446,
+            "name": "Terra Guard",
+            "slug": "terra-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 495,
+            "name": "REVERSE DE LA RIVA",
+            "slug": "reverse-de-la-riva"
+          }
+        ]
+      }
+    ]
+  },
+  "BACK DEFENSE": {
+    "term_id": 92,
+    "name": "BACK DEFENSE",
+    "slug": "back-defense",
+    "lessons": [
+      {
+        "id": 108783,
+        "title": "RECOVERING GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/DEFENSE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/DEFENSE.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 92,
+            "name": "BACK DEFENSE",
+            "slug": "back-defense"
+          }
+        ]
+      },
+      {
+        "id": 107002,
+        "title": "ESCAPING THE BACK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/09/BACK-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/09/BACK.jpg",
+        "last_modified": "September 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 92,
+            "name": "BACK DEFENSE",
+            "slug": "back-defense"
+          }
+        ]
+      },
+      {
+        "id": 106074,
+        "title": "DEFENDING AND ESCAPING FROM THE BACK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/DEFENSE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/DEFENSE.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 92,
+            "name": "BACK DEFENSE",
+            "slug": "back-defense"
+          }
+        ]
+      },
+      {
+        "id": 106070,
+        "title": "TURTLE POSITION ESCAPES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/TURTLE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/TURTLE.jpg",
+        "last_modified": "December 3, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 104,
+            "name": "Back",
+            "slug": "back"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 92,
+            "name": "BACK DEFENSE",
+            "slug": "back-defense"
+          }
+        ]
+      }
+    ]
+  },
+  "50/50": {
+    "term_id": 493,
+    "name": "50/50",
+    "slug": "50-50-50-50",
+    "lessons": [
+      {
+        "id": 108961,
+        "title": "50/50 GUARD AND PASSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/fifty-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/fifty.jpg",
+        "last_modified": "January 13, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 443,
+            "name": "50/50",
+            "slug": "50-50"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 493,
+            "name": "50/50",
+            "slug": "50-50-50-50"
+          }
+        ]
+      }
+    ]
+  },
+  "ONE LEGGED X": {
+    "term_id": 491,
+    "name": "ONE LEGGED X",
+    "slug": "one-legged-x-one-legged-x",
+    "lessons": [
+      {
+        "id": 108957,
+        "title": "ANKLE LOCK SUBMISSION AND DEFENSE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/OLX-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/OLX.jpg",
+        "last_modified": "July 22, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 419,
+            "name": "One Legged X",
+            "slug": "one-legged-x"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 491,
+            "name": "ONE LEGGED X",
+            "slug": "one-legged-x-one-legged-x"
+          }
+        ]
+      }
+    ]
+  },
+  "DLR": {
+    "term_id": 490,
+    "name": "DLR",
+    "slug": "dlr",
+    "lessons": [
+      {
+        "id": 108946,
+        "title": "DE LA RIVA X",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/SLR-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/SLR.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 490,
+            "name": "DLR",
+            "slug": "dlr"
+          }
+        ]
+      },
+      {
+        "id": 108943,
+        "title": "UNDERHOOK DLR",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/DLR-ANKLE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/DLR-ANKLE.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 490,
+            "name": "DLR",
+            "slug": "dlr"
+          }
+        ]
+      },
+      {
+        "id": 108937,
+        "title": "LEG DRAG AND BABY BOLO",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/dlrlegg-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/dlrlegg.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 490,
+            "name": "DLR",
+            "slug": "dlr"
+          }
+        ]
+      }
+    ]
+  },
+  "DLR BOTTOM": {
+    "term_id": 488,
+    "name": "DLR BOTTOM",
+    "slug": "de-la-riva-bottom",
+    "lessons": [
+      {
+        "id": 108940,
+        "title": "PANT GRIP DLR",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/marangoni-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/marangoni.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 488,
+            "name": "DLR BOTTOM",
+            "slug": "de-la-riva-bottom"
+          }
+        ]
+      },
+      {
+        "id": 108923,
+        "title": "SHALLOW DE LA RIVA HOOK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/Establishing-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/Establishing.jpg",
+        "last_modified": "May 1, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 488,
+            "name": "DLR BOTTOM",
+            "slug": "de-la-riva-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "DLR TOP": {
+    "term_id": 489,
+    "name": "DLR TOP",
+    "slug": "de-la-riva-top",
+    "lessons": [
+      {
+        "id": 108928,
+        "title": "SHALLOW DE LA RIVA PASSES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/top-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/top.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 418,
+            "name": "Dela Riva",
+            "slug": "dela-riva"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 489,
+            "name": "DLR TOP",
+            "slug": "de-la-riva-top"
+          }
+        ]
+      }
+    ]
+  },
+  "REVERSE HALF GUARD": {
+    "term_id": 486,
+    "name": "REVERSE HALF GUARD",
+    "slug": "reverse-half-guard",
+    "lessons": [
+      {
+        "id": 108919,
+        "title": "REVERSE HALF GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/REVERSE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/REVERSE.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 486,
+            "name": "REVERSE HALF GUARD",
+            "slug": "reverse-half-guard"
+          }
+        ]
+      }
+    ]
+  },
+  "DEEP HALF GUARD": {
+    "term_id": 485,
+    "name": "DEEP HALF GUARD",
+    "slug": "deep-half-guard",
+    "lessons": [
+      {
+        "id": 108917,
+        "title": "DEEP HALF GUARD AND COUNTER",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/deephalf-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/deephalf.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 414,
+            "name": "Deep Half Guard",
+            "slug": "deep-half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 485,
+            "name": "DEEP HALF GUARD",
+            "slug": "deep-half-guard"
+          }
+        ]
+      },
+      {
+        "id": 108912,
+        "title": "DEEP HALF GUARD AND COUNTER (CONTROLLING 1 LEG)",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/deephalf-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/deephalf-1.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 414,
+            "name": "Deep Half Guard",
+            "slug": "deep-half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 88,
+            "name": "Advanced",
+            "slug": "advanced"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 485,
+            "name": "DEEP HALF GUARD",
+            "slug": "deep-half-guard"
+          }
+        ]
+      }
+    ]
+  },
+  "MOUNT ATTACKS": {
+    "term_id": 98,
+    "name": "MOUNT ATTACKS",
+    "slug": "mount-attacks",
+    "lessons": [
+      {
+        "id": 108776,
+        "title": "TECHNICAL MOUNT ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2023/01/top-2-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2023/01/top-2.jpg",
+        "last_modified": "January 12, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 98,
+            "name": "MOUNT ATTACKS",
+            "slug": "mount-attacks"
+          }
+        ]
+      },
+      {
+        "id": 102253,
+        "title": "KEYLOCK",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/02/KEYLOCK-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/02/KEYLOCK-1.jpg",
+        "last_modified": "May 25, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 98,
+            "name": "MOUNT ATTACKS",
+            "slug": "mount-attacks"
+          }
+        ]
+      },
+      {
+        "id": 102251,
+        "title": "ARMLOCK AND BREAKING MY OPPONENT GRIPS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/02/armlock-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/02/armlock.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 98,
+            "name": "MOUNT ATTACKS",
+            "slug": "mount-attacks"
+          }
+        ]
+      },
+      {
+        "id": 102247,
+        "title": "CROSS CHOKE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/02/cross-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/02/cross.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 98,
+            "name": "MOUNT ATTACKS",
+            "slug": "mount-attacks"
+          }
+        ]
+      }
+    ]
+  },
+  "CLOSED GUARD": {
+    "term_id": 422,
+    "name": "CLOSED GUARD",
+    "slug": "closed-guard-closed-guard",
+    "lessons": [
+      {
+        "id": 107186,
+        "title": "POSTURING AND OPENING THE CLOSED GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/10/closed-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/10/closed.jpg",
+        "last_modified": "October 14, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 422,
+            "name": "CLOSED GUARD",
+            "slug": "closed-guard-closed-guard"
+          }
+        ]
+      },
+      {
+        "id": 106018,
+        "title": "CATUCADA SWEEP AND DEFENSE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/openclosedguard-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/openclosedguard.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 422,
+            "name": "CLOSED GUARD",
+            "slug": "closed-guard-closed-guard"
+          }
+        ]
+      },
+      {
+        "id": 106016,
+        "title": "OMOPLATA AND ESCAPES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/omoplata-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/omoplata.jpg",
+        "last_modified": "January 5, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 422,
+            "name": "CLOSED GUARD",
+            "slug": "closed-guard-closed-guard"
+          }
+        ]
+      },
+      {
+        "id": 106007,
+        "title": "ARMLOCK AND DEFENSE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/ARMLock-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/ARMLock.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 109,
+            "name": "Closed Guard",
+            "slug": "closed-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 422,
+            "name": "CLOSED GUARD",
+            "slug": "closed-guard-closed-guard"
+          }
+        ]
+      }
+    ]
+  },
+  "MOUNT": {
+    "term_id": 423,
+    "name": "MOUNT",
+    "slug": "mount-mount",
+    "lessons": [
+      {
+        "id": 106993,
+        "title": "HIP PRESS AND EZEQUIEL",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/09/MOUNT-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/09/MOUNT.jpg",
+        "last_modified": "September 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 423,
+            "name": "MOUNT",
+            "slug": "mount-mount"
+          }
+        ]
+      }
+    ]
+  },
+  "MOUNT DEFENSE": {
+    "term_id": 99,
+    "name": "MOUNT DEFENSE",
+    "slug": "mount-defense",
+    "lessons": [
+      {
+        "id": 106990,
+        "title": "HIP ESCAPE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/09/HIPESCAPE-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/09/HIPESCAPE.jpg",
+        "last_modified": "September 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 99,
+            "name": "MOUNT DEFENSE",
+            "slug": "mount-defense"
+          }
+        ]
+      },
+      {
+        "id": 102256,
+        "title": "UPA",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/02/UPA-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/02/UPA.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 107,
+            "name": "Mount",
+            "slug": "mount"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 99,
+            "name": "MOUNT DEFENSE",
+            "slug": "mount-defense"
+          }
+        ]
+      }
+    ]
+  },
+  "ONE LEGGED X TOP": {
+    "term_id": 478,
+    "name": "ONE LEGGED X TOP",
+    "slug": "one-legged-x-top-one-legged-x",
+    "lessons": [
+      {
+        "id": 106128,
+        "title": "PASSING THE OLX",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/PASS-1-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/PASS-1.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 419,
+            "name": "One Legged X",
+            "slug": "one-legged-x"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 478,
+            "name": "ONE LEGGED X TOP",
+            "slug": "one-legged-x-top-one-legged-x"
+          }
+        ]
+      }
+    ]
+  },
+  "X GUARD TOP": {
+    "term_id": 481,
+    "name": "X GUARD TOP",
+    "slug": "x-guard-top",
+    "lessons": [
+      {
+        "id": 106126,
+        "title": "PASSING THE X GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/PASS-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/PASS.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 444,
+            "name": "X Guard",
+            "slug": "x-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 481,
+            "name": "X GUARD TOP",
+            "slug": "x-guard-top"
+          }
+        ]
+      }
+    ]
+  },
+  "X GUARD BOTTOM": {
+    "term_id": 480,
+    "name": "X GUARD BOTTOM",
+    "slug": "x-guard-bottom",
+    "lessons": [
+      {
+        "id": 106118,
+        "title": "X GUARD ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/XGUARD-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/XGUARD.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 444,
+            "name": "X Guard",
+            "slug": "x-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 480,
+            "name": "X GUARD BOTTOM",
+            "slug": "x-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 106110,
+        "title": "BUTTERFLY GUARD TO TECHNICAL STAND UP SWEEP",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/HOOKSWEEP-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/HOOKSWEEP.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 415,
+            "name": "Butterfly Guard",
+            "slug": "butterfly-guard"
+          },
+          {
+            "term_id": 444,
+            "name": "X Guard",
+            "slug": "x-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 480,
+            "name": "X GUARD BOTTOM",
+            "slug": "x-guard-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "ONE LEGGED X BOTTOM": {
+    "term_id": 476,
+    "name": "ONE LEGGED X BOTTOM",
+    "slug": "one-legged-x-bottom",
+    "lessons": [
+      {
+        "id": 106103,
+        "title": "OLX SWEEPS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/ONELEGGEDX-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/ONELEGGEDX.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 419,
+            "name": "One Legged X",
+            "slug": "one-legged-x"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 476,
+            "name": "ONE LEGGED X BOTTOM",
+            "slug": "one-legged-x-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "SPIDER GUARD BOTTOM": {
+    "term_id": 473,
+    "name": "SPIDER GUARD BOTTOM",
+    "slug": "spider-guard-bottom",
+    "lessons": [
+      {
+        "id": 106098,
+        "title": "LASSO SWEEPS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/LASO-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/LASO.jpg",
+        "last_modified": "January 24, 2023",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 417,
+            "name": "Spider Guard",
+            "slug": "spider-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 473,
+            "name": "SPIDER GUARD BOTTOM",
+            "slug": "spider-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 106094,
+        "title": "SPIDER TRIANGLE AND ESCAPE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/BUSDRIVER-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/BUSDRIVER.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 417,
+            "name": "Spider Guard",
+            "slug": "spider-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 473,
+            "name": "SPIDER GUARD BOTTOM",
+            "slug": "spider-guard-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "SIDE CONTROL ATTACKS": {
+    "term_id": 93,
+    "name": "SIDE CONTROL ATTACKS",
+    "slug": "side-control-attacks",
+    "lessons": [
+      {
+        "id": 106091,
+        "title": "MOUNTING FROM SIDE CONTROL",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/side-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/side.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 93,
+            "name": "SIDE CONTROL ATTACKS",
+            "slug": "side-control-attacks"
+          }
+        ]
+      },
+      {
+        "id": 106088,
+        "title": "KIMURA",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/ki-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/ki.jpg",
+        "last_modified": "October 4, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 93,
+            "name": "SIDE CONTROL ATTACKS",
+            "slug": "side-control-attacks"
+          }
+        ]
+      },
+      {
+        "id": 106085,
+        "title": "KATAGATAME",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/katagatame-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/katagatame.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 93,
+            "name": "SIDE CONTROL ATTACKS",
+            "slug": "side-control-attacks"
+          }
+        ]
+      },
+      {
+        "id": 102041,
+        "title": "SWITCHING BASE AND ATTACKING THE ARM",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/01/sidecontrol-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/01/sidecontrol.jpg",
+        "last_modified": "June 7, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 93,
+            "name": "SIDE CONTROL ATTACKS",
+            "slug": "side-control-attacks"
+          }
+        ]
+      }
+    ]
+  },
+  "ATTACKS": {
+    "term_id": 483,
+    "name": "ATTACKS",
+    "slug": "attacks",
+    "lessons": [
+      {
+        "id": 106082,
+        "title": "KNEE ON BELLY ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/ATTACKS-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/ATTACKS.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 483,
+            "name": "ATTACKS",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 482,
+            "name": "Knee On Belly",
+            "slug": "knee-on-belly"
+          }
+        ]
+      }
+    ]
+  },
+  "DEFENSE": {
+    "term_id": 484,
+    "name": "DEFENSE",
+    "slug": "defense",
+    "lessons": [
+      {
+        "id": 106079,
+        "title": "KNEE ON BELLY ESCAPES",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/NEON-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/NEON.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 105,
+            "name": "Side Control",
+            "slug": "side-control"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 484,
+            "name": "DEFENSE",
+            "slug": "defense"
+          }
+        ]
+      }
+    ]
+  },
+  "OPEN GUARD PASSES": {
+    "term_id": 100,
+    "name": "OPEN GUARD PASSES",
+    "slug": "open-guard-passes",
+    "lessons": [
+      {
+        "id": 106059,
+        "title": "OVER UNDER PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/overunder-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/overunder.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 100,
+            "name": "OPEN GUARD PASSES",
+            "slug": "open-guard-passes"
+          }
+        ]
+      },
+      {
+        "id": 106056,
+        "title": "DOUBLE UNDER PASS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/toureando-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/toureando.jpg",
+        "last_modified": "August 27, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 85,
+            "name": "Passes",
+            "slug": "passes"
+          },
+          {
+            "term_id": 83,
+            "name": "Top",
+            "slug": "top"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 108,
+            "name": "Open Guard",
+            "slug": "open-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 100,
+            "name": "OPEN GUARD PASSES",
+            "slug": "open-guard-passes"
+          }
+        ]
+      }
+    ]
+  },
+  "HALF GUARD BOTTOM": {
+    "term_id": 96,
+    "name": "HALF GUARD BOTTOM",
+    "slug": "half-guard-bottom",
+    "lessons": [
+      {
+        "id": 106029,
+        "title": "SLEEVE DRAG",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/sleevedrag-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/sleevedrag.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 96,
+            "name": "HALF GUARD BOTTOM",
+            "slug": "half-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 106024,
+        "title": "UNDERHOOK ATTACKS",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/underhook-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/underhook.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 80,
+            "name": "Attacks",
+            "slug": "attacks"
+          },
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 86,
+            "name": "Sweeps",
+            "slug": "sweeps"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 96,
+            "name": "HALF GUARD BOTTOM",
+            "slug": "half-guard-bottom"
+          }
+        ]
+      },
+      {
+        "id": 106022,
+        "title": "RECOVERING THE GUARD",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2022/08/recovering-640x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2022/08/recovering.jpg",
+        "last_modified": "August 26, 2022",
+        "lesson_techniques": [
+          {
+            "term_id": 84,
+            "name": "Bottom",
+            "slug": "bottom"
+          },
+          {
+            "term_id": 81,
+            "name": "Defense",
+            "slug": "defense"
+          },
+          {
+            "term_id": 82,
+            "name": "Escapes",
+            "slug": "escapes"
+          }
+        ],
+        "lesson_positions": [
+          {
+            "term_id": 106,
+            "name": "Half Guard",
+            "slug": "half-guard"
+          }
+        ],
+        "lesson_types": [
+          {
+            "term_id": 87,
+            "name": "Fundamental",
+            "slug": "fundamental"
+          }
+        ],
+        "curriculum_position": [
+          {
+            "term_id": 96,
+            "name": "HALF GUARD BOTTOM",
+            "slug": "half-guard-bottom"
+          }
+        ]
+      }
+    ]
+  },
+  "Introduction": {
+    "term_id": 448,
+    "name": "Introduction",
+    "slug": "introduction",
+    "lessons": [
+      {
+        "id": 16363,
+        "title": "WELCOME TO CAIO TERRA ONLINE",
+        "description": "",
+        "thumburl": "https://caioterra.com/wp-content/uploads/2019/03/selcome-586x360.jpg",
+        "image_full_url": "https://caioterra.com/wp-content/uploads/2019/03/selcome.jpg",
+        "last_modified": "March 10, 2022",
+        "lesson_techniques": [],
+        "lesson_positions": [],
+        "lesson_types": [],
+        "curriculum_position": [
+          {
+            "term_id": 448,
+            "name": "Introduction",
+            "slug": "introduction"
+          }
+        ]
+      }
+    ]
+  }
+}
