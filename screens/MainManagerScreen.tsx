@@ -48,7 +48,7 @@ function MainManagerScreen() {
             tabBarActiveTintColor: '#fff',
           }}>
           <Tab.Screen
-            name="Videos"
+            name="Find Videos"
             component={VideoManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (

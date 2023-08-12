@@ -10,7 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getCredentials } from '../storage'; // Import the getCredentials function
+import {getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -69,7 +69,8 @@ const FavoritesListing: React.FC = () => {
         });
 
         const apiUrl =
-          'https://caioterra.com/app-api/get-favorites.php?' + params.toString();
+          'https://caioterra.com/app-api/get-favorites.php?' +
+          params.toString();
 
         const response = await fetch(apiUrl);
         const data = await response.json();

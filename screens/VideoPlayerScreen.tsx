@@ -19,7 +19,6 @@ const VideoPlayer = ({route}: {route: any}) => {
     // Cleanup function to unload the video when the component is unmounted
     return () => {
       if (videoRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         videoRef.current.stop();
       }
     };
@@ -100,7 +99,7 @@ const VideoPlayer = ({route}: {route: any}) => {
         //   <Text style={styles.text}>Vimeo Token: {vimeoToken}</Text>
         //   <Text style={styles.text}>Loading video...</Text>
         // </View>
-        <Loader />
+        <Loader/>
       )}
     </View>
   );
@@ -134,8 +133,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 8,
     marginBottom: 10,
-    borderColor: 'red',
-    borderWidth: 1,
   },
   icons: {
     color: '#fff',
@@ -164,6 +161,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  additionalContent: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#1c1c1c',
+    borderRadius: 8,
   },
 });
 
