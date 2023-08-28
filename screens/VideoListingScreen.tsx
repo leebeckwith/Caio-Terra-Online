@@ -9,12 +9,12 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getCredentials} from '../storage';
+import {getCredentials, getCachedVideos, setCachedVideos} from '../storage';
 
 interface VideoData {
   id: number;
@@ -23,6 +23,9 @@ interface VideoData {
   thumburl: string;
   link: string;
   favorite: boolean;
+  video_types: {term_id: number; name: string}[];
+  video_positions: {term_id: number; name: string}[];
+  video_techniques: {term_id: number; name: string}[];
 }
 
 // @ts-ignore
@@ -30,13 +33,12 @@ const VideoListing = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [showFavoritesButton, setShowFavoritesButton] =
     useState<boolean>(false);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
-  const [toggle, setToggle] = useState(false);
+  const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     const checkCredentials = async () => {
@@ -51,12 +53,11 @@ const VideoListing = () => {
     const fetchVideos = async () => {
       try {
         dispatch(setLoading(true));
-        const cachedVideos = await AsyncStorage.getItem('cachedVideos');
+        const cachedVideos = await getCachedVideos();
         //Make the API call and get the videos data
-        if (cachedVideos) {
-          const cachedData = JSON.parse(cachedVideos);
-          setVideos(cachedData);
-          setFilteredVideos(cachedData);
+        if (cachedVideos && cachedVideos.length > 0) {
+          setVideos(cachedVideos);
+          setFilteredVideos(cachedVideos);
           console.log('Cached video data used');
         } else {
           // Make the API call and get the videos data
@@ -92,11 +93,9 @@ const VideoListing = () => {
 
               setVideos(updatedData);
               setFilteredVideos(updatedData);
-              await AsyncStorage.setItem(
-                'cachedVideos',
-                JSON.stringify(updatedData),
-              );
               console.log('Fresh video data fetched');
+              await setCachedVideos(updatedData);
+              console.log('Video data freshly cached');
             }
           }
         }
@@ -113,15 +112,15 @@ const VideoListing = () => {
     };
   }, []);
 
-  const handleVideoPress = async (vimeoId: number) => {
+  const handleVideoPress = (vimeoId: number) => {
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-
     // @ts-ignore Because this navigation resolves fine with the props sent
-    navigation.navigate('Player', {
-      vimeoId,
-      vimeoToken,
-    });
+    // navigation.navigate('Player', {
+    //   vimeoId,
+    //   vimeoToken,
+    // });
+    openVideoModal(vimeoId, vimeoToken);
   };
 
   const handleFavoritePress = async (id: number) => {
@@ -178,11 +177,6 @@ const VideoListing = () => {
     );
   };
 
-  const navigateToOther = () => {
-    // @ts-ignore
-    navigation.navigate('Favorites', {cachedVideos: videos});
-  };
-
   const handleSearch = (text: string) => {
     // Filter videos based on the search term
     const filtered = videos.filter(video =>
@@ -197,12 +191,12 @@ const VideoListing = () => {
       <View style={styles.videoItemContainer}>
         <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
           <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
+          <Text style={styles.titleOverlay}>{item.title.toUpperCase()}</Text>
         </Pressable>
         <View style={styles.wrapper}>
-          <Text style={styles.title}>{item.title}</Text>
           {showFavoritesButton && (
             <TouchableOpacity
-              style={[styles.iconButton, styles.icons]}
+              style={styles.iconButton}
               onPress={() => handleFavoritePress(item.id)}>
               <Icon
                 name={item.favorite ? 'star' : 'star-o'}
@@ -218,31 +212,29 @@ const VideoListing = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search videos..."
-        placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-        onChangeText={handleSearch}
-        value={searchTerm}
-      />
-      {showFavoritesButton && (
-        <View style={styles.buttonContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder={`Search ${filteredVideos.length} videos...`}
+          placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+          onChangeText={handleSearch}
+          value={searchTerm}
+        />
+        {showFavoritesButton && (
           <Pressable
             onPress={showFavorites}
             style={[styles.button, showFavoritesFilter ? styles.active : null]}>
             <View style={styles.buttonContent}>
-              <Icon name="star" color="#fff" size={18} style={styles.icon} />
-              <Text style={styles.buttonText}>Favorites</Text>
+              <Icon name="star" color="#fff" size={18} />
             </View>
           </Pressable>
-          {/*<Pressable onPress={navigateToOther} style={styles.button}>*/}
-          {/*  <Text style={styles.buttonText}>New Button</Text>*/}
-          {/*</Pressable>*/}
-        </View>
-      )}
+        )}
+      </View>
       {filteredVideos.length > 0 ? (
         <FlatList
           data={filteredVideos}
+          showsVerticalScrollIndicator={true}
+          indicatorStyle={'white'}
           renderItem={({item}) => (
             <VideoItem key={item.id.toString()} item={item} />
           )}
@@ -259,15 +251,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    padding: 10,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   searchInput: {
+    flex: 1,
     height: 40,
     color: '#050505',
     backgroundColor: '#fff',
-    borderRadius: 8,
     marginBottom: 10,
     marginTop: 10,
+    marginRight: 8,
     paddingHorizontal: 10,
   },
   videoItemContainer: {
@@ -284,34 +281,23 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: '100%',
     height: 200,
-    borderRadius: 5,
   },
   wrapper: {
-    flexDirection: 'row',
-  },
-  icons: {
-    textAlign: 'right',
-    width: '5%',
-    marginTop: 8,
-    display: 'flex',
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
   },
   buttonContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    marginLeft: -2.5,
-    marginRight: -2.5,
-  },
   button: {
-    flex: 1,
     backgroundColor: '#555',
-    borderRadius: 8,
-    padding: 10,
+    padding: 11,
     marginHorizontal: 2.5,
+  },
+  flex: {
+    flex: 1,
   },
   active: {
     backgroundColor: '#00a6ff',
@@ -320,11 +306,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-  icon: {
-    marginRight: 8,
+  left: {
+    marginLeft: 8,
   },
   iconButton: {
     backgroundColor: 'transparent',
+  },
+  titleOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+    padding: 8,
+    paddingRight: 25,
+    textAlign: 'left',
   },
 });
 

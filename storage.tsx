@@ -29,3 +29,21 @@ export const clearCredentials = async () => {
     console.error('Error clearing credentials:', error);
   }
 };
+
+export const setCachedVideos = async (videos: any) => {
+  try {
+    await AsyncStorage.setItem('cachedVideos', JSON.stringify(videos));
+  } catch (error) {
+    console.error('Error storing cached videos:', error);
+  }
+};
+
+export const getCachedVideos = async () => {
+  try {
+    const cachedVideos = await AsyncStorage.getItem('cachedVideos');
+    return cachedVideos ? JSON.parse(cachedVideos) : [];
+  } catch (error) {
+    console.error('Error getting cached videos:', error);
+    return [];
+  }
+};
