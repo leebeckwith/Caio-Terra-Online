@@ -1,19 +1,57 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import VideoPlayer from './VideoPlayerScreen';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import VideoListing from './VideoListingScreen';
-import FavoritesListing from './FavoritesListingScreen';
+import VideoFilterview from './VideoFilterviewScreen';
+import VideoGridview from './VideoGridviewScreen';
+import {StyleSheet} from 'react-native';
 
-const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const VideoManagerScreen = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="VideoListing" component={VideoListing} />
-      <Stack.Screen name="Favorites" component={FavoritesListing} />
-      <Stack.Screen name="Player" component={VideoPlayer} />
-    </Stack.Navigator>
+    <Tab.Navigator
+      sceneContainerStyle={styles.sceneContainer}
+      style={styles.tabContainer}
+      screenOptions={{
+        tabBarScrollEnabled: false,
+        tabBarIndicatorStyle: {
+          height: '100%',
+          backgroundColor: 'rgba(255, 255, 255, 0.25)',
+        },
+        tabBarIndicatorContainerStyle: {
+          //backgroundColor: 'rgba(255, 255, 255, 0)',
+        },
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+          elevation: 0,
+        },
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+        tabBarActiveTintColor: '#00a6ff',
+      }}>
+      <Tab.Screen name="Search" component={VideoListing} />
+      <Tab.Screen name="Grid" component={VideoGridview} />
+      <Tab.Screen name="Filter" component={VideoFilterview} />
+    </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  background: {
+    height: '100%',
+    width: '100%',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sceneContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  tabContainer: {
+    minHeight: '100%',
+    maxHeight: '100%',
+  },
+});
 
 export default VideoManagerScreen;

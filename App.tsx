@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginManagerScreen from './screens/LoginManagerScreen';
 import MainManagerScreen from './screens/MainManagerScreen';
+import {VideoModalProvider} from './components/VideoPlayerModalContext';
+import VideoPlayerModal from './components/VideoPlayerModal';
 import {Provider} from 'react-redux';
 import store from './store';
 
@@ -16,12 +18,15 @@ function App(): React.JSX.Element {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Login" component={LoginManagerScreen} />
-          <Stack.Screen name="Main" component={MainManagerScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <VideoModalProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="Login" component={LoginManagerScreen} />
+            <Stack.Screen name="Main" component={MainManagerScreen} />
+          </Stack.Navigator>
+          <VideoPlayerModal />
+        </NavigationContainer>
+      </VideoModalProvider>
     </Provider>
   );
 }

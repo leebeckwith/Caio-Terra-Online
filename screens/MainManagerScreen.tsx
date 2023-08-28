@@ -5,7 +5,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Loader from '../components/Loader';
 import VideoManagerScreen from './VideoManagerScreen';
 import AccountManagerScreen from './AccountManagerScreen';
-import FavoritesListingScreen from './FavoritesListingScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
 import LessonPlansListingScreen from './LessonPlansListingScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -24,7 +23,6 @@ function MainManagerScreen() {
           sceneContainerStyle={{
             backgroundColor: 'rgba(0, 0, 0, 0)',
           }}
-          style={styles.tabContainer}
           screenOptions={{
             headerShown: false,
             tabBarStyle: {
@@ -48,7 +46,7 @@ function MainManagerScreen() {
             tabBarActiveTintColor: '#fff',
           }}>
           <Tab.Screen
-            name="Find Videos"
+            name="Videos"
             component={VideoManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
@@ -56,24 +54,15 @@ function MainManagerScreen() {
               ),
             }}
           />
-          {/*<Tab.Screen*/}
-          {/*  name="Favorites"*/}
-          {/*  component={FavoritesListingScreen}*/}
-          {/*  options={{*/}
-          {/*    tabBarIcon: ({color, size}) => (*/}
-          {/*      <Icon name="star" color={color} size={size} />*/}
-          {/*    ),*/}
-          {/*  }}*/}
-          {/*/>*/}
-          {/*<Tab.Screen*/}
-          {/*  name="Lesson Plans"*/}
-          {/*  component={LessonPlansListingScreen}*/}
-          {/*  options={{*/}
-          {/*    tabBarIcon: ({color, size}) => (*/}
-          {/*      <Icon name="tasks" color={color} size={size} />*/}
-          {/*    ),*/}
-          {/*  }}*/}
-          {/*/>*/}
+          <Tab.Screen
+            name="Lesson Plans"
+            component={LessonPlansListingScreen}
+            options={{
+              tabBarIcon: ({color, size}) => (
+                <Icon name="tasks" color={color} size={size} />
+              ),
+            }}
+          />
           <Tab.Screen
             name="Curriculum"
             component={CurriculumListingScreen}
@@ -101,6 +90,7 @@ function MainManagerScreen() {
         <Loader />
       </Modal>
     </SafeAreaView>
+
   );
 }
 
@@ -112,6 +102,9 @@ const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
     position: 'relative',
+  },
+  sceneContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
 });
 

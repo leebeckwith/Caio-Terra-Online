@@ -6,14 +6,17 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import the icon library you're using
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {getCachedVideos} from '../storage';
 
 interface Lesson {
   id: number;
   title: string;
   thumburl: string;
-  // Other lesson properties...
+  lessonData: [];
+  showSubItems: boolean;
 }
 
 interface Category {
@@ -28,34 +31,6 @@ const CurriculumListing: React.FC = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<Lesson[]>([]);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
-  useEffect(() => {
-    // ... (fetching and sorting categories remain the same)
-  }, []);
-
-  const toggleCategory = (categoryId: number, categoryName: string) => {
-    setExpandedCategory(prevCategoryId =>
-      prevCategoryId === categoryId ? null : categoryId,
-    );
-    console.log(categoryName);
-    if (!isExpanded) {
-      try {
-        /*const response = await fetch(
-          `https://caioterra.com/ct_get/ct_videos/?taxonomy=video_technique&term_slug=${item.slug}`,
-        );
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-        const lessonItems: Lesson[] = await response.json();
-        setLessonData(lessonItems);*/
-        setIsExpanded(true);
-      } catch (error) {
-        console.error('Error fetching lesson items:', error);
-      }
-    } else {
-      setIsExpanded(false);
-    }
-  };
 
   useEffect(() => {
     // Fetch curriculum data
@@ -80,6 +55,36 @@ const CurriculumListing: React.FC = () => {
     fetchCurriculumData();
   }, []);
 
+  const toggleCategory = (categoryId: number, categoryName: string) => {
+    setExpandedCategory(prevCategoryId =>
+      prevCategoryId === categoryId ? null : categoryId,
+    );
+    console.log(categoryName);
+    setLessonData([]);
+
+    // Reset lesson data for all lessons in the current category
+    setCategories(prevCategories =>
+      prevCategories.map(category => ({
+        ...category,
+        lessons: category.lessons.map(lesson => ({
+          ...lesson,
+          lessonData: [],
+          showSubItems: false,
+        })),
+      })),
+    );
+
+    if (!isExpanded) {
+      try {
+        setIsExpanded(true);
+      } catch (error) {
+        console.error('Error fetching lesson items:', error);
+      }
+    } else {
+      setIsExpanded(false);
+    }
+  };
+
   const sortCategories = (categoryArray: Category[]): Category[] => {
     // Sort categories by name
     const sortedCategories = categoryArray.sort((a, b) =>
@@ -99,6 +104,46 @@ const CurriculumListing: React.FC = () => {
     }
 
     return sortedCategories;
+  };
+  const showPlan = async (lessonId: number) => {
+    try {
+      const response = await fetch(
+        `https://caioterra.com/app-api/plan-videos.php?id=${lessonId}`,
+      );
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
+      const lessonVideos = await response.json();
+      const cachedVideos = await getCachedVideos();
+
+      const mappedLessonVideos = lessonVideos
+        .map(video => {
+          const cachedVideo = cachedVideos.find(
+            cachedVideo => cachedVideo.id === video.id,
+          );
+          if (cachedVideo) {
+            return {
+              ...cachedVideo,
+            };
+          } else {
+            return null;
+          }
+        })
+        .filter(video => video !== null);
+      setLessonData(mappedLessonVideos);
+
+      setCategories(prevCategories =>
+        prevCategories.map(category => ({
+          ...category,
+          lessons: category.lessons.map(lesson => ({
+            ...lesson,
+            showSubItems: lesson.id === lessonId,
+          })),
+        })),
+      );
+    } catch (error) {
+      console.error('Error fetching lesson items:', error);
+    }
   };
 
   const renderCategoryItem = ({item}: {item: Category}) => {
@@ -131,29 +176,34 @@ const CurriculumListing: React.FC = () => {
     );
   };
 
+  const LessonSubItem: React.FC<{item: Lesson}> = React.memo(({item}) => {
+    return (
+      <View style={styles.wrapper}>
+        {/*<Pressable onPress={() => handleVideoPress(item.vimeoid)}>*/}
+        <Pressable>
+          <Image
+            source={{uri: item.thumburl}}
+            style={styles.subLessonThumbnail}
+          />
+        </Pressable>
+        <Text style={styles.lessonTitle}>{item.title}</Text>
+      </View>
+    );
+  });
+
   const renderLessonItem = ({item}: {item: Lesson}) => {
     return (
       <View style={styles.lessonItemContainer}>
-        {/*<TouchableOpacity onPress={() => toggleLesson(item.title)}>*/}
-        <Image source={{uri: item.thumburl}} style={styles.lessonThumb} />
-        <Text style={styles.lessonTitle}>{item.title}</Text>
-        {/*</TouchableOpacity>*/}
-        {isExpanded && (
+        <TouchableOpacity onPress={() => showPlan(item.id)}>
+          <Image source={{uri: item.thumburl}} style={styles.lessonThumb} />
+        </TouchableOpacity>
+        {item.showSubItems && (
           <FlatList
             data={lessonData}
-            renderItem={renderLessonSubItem} // Define a new function for rendering sub-items
+            renderItem={({item}) => <LessonSubItem item={item} />} // Use the extracted component
             keyExtractor={subItem => subItem.id.toString()}
           />
         )}
-      </View>
-    );
-  };
-
-  const renderLessonSubItem = ({item}: {item: Lesson}) => {
-    return (
-      <View>
-        <Text style={styles.lessonTitle}>{item.title}</Text>
-        {/* Display other sub-lesson information */}
       </View>
     );
   };
@@ -177,7 +227,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    padding: 10,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   loadingText: {
     color: '#fff',
@@ -205,9 +259,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   lessonTitle: {
+    width: '60%',
     color: '#fff',
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
+    marginTop: 0,
+    marginBottom: 10,
+    marginLeft: 10,
   },
   lessonThumb: {
     width: '100%',
@@ -215,11 +273,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
   },
+  subLessonThumbnail: {
+    width: 100,
+    height: 60,
+  },
+  wrapper: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
   icon: {
-    marginRight: 5, // Add some margin to separate the icon from the image
+    marginRight: 5,
   },
   iconSpacer: {
-    width: 18, // Adjust the width to match the icon's size
+    width: 18,
   },
 });
 
