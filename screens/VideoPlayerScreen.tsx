@@ -1,27 +1,19 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import Video from 'react-native-video';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 
 const VideoPlayer = ({route}: {route: any}) => {
-  // Extract the parameters passed from navigation
   const {vimeoId, vimeoToken} = route.params ? route.params : '';
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null); // Store the video URL
-  const videoRef = useRef<Video | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
+
   const isFocused = useIsFocused();
-  const navigation = useNavigation();
 
   useEffect(() => {
     getVimeoVideo(vimeoId);
-
-    // Cleanup function to unload the video when the component is unmounted
-    return () => {
-      if (videoRef.current) {
-        videoRef.current.stop();
-      }
-    };
   }, []); // Empty dependency array to run this effect only once
 
   const getVimeoVideo = async (vimeoId: number) => {
@@ -39,8 +31,9 @@ const VideoPlayer = ({route}: {route: any}) => {
       // Parse the response and get the video data
       const videoData = await response.json();
 
-      // Set the video data to the selectedVideo state
-      setSelectedVideo(videoData.files[2].link);
+      // Set the video data
+      setSelectedTitle(videoData.name);
+      setSelectedVideo(videoData.files[1].link);
     } catch (error) {
       console.error('Error fetching video from Vimeo API:', error);
       setSelectedVideo(null);
@@ -51,13 +44,14 @@ const VideoPlayer = ({route}: {route: any}) => {
     <View style={styles.container}>
       {selectedVideo ? (
         <View>
+          <Text style={styles.title}>{selectedTitle}</Text>
           <View>
             <Video
               source={{uri: selectedVideo}}
               ref={ref => {
                 // @ts-ignore
                 this.player = ref;
-              }} // Store reference
+              }}
               style={styles.videoPlayer}
               resizeMode="contain"
               controls={true}
@@ -65,12 +59,12 @@ const VideoPlayer = ({route}: {route: any}) => {
             />
             <View style={styles.wrapper}>
               <View style={[styles.iconsLeft, styles.iconContainer]}>
-                <Icon
-                  name="list"
-                  color="white"
-                  size={30}
-                  style={styles.iconsLeft}
-                />
+                {/*<Icon*/}
+                {/*  name="list"*/}
+                {/*  color="white"*/}
+                {/*  size={30}*/}
+                {/*  style={styles.iconsLeft}*/}
+                {/*/>*/}
                 <Icon
                   name="download"
                   color="white"
@@ -78,12 +72,12 @@ const VideoPlayer = ({route}: {route: any}) => {
                   style={styles.iconsLeft}
                 />
               </View>
-              <Icon
-                name="star-o"
-                color="white"
-                size={30}
-                style={styles.iconsRight}
-              />
+              {/*<Icon*/}
+              {/*  name="star-o"*/}
+              {/*  color="white"*/}
+              {/*  size={30}*/}
+              {/*  style={styles.iconsRight}*/}
+              {/*/>*/}
             </View>
           </View>
         </View>
@@ -105,8 +99,8 @@ const styles = StyleSheet.create({
   },
   videoPlayer: {
     width: '100%',
-    height: 300,
-    backgroundColor: '#050505',
+    aspectRatio: 16 / 9,
+    backgroundColor: '#000',
   },
   wrapper: {
     flexDirection: 'row',
@@ -120,11 +114,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    width: '95%',
+    textAlign: 'center',
     color: '#fff',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
-    marginTop: 8,
     marginBottom: 10,
   },
   icons: {

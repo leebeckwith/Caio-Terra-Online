@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Image,
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import {Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
+import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {getCachedVideos} from '../storage';
 
@@ -16,6 +9,7 @@ interface Lesson {
   title: string;
   thumburl: string;
   lessonData: [];
+  vimeoid: number;
   showSubItems: boolean;
 }
 
@@ -31,6 +25,7 @@ const CurriculumListing: React.FC = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<Lesson[]>([]);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     // Fetch curriculum data
@@ -55,11 +50,10 @@ const CurriculumListing: React.FC = () => {
     fetchCurriculumData();
   }, []);
 
-  const toggleCategory = (categoryId: number, categoryName: string) => {
+  const toggleCategory = (categoryId: number) => {
     setExpandedCategory(prevCategoryId =>
       prevCategoryId === categoryId ? null : categoryId,
     );
-    console.log(categoryName);
     setLessonData([]);
 
     // Reset lesson data for all lessons in the current category
@@ -151,8 +145,8 @@ const CurriculumListing: React.FC = () => {
 
     return (
       <View style={styles.categoryContainer}>
-        <TouchableOpacity
-          onPress={() => toggleCategory(item.term_id, item.name)}
+        <Pressable
+          onPress={() => toggleCategory(item.term_id)}
           style={styles.categoryHeader}>
           <Icon
             name={isExpanded ? 'minus' : 'plus'}
@@ -164,7 +158,7 @@ const CurriculumListing: React.FC = () => {
           <Text style={styles.categoryName}>
             {item.name.toLocaleUpperCase()}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
         {isExpanded && (
           <FlatList
             data={item.lessons}
@@ -179,8 +173,7 @@ const CurriculumListing: React.FC = () => {
   const LessonSubItem: React.FC<{item: Lesson}> = React.memo(({item}) => {
     return (
       <View style={styles.wrapper}>
-        {/*<Pressable onPress={() => handleVideoPress(item.vimeoid)}>*/}
-        <Pressable>
+        <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
           <Image
             source={{uri: item.thumburl}}
             style={styles.subLessonThumbnail}
@@ -194,18 +187,24 @@ const CurriculumListing: React.FC = () => {
   const renderLessonItem = ({item}: {item: Lesson}) => {
     return (
       <View style={styles.lessonItemContainer}>
-        <TouchableOpacity onPress={() => showPlan(item.id)}>
+        <Pressable onPress={() => showPlan(item.id)}>
           <Image source={{uri: item.thumburl}} style={styles.lessonThumb} />
-        </TouchableOpacity>
+        </Pressable>
         {item.showSubItems && (
           <FlatList
             data={lessonData}
-            renderItem={({item}) => <LessonSubItem item={item} />} // Use the extracted component
+            renderItem={({item}) => <LessonSubItem item={item} />}
             keyExtractor={subItem => subItem.id.toString()}
           />
         )}
       </View>
     );
+  };
+
+  const handleVideoPress = (vimeoId: number) => {
+    // CTA App Vimeo Bearer token
+    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
+    openVideoModal(vimeoId, vimeoToken);
   };
 
   return (

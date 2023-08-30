@@ -35,6 +35,8 @@ export const setCachedVideos = async (videos: any) => {
     await AsyncStorage.setItem('cachedVideos', JSON.stringify(videos));
   } catch (error) {
     console.error('Error storing cached videos:', error);
+  } finally {
+    console.log('Videos set in cache');
   }
 };
 
@@ -45,5 +47,7 @@ export const getCachedVideos = async () => {
   } catch (error) {
     console.error('Error getting cached videos:', error);
     return [];
+  } finally {
+    console.log('Cached videos retrieved');
   }
 };

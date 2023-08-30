@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
-import {storeCredentials} from '../storage'; // Import the storage utility
+import {storeCredentials} from '../storage';
 
 function LoginScreen(): React.JSX.Element {
   // Data for login
@@ -97,9 +97,7 @@ function LoginScreen(): React.JSX.Element {
                 keyboardType="default"
                 style={styles.input}
                 returnKeyType="next"
-                //onChangeText={text => setRecoveryUsername(text)}
                 placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-                //value={log}
                 blurOnSubmit={false}
               />
               <Pressable

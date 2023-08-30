@@ -73,7 +73,7 @@ function MainManagerScreen() {
             }}
           />
           <Tab.Screen
-            name="My Account"
+            name="Account"
             component={AccountManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (

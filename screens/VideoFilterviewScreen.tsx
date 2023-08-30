@@ -1,13 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity, FlatList, Pressable
-} from "react-native";
+import {View, Text, Image, StyleSheet, FlatList, Pressable} from 'react-native';
+import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useNavigation} from '@react-navigation/native';
 import {getCachedVideos} from '../storage';
 
 interface VideoData {
@@ -19,13 +13,11 @@ interface VideoData {
   video_types: {term_id: number; name: string}[];
   video_positions: {term_id: number; name: string}[];
   video_techniques: {term_id: number; name: string}[];
-  // Add your other properties here
 }
 
 const VideoFilterviewScreen: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
-  const navigation = useNavigation();
   const [techniques, setTechniques] = useState<{id: number; name: string}[]>(
     [],
   );
@@ -38,11 +30,7 @@ const VideoFilterviewScreen: React.FC = () => {
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [positionOpen, setPositionOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
-  const [items, setItems] = useState([
-    {label: 'Apple', value: 'apple'},
-    {label: 'Banana', value: 'banana'},
-  ]);
-  const [value, setValue] = useState(null);
+  const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -51,7 +39,6 @@ const VideoFilterviewScreen: React.FC = () => {
 
         if (cachedVideos && cachedVideos.length > 0) {
           setVideos(cachedVideos);
-          console.log('Cached video data used');
 
           // Extract unique techniques, positions, and types from cachedVideos
           const uniqueTechniques: {[id: number]: {id: number; name: string}} =
@@ -108,9 +95,7 @@ const VideoFilterviewScreen: React.FC = () => {
 
     if (selectedType !== null) {
       filtered = filtered.filter(video =>
-        video.video_types.some(
-          type => type.name === selectedType,
-        ),
+        video.video_types.some(type => type.name === selectedType),
       );
     }
 
@@ -141,22 +126,25 @@ const VideoFilterviewScreen: React.FC = () => {
   }));
 
   const onTechniqueOpen = useCallback(() => {
-    //console.log('technique opened');
     setPositionOpen(false);
     setTypeOpen(false);
   }, []);
 
   const onPositionOpen = useCallback(() => {
-    //console.log('technique opened');
     setTechniqueOpen(false);
     setTypeOpen(false);
   }, []);
 
   const onTypeOpen = useCallback(() => {
-    //console.log('technique opened');
     setPositionOpen(false);
     setTechniqueOpen(false);
   }, []);
+
+  const handleVideoPress = (vimeoId: number) => {
+    // CTA App Vimeo Bearer token
+    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
+    openVideoModal(vimeoId, vimeoToken);
+  };
 
   return (
     <View style={styles.container}>
@@ -224,8 +212,7 @@ const VideoFilterviewScreen: React.FC = () => {
           renderItem={({item}) => (
             <View style={styles.videoItemContainer}>
               <View style={styles.wrapper}>
-                {/*<Pressable onPress={() => handleVideoPress(item.vimeoid)}>*/}
-                <Pressable>
+                <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
                   <Image
                     source={{uri: item.thumburl}}
                     style={styles.lessonThumbnail}
