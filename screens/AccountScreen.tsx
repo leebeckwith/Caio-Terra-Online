@@ -3,7 +3,7 @@ import {Button, Alert, ScrollView, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
 import {clearCredentials} from '../storage';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import the storage utility
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function AccountScreen(): React.JSX.Element {
   const navigation = useNavigation();

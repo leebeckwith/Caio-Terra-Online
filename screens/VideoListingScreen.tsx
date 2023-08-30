@@ -7,7 +7,6 @@ import {
   Pressable,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
 } from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -54,11 +53,9 @@ const VideoListing = () => {
       try {
         dispatch(setLoading(true));
         const cachedVideos = await getCachedVideos();
-        //Make the API call and get the videos data
         if (cachedVideos && cachedVideos.length > 0) {
           setVideos(cachedVideos);
           setFilteredVideos(cachedVideos);
-          console.log('Cached video data used');
         } else {
           // Make the API call and get the videos data
           const response = await fetch(
@@ -93,9 +90,7 @@ const VideoListing = () => {
 
               setVideos(updatedData);
               setFilteredVideos(updatedData);
-              console.log('Fresh video data fetched');
               await setCachedVideos(updatedData);
-              console.log('Video data freshly cached');
             }
           }
         }
@@ -195,7 +190,7 @@ const VideoListing = () => {
         </Pressable>
         <View style={styles.wrapper}>
           {showFavoritesButton && (
-            <TouchableOpacity
+            <Pressable
               style={styles.iconButton}
               onPress={() => handleFavoritePress(item.id)}>
               <Icon
@@ -203,7 +198,7 @@ const VideoListing = () => {
                 color="white"
                 size={20}
               />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </View>

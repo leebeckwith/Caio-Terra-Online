@@ -3,13 +3,11 @@ import {
   View,
   Text,
   Image,
-  Animated,
-  Dimensions,
   FlatList,
   StyleSheet,
   Pressable,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {getCachedVideos} from '../storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -24,13 +22,8 @@ interface VideoData {
 const LessonPlansListing: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
-  const [scrollViewWidth, setScrollViewWidth] = useState(screenWidth);
   const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
-  const navigation = useNavigation();
-
-  const screenWidth = Dimensions.get('window').width;
-  const boxWidth = screenWidth * 0.78;
-  const halfBoxDistance = (screenWidth - boxWidth) / 2;
+  const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -87,24 +80,14 @@ const LessonPlansListing: React.FC = () => {
   const handleVideoPress = (vimeoId: number) => {
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-
-    // @ts-ignore Because this navigation resolves fine with the props sent
-    navigation.navigate('Player', {
-      vimeoId,
-      vimeoToken,
-      onBack: () => {
-        // This callback will be triggered when the back button is pressed on VideoPlayerScreen
-        navigation.goBack(); // Navigate back to the LessonPlansListing screen
-      },
-    });
+    openVideoModal(vimeoId, vimeoToken);
   };
 
-  const VideoItem: React.FC<{item: VideoData}> = ({item}) => {
+  const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
     return (
       <View style={styles.videoItemContainer}>
         <View style={styles.wrapper}>
-          {/*<Pressable onPress={() => handleVideoPress(item.vimeoid)}>*/}
-          <Pressable>
+          <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
             <Image
               source={{uri: item.thumburl}}
               style={styles.lessonThumbnail}
@@ -114,88 +97,31 @@ const LessonPlansListing: React.FC = () => {
         </View>
       </View>
     );
-  };
-
-  const renderLessonCategory = ({
-    item,
-    index,
-  }: {
-    item: VideoData;
-    index: number;
-  }) => {
-    return (
-      <Animated.View
-        style={{
-          transform: [
-            {
-              scale: pan.x.interpolate({
-                inputRange: [
-                  (index - 1) * boxWidth - halfBoxDistance,
-                  index * boxWidth - halfBoxDistance,
-                  (index + 1) * boxWidth - halfBoxDistance,
-                ],
-                outputRange: [0.7, 1, 0.7],
-                extrapolate: 'clamp',
-              }),
-            },
-          ],
-        }}>
-        <View style={[styles.carouselContent, {width: boxWidth}]}>
-          <Pressable
-            onPress={() => fetchAndSetPlanVideos(item.id)}
-            style={[styles.thumbnailContainer]}>
-            <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-            {/*<Text style={styles.titleOverlay}>{item.title}</Text>*/}
-            {/*<View style={styles.iconOverlay}>*/}
-            {/*  <Icon*/}
-            {/*    name="plus-circle"*/}
-            {/*    color="rgba(255, 255, 255, 0.4)"*/}
-            {/*    size={28}*/}
-            {/*    style={styles.icon}*/}
-            {/*  />*/}
-            {/*</View>*/}
-          </Pressable>
-        </View>
-      </Animated.View>
-    );
-  };
-
-  const pan = React.useRef(new Animated.ValueXY()).current;
+  });
 
   return (
     <View style={styles.videoItemContainer}>
-      <View style={styles.categoryContainer}>
-        <Text style={styles.categoryName}>
-          SWIPE TO BROWSE, CLICK FOR DETAILS
-        </Text>
+      <View>
+        <Text style={styles.categoryName}>SWIPE AND CLICK FOR DETAILS</Text>
       </View>
       <FlatList
         horizontal
         data={filteredVideos}
         style={styles.carouselContainer}
-        contentContainerStyle={{paddingVertical: 16}}
-        contentInsetAdjustmentBehavior="never"
-        snapToAlignment="center"
-        decelerationRate="fast"
-        automaticallyAdjustContentInsets={true}
-        indicatorStyle={'white'}
+        contentContainerStyle={styles.carouselContentContainer}
         showsHorizontalScrollIndicator={true}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={0.8}
-        snapToInterval={boxWidth}
-        contentInset={{
-          left: halfBoxDistance,
-          right: halfBoxDistance,
-        }}
-        contentOffset={{x: halfBoxDistance * -1, y: 0}}
-        onLayout={e => {
-          setScrollViewWidth(e.nativeEvent.layout.width + 50);
-        }}
-        onScroll={Animated.event([{nativeEvent: {contentOffset: {x: pan.x}}}], {
-          useNativeDriver: false,
-        })}
+        indicatorStyle={'white'}
         keyExtractor={(item, index) => `${index}-${item.id.toString()}`}
-        renderItem={renderLessonCategory}
+        renderItem={({item}) => (
+          <View style={styles.carouselContent}>
+            <Pressable
+              onPress={() => fetchAndSetPlanVideos(item.id)}
+              style={[styles.thumbnailContainer]}>
+              <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
+              <Text style={styles.titleOverlay}>{item.title}</Text>
+            </Pressable>
+          </View>
+        )}
       />
       {mappedVideos.length > 0 && (
         <FlatList
@@ -255,10 +181,7 @@ const styles = StyleSheet.create({
   categoryHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-  },
-  categoryContainer: {
-    marginBottom: 8,
+    paddingBottom: 10,
   },
   categoryName: {
     color: '#fff',
@@ -270,21 +193,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     height: 250,
   },
+  carouselContentContainer: {
+    paddingVertical: 16,
+  },
   carouselContent: {
     height: '100%',
     borderRadius: 0,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 10,
   },
   titleOverlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
     textAlign: 'center',
