@@ -1,14 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  StyleSheet,
-  Pressable,
-} from 'react-native';
+import {View, Text, Image, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
-import {getCachedVideos} from '../storage';
+import {getCachedVideos, getCredentials} from '../storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface VideoData {
@@ -77,17 +70,18 @@ const LessonPlansListing: React.FC = () => {
     setMappedVideos(mappedCachedVideos);
   };
 
-  const handleVideoPress = (vimeoId: number) => {
+  const handleVideoPress = async (vimeoId: number, videoId: number) => {
+    const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
   };
 
   const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
     return (
       <View style={styles.videoItemContainer}>
         <View style={styles.wrapper}>
-          <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
+          <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
             <Image
               source={{uri: item.thumburl}}
               style={styles.lessonThumbnail}
@@ -95,6 +89,19 @@ const LessonPlansListing: React.FC = () => {
           </Pressable>
           <Text style={styles.lessonTitle}>{item.title}</Text>
         </View>
+      </View>
+    );
+  });
+
+  const CarouselItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
+    return (
+      <View style={styles.carouselContent}>
+        <Pressable
+          onPress={() => fetchAndSetPlanVideos(item.id)}
+          style={[styles.thumbnailContainer]}>
+          <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
+          <Text style={styles.titleOverlay}>{item.title}</Text>
+        </Pressable>
       </View>
     );
   });
@@ -112,16 +119,7 @@ const LessonPlansListing: React.FC = () => {
         showsHorizontalScrollIndicator={true}
         indicatorStyle={'white'}
         keyExtractor={(item, index) => `${index}-${item.id.toString()}`}
-        renderItem={({item}) => (
-          <View style={styles.carouselContent}>
-            <Pressable
-              onPress={() => fetchAndSetPlanVideos(item.id)}
-              style={[styles.thumbnailContainer]}>
-              <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-              <Text style={styles.titleOverlay}>{item.title}</Text>
-            </Pressable>
-          </View>
-        )}
+        renderItem={({item}) => <CarouselItem item={item} />}
       />
       {mappedVideos.length > 0 && (
         <FlatList

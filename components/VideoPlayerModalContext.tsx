@@ -7,10 +7,12 @@ export const VideoModalProvider = ({children}) => {
   const [selectedVideoInfo, setSelectedVideoInfo] = useState({
     vimeoId: null,
     vimeoToken: null,
+    userId: null,
+    videoId: null,
   });
 
-  const openVideoModal = (vimeoId, vimeoToken) => {
-    setSelectedVideoInfo({vimeoId, vimeoToken});
+  const openVideoModal = (vimeoId, vimeoToken, userId, videoId) => {
+    setSelectedVideoInfo({vimeoId, vimeoToken, userId, videoId});
     setVideoModalVisible(true);
   };
 
@@ -19,6 +21,8 @@ export const VideoModalProvider = ({children}) => {
     setSelectedVideoInfo({
       vimeoId: null,
       vimeoToken: null,
+      userId: null,
+      videoId: null,
     });
   };
 

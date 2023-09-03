@@ -5,7 +5,7 @@ interface LoadingState {
 }
 
 const initialState: LoadingState = {
-  value: false, // Default value for loading state
+  value: false,
 };
 
 const loadingSlice = createSlice({
@@ -13,8 +13,7 @@ const loadingSlice = createSlice({
   initialState,
   reducers: {
     setLoading: (state, action) => {
-      //console.log('dispatched: ' + action.payload);
-      state.value = action.payload; // Set loading state to the provided payload
+      state.value = action.payload;
     },
   },
 });
