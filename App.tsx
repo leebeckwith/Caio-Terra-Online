@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginManagerScreen from './screens/LoginManagerScreen';
 import MainManagerScreen from './screens/MainManagerScreen';
+import {FavoriteProvider} from './components//FavoriteContext';
 import {VideoModalProvider} from './components/VideoPlayerModalContext';
 import VideoPlayerModal from './components/VideoPlayerModal';
 import {Provider} from 'react-redux';
@@ -18,15 +19,17 @@ function App(): React.JSX.Element {
 
   return (
     <Provider store={store}>
-      <VideoModalProvider>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Login" component={LoginManagerScreen} />
-            <Stack.Screen name="Main" component={MainManagerScreen} />
-          </Stack.Navigator>
-          <VideoPlayerModal />
-        </NavigationContainer>
-      </VideoModalProvider>
+      <FavoriteProvider>
+        <VideoModalProvider>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Login" component={LoginManagerScreen} />
+              <Stack.Screen name="Main" component={MainManagerScreen} />
+            </Stack.Navigator>
+            <VideoPlayerModal />
+          </NavigationContainer>
+        </VideoModalProvider>
+      </FavoriteProvider>
     </Provider>
   );
 }

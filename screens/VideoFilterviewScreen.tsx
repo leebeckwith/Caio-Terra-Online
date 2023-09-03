@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Image, StyleSheet, FlatList, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {getCachedVideos} from '../storage';
+import {getCachedVideos, getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -140,32 +140,16 @@ const VideoFilterviewScreen: React.FC = () => {
     setTechniqueOpen(false);
   }, []);
 
-  const handleVideoPress = (vimeoId: number) => {
+  const handleVideoPress = async (vimeoId: number, videoId: number) => {
+    const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.filterContainer}>
-        <DropDownPicker
-          placeholder="Select technique"
-          listMode="MODAL"
-          modalTitle="Select technique"
-          modalProps={{
-            animationType: 'fade',
-          }}
-          open={techniqueOpen}
-          setOpen={setTechniqueOpen}
-          value={selectedTechnique}
-          setValue={setSelectedTechnique}
-          onOpen={onTechniqueOpen}
-          items={techniqueData}
-          zIndex={3000}
-          zIndexInverse={1000}
-          style={styles.dropDownContainer}
-        />
         <DropDownPicker
           placeholder="Select position"
           listMode="MODAL"
@@ -181,6 +165,23 @@ const VideoFilterviewScreen: React.FC = () => {
           items={positionData}
           zIndex={2000}
           zIndexInverse={2000}
+          style={styles.dropDownContainer}
+        />
+        <DropDownPicker
+          placeholder="Select technique"
+          listMode="MODAL"
+          modalTitle="Select technique"
+          modalProps={{
+            animationType: 'fade',
+          }}
+          open={techniqueOpen}
+          setOpen={setTechniqueOpen}
+          value={selectedTechnique}
+          setValue={setSelectedTechnique}
+          onOpen={onTechniqueOpen}
+          items={techniqueData}
+          zIndex={3000}
+          zIndexInverse={1000}
           style={styles.dropDownContainer}
         />
         <DropDownPicker
@@ -212,7 +213,8 @@ const VideoFilterviewScreen: React.FC = () => {
           renderItem={({item}) => (
             <View style={styles.videoItemContainer}>
               <View style={styles.wrapper}>
-                <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
+                <Pressable
+                  onPress={() => handleVideoPress(item.vimeoid, item.id)}>
                   <Image
                     source={{uri: item.thumburl}}
                     style={styles.lessonThumbnail}

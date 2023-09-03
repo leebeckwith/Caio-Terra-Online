@@ -32,34 +32,38 @@ function LoginScreen(): React.JSX.Element {
     }
 
     try {
-      const formData = new FormData();
-      formData.append('log', log);
-      formData.append('pwd', pwd);
-      formData.append('lwa', '1');
-      formData.append('login-with-ajax', 'login');
+      const queryParams = new URLSearchParams({
+        username: log,
+        password: pwd,
+      });
 
       const response = await fetch(
-        'https://caioterra.com/wp-admin/admin-ajax.php',
+        `https://caioterra.com/ct_get/ct_users?${queryParams.toString()}`,
         {
-          method: 'POST',
-          body: formData,
+          method: 'GET',
         },
       );
 
       const responseData = await response.json();
 
       if (response.ok) {
-        if (responseData.result === false) {
-          Alert.alert('Error', responseData.error);
-        } else {
-          //Alert.alert('Login Successful', 'Welcome!');
-          storeCredentials(log, pwd);
-          // @ts-ignore
+        if (responseData.user_id) {
+          const {user_id, display_name, user_email} = responseData;
+          await storeCredentials(log, pwd, user_id, display_name, user_email);
           navigation.navigate('Main', {
             screen: 'Videos',
             initial: false,
           });
+        } else if (
+          responseData.errors &&
+          responseData.errors.incorrect_password
+        ) {
+          Alert.alert('Error', 'Invalid username or password.');
+        } else {
+          Alert.alert('Error', 'Invalid username or password.');
         }
+      } else {
+        Alert.alert('Error', 'There was an error logging in.');
       }
     } catch (error) {
       Alert.alert('Error', 'There was an error logging in.');

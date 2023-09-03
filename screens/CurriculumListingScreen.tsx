@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getCachedVideos} from '../storage';
+import {getCachedVideos, getCredentials} from '../storage';
 
 interface Lesson {
   id: number;
@@ -173,7 +173,7 @@ const CurriculumListing: React.FC = () => {
   const LessonSubItem: React.FC<{item: Lesson}> = React.memo(({item}) => {
     return (
       <View style={styles.wrapper}>
-        <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
+        <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
           <Image
             source={{uri: item.thumburl}}
             style={styles.subLessonThumbnail}
@@ -201,10 +201,11 @@ const CurriculumListing: React.FC = () => {
     );
   };
 
-  const handleVideoPress = (vimeoId: number) => {
+  const handleVideoPress = async (vimeoId: number, videoId: number) => {
+    const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
   };
 
   return (

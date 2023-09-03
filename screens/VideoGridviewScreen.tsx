@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getCachedVideos} from '../storage';
+import {getCachedVideos, getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -35,10 +35,26 @@ const VideoGridview: React.FC = () => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const {openVideoModal} = useVideoModal();
 
-  const handleVideoPress = (vimeoId: number) => {
+  const handleVideoPress = async (vimeoId: number, videoId: number) => {
+    const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+  };
+  const categorizeVideosByField = (videos: VideoData[], field: string) => {
+    const categorizedVideos: Record<string, VideoData[]> = {};
+
+    videos.forEach(video => {
+      video[field].forEach(category => {
+        const termKey = `${category.term_id}-${category.name.toLowerCase()}`;
+        if (!categorizedVideos[termKey]) {
+          categorizedVideos[termKey] = [];
+        }
+        categorizedVideos[termKey].push(video);
+      });
+    });
+
+    return categorizedVideos;
   };
 
   useEffect(() => {
@@ -68,22 +84,6 @@ const VideoGridview: React.FC = () => {
     fetchVideos();
   }, []);
 
-  const categorizeVideosByField = (videos: VideoData[], field: string) => {
-    const categorizedVideos: Record<string, VideoData[]> = {};
-
-    videos.forEach(video => {
-      video[field].forEach(category => {
-        const termKey = `${category.term_id}-${category.name.toLowerCase()}`;
-        if (!categorizedVideos[termKey]) {
-          categorizedVideos[termKey] = [];
-        }
-        categorizedVideos[termKey].push(video);
-      });
-    });
-
-    return categorizedVideos;
-  };
-
   const toggleCategory = (categoryKey: string) => {
     setExpandedCategory(prevCategoryKey =>
       prevCategoryKey === categoryKey ? null : categoryKey,
@@ -94,7 +94,7 @@ const VideoGridview: React.FC = () => {
     return (
       <Pressable>
         <View style={styles.videoItemContainer}>
-          <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
+          <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
             <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
           </Pressable>
           <Text style={styles.videoTitle}>{item.title.toUpperCase()}</Text>

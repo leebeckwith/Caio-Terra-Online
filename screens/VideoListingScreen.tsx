@@ -9,11 +9,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
+import {useFavorites} from '../components/FavoriteContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getCredentials, getCachedVideos, setCachedVideos} from '../storage';
+import {getCredentials, getCachedVideos, setCachedVideos, toggleFavoriteInCache} from '../storage';
 
 interface VideoData {
   id: number;
@@ -37,6 +37,7 @@ const VideoListing = () => {
     useState<boolean>(false);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
+  const {favorites, toggleFavorite} = useFavorites();
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
@@ -53,6 +54,8 @@ const VideoListing = () => {
       try {
         dispatch(setLoading(true));
         const cachedVideos = await getCachedVideos();
+
+        // If cached videos exist, set them directly
         if (cachedVideos && cachedVideos.length > 0) {
           setVideos(cachedVideos);
           setFilteredVideos(cachedVideos);
@@ -63,10 +66,8 @@ const VideoListing = () => {
           );
           const data = await response.json();
 
-          setVideos(data);
-          setFilteredVideos(data);
+          const { username, password } = await getCredentials();
 
-          const {username, password} = await getCredentials();
           if (username && password) {
             const params = new URLSearchParams({
               username,
@@ -84,12 +85,13 @@ const VideoListing = () => {
 
               const updatedData = data.map(video =>
                 favoriteIds.includes(video.id.toString())
-                  ? {...video, favorite: true}
+                  ? { ...video, favorite: true }
                   : video,
               );
 
               setVideos(updatedData);
               setFilteredVideos(updatedData);
+
               await setCachedVideos(updatedData);
             }
           }
@@ -100,36 +102,21 @@ const VideoListing = () => {
         dispatch(setLoading(false));
       }
     };
+
     // Call the fetchVideos function when the component mounts
     fetchVideos();
-    return () => {
-      // this now gets called when the component unmounts
-    };
   }, []);
 
-  const handleVideoPress = (vimeoId: number) => {
+  const handleVideoPress = async (vimeoId: number, videoId: number) => {
+    const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    // @ts-ignore Because this navigation resolves fine with the props sent
-    // navigation.navigate('Player', {
-    //   vimeoId,
-    //   vimeoToken,
-    // });
-    openVideoModal(vimeoId, vimeoToken);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
   };
 
   const handleFavoritePress = async (id: number) => {
     try {
-      const updatedVideos = videos.map(video =>
-        video.id === id ? {...video, favorite: !video.favorite} : video,
-      );
-
-      setVideos(updatedVideos);
-      setFilteredVideos(updatedVideos);
-
-      const video = updatedVideos.find(video => video.id === id);
-      const newFavoriteStatus = video?.favorite ? 1 : 0;
-
+      const newFavoriteStatus = Number(favorites?.includes(id) ? 0: 1);
       const {username, password} = await getCredentials();
 
       if (username && password) {
@@ -141,34 +128,29 @@ const VideoListing = () => {
         const apiStr =
           `https://caioterra.com/app-api/set-favorite.php?post_id=${id}&is_fav=${newFavoriteStatus}&` +
           params.toString();
-
         const response = await fetch(apiStr);
 
         if (response.ok) {
-          // Update cached data with new favorite status
-          const updatedCachedData = updatedVideos.map(video =>
+          await toggleFavoriteInCache(id);
+          toggleFavorite(id);
+          const updatedVideos = videos.map(video =>
             video.id === id ? {...video, favorite: !video.favorite} : video,
           );
-          await AsyncStorage.setItem(
-            'cachedVideos',
-            JSON.stringify(updatedCachedData),
-          );
+          setVideos(updatedVideos);
+          setFilteredVideos(updatedVideos);
         }
       }
     } catch (error) {
       console.error('Error toggling favorite status:', error);
-    } finally {
-      // ... (existing logic)
     }
   };
 
   const showFavorites = () => {
     setShowFavoritesFilter(prevState => !prevState);
-    // Toggle the filter based on the current state
     setFilteredVideos(prevFilteredVideos =>
       showFavoritesFilter
         ? videos
-        : prevFilteredVideos.filter(video => video.favorite),
+        : prevFilteredVideos.filter(video => favorites.includes(Number(video.id))),
     );
   };
 
@@ -182,9 +164,10 @@ const VideoListing = () => {
   };
 
   const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
+    const isFavorite = favorites.includes(item.id);
     return (
       <View style={styles.videoItemContainer}>
-        <Pressable onPress={() => handleVideoPress(item.vimeoid)}>
+        <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
           <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
           <Text style={styles.titleOverlay}>{item.title.toUpperCase()}</Text>
         </Pressable>
@@ -194,7 +177,7 @@ const VideoListing = () => {
               style={styles.iconButton}
               onPress={() => handleFavoritePress(item.id)}>
               <Icon
-                name={item.favorite ? 'star' : 'star-o'}
+                name={isFavorite ? 'star' : 'star-o'}
                 color="white"
                 size={20}
               />

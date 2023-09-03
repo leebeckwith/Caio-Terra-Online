@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Alert, ScrollView, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
-import {clearCredentials} from '../storage';
+import {clearCredentials, clearCachedVideos} from '../storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function AccountScreen(): React.JSX.Element {
@@ -10,7 +10,7 @@ function AccountScreen(): React.JSX.Element {
   const handleLogout = async () => {
     try {
       await clearCredentials();
-      await AsyncStorage.removeItem('cachedVideos');
+      await clearCachedVideos();
       navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out:', error);
