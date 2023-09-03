@@ -164,10 +164,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   };
 
   const handleSeekToTimestamp = timestamp => {
-    // Set the video's current time to the timestamp of the note
-    playerRef.current.seek(timestamp);
-
-    // Pause the video
+    playerRef.current.seek(Number(timestamp));
     setIsPaused(true);
   };
 
@@ -307,8 +304,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     padding: 10,
-    height: 700,
-    maxHeight: 700,
+    height: 600,
     borderColor: 'rgba(255, 255, 255, 0.4)',
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -414,8 +410,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   notesListContainer: {
-    height: 250,
-    maxHeight: 250,
+    height: 160,
     marginBottom: 20,
   },
 });
