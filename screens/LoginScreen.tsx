@@ -151,12 +151,12 @@ function LoginScreen(): React.JSX.Element {
           <Pressable
             onPress={handleLogin}
             style={[styles.button, styles.shadowProp]}>
-            <Text style={styles.label}>Subscriber Login</Text>
+            <Text style={styles.label}>SUBSCRIBER LOGIN</Text>
           </Pressable>
           <Pressable
             onPress={handleBrowse}
             style={[styles.button, styles.secondary, styles.shadowProp]}>
-            <Text style={styles.label}>Browse as Guest</Text>
+            <Text style={styles.label}>BROWSE AS GUEST</Text>
           </Pressable>
         </View>
       </View>

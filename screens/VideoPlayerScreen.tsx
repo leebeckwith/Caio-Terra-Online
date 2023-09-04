@@ -8,6 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import Video from 'react-native-video';
+import VideoDownloadModal from '../components/VideoDownloadModal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 import {useFavorites} from '../components/FavoriteContext';
@@ -35,6 +36,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const {favorites, toggleFavorite} = useFavorites();
 
   const fetchVideoNotes = async () => {
@@ -164,8 +166,8 @@ const VideoPlayer = ({route}: {route: any}) => {
   };
 
   const handleSeekToTimestamp = timestamp => {
-    playerRef.current.seek(Number(timestamp));
     setIsPaused(true);
+    playerRef.current.seek(Number(timestamp));
   };
 
   const handleDeleteNote = async (noteId: number) => {
@@ -184,6 +186,11 @@ const VideoPlayer = ({route}: {route: any}) => {
     } catch (error) {
       console.error('Error deleting video note:', error);
     }
+  };
+
+  const openDownloadModal = () => {
+    setIsPaused(true);
+    setIsModalVisible(true);
   };
 
   const formatTime = timeInSeconds => {
@@ -230,6 +237,13 @@ const VideoPlayer = ({route}: {route: any}) => {
 
   return (
     <View style={styles.container}>
+      {isModalVisible && (
+        <VideoDownloadModal
+          isVisible={isModalVisible}
+          onClose={() => setIsModalVisible(false)}
+          vimeoId={vimeoId}
+        />
+      )}
       {selectedVideo ? (
         <View>
           <Text style={styles.title}>{selectedTitle}</Text>
@@ -245,7 +259,7 @@ const VideoPlayer = ({route}: {route: any}) => {
             />
             <View style={styles.wrapper}>
               <View style={[styles.iconsLeft, styles.iconContainer]}>
-                <Pressable style={[styles.button, styles.inactive]}>
+                <Pressable style={[styles.button, styles.inactive]} onPress={openDownloadModal}>
                   <Icon
                     name="download"
                     color="white"
@@ -280,7 +294,7 @@ const VideoPlayer = ({route}: {route: any}) => {
                 styles.noteButton,
                 noteContent ? styles.active : styles.inactive,
               ]}>
-              <Text style={styles.noteButtonText}>Add Note</Text>
+              <Text style={styles.noteButtonText}>ADD NOTE</Text>
             </Pressable>
           </View>
           <FlatList
@@ -386,7 +400,6 @@ const styles = StyleSheet.create({
   },
   noteButtonText: {
     color: '#fff',
-    fontWeight: 'bold',
     marginLeft: 10,
   },
   noteItem: {
