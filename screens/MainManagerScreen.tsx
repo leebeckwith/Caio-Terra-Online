@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
     position: 'relative',
+    padding: 10,
   },
   sceneContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.25)',
