@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View, Text, Modal, Pressable, StyleSheet} from 'react-native'
+import {Alert, FlatList, View, Text, Modal, Pressable, StyleSheet} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Animatable from 'react-native-animatable';
 import RNFS from 'react-native-fs';
 
 interface VideoDownloadModalProps {
@@ -21,10 +23,10 @@ interface VideoDownloadItem {
 const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onClose, vimeoId }) => {
   const [videoData, setVideoData] = useState<VideoDownloadItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [selectedDownloadLink, setSelectedDownloadLink] = useState<string | null>(null);
+
 
   useEffect(() => {
-    // Fetch the download options from the API
     const fetchDownloadOptions = async () => {
       try {
         const response = await fetch(
@@ -45,27 +47,43 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onCl
 
   const handleDownload = async(downloadLink: string, resolution: string) => {
     const downloadDest = `${RNFS.DocumentDirectoryPath}/${vimeoId}_${resolution}.mp4`;
+    setSelectedDownloadLink(downloadLink);
     console.log(downloadDest);
     RNFS.downloadFile({
       fromUrl: downloadLink,
       toFile: downloadDest,
       //background: true,
-      //discretionary: true,
-      progress: (res: RNFS.DownloadProgressCallbackResult) => {
-        const progress: number = (res.bytesWritten / res.contentLength) * 100;
-        console.log(`Progress: ${progress.toFixed(2)}%`);
-      },
+      discretionary: true,
+      // progress: (res: RNFS.DownloadProgressCallbackResult) => {
+      //   const progress: number = (res.bytesWritten / res.contentLength) * 100;
+      //   console.log(`Progress: ${progress.toFixed(2)}%`);
+      // },
     }).promise.then((response: RNFS.DownloadResult) => {
-        console.log('File downloaded!', response);
+      //console.log('File downloaded!', response);
+      Alert.alert('File Downloaded', `Your file, ${vimeoId}_${resolution}.mp4, downloaded successfully.`);
+      setSelectedDownloadLink(null);
     }).catch((err: Error) => {
-        console.log('Download error:', err);
+      //console.log('Download error:', err);
+      Alert.alert('File Downloaded Error', `Your file didn't download successfully: ${err}`);
+      setSelectedDownloadLink(null);
     });
   };
 
   const renderVideoItem = ({ item }: { item: VideoDownloadItem }) => (
     <View>
-      <Pressable style={styles.videoDownloadItem} onPress={() => handleDownload(item.link, item.rendition)}>
+      <Pressable style={[styles.videoDownloadItem, selectedDownloadLink === item.link ? styles.active : null]} onPress={() => handleDownload(item.link, item.rendition)}>
         <Text style={styles.buttonBody}>{item.rendition} ({item.width}x{item.height}) - {item.size_short}</Text>
+        {selectedDownloadLink === item.link && (
+          <Animatable.View
+            animation="rotate"
+            easing="linear"
+            iterationCount="infinite"
+            duration={1000}
+            style={styles.spinnerIconContainer}
+          >
+            <Icon name="spinner" color="white" size={20} style={styles.icons} />
+          </Animatable.View>
+        )}
       </Pressable>
     </View>
   );
@@ -121,15 +139,17 @@ const styles = StyleSheet.create({
   buttonBody: {
     color: '#fff',
   },
-  downloadButton: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderColor: '#000',
-  },
   videoDownloadItem: {
     backgroundColor: '#333',
     padding: 15,
+    height: 50,
     marginBottom: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  active: {
+    backgroundColor: '#00a6ff',
   },
   closeButton: {
     backgroundColor: '#666',
@@ -141,6 +161,13 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -3, height: 5},
     shadowOpacity: 0.2,
     shadowRadius: 5,
+  },
+  icons: {
+    color: '#fff',
+  },
+  spinnerIconContainer: {
+    width: 20,
+    height: 20,
   },
 });
 

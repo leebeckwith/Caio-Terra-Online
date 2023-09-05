@@ -216,7 +216,7 @@ const VideoPlayer = ({route}: {route: any}) => {
             {formatTime(item.note_playback_timestamp)}
           </Text>
         </Pressable>
-        <Pressable style={[styles.inlineButton]}>
+        <Pressable style={[styles.inlineButton]} onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
           <Text style={styles.noteContent}>{item.note_text}</Text>
         </Pressable>
         <View style={styles.deleteButtonContainer}>
