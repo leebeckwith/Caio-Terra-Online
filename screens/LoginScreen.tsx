@@ -50,10 +50,7 @@ function LoginScreen(): React.JSX.Element {
         if (responseData.user_id) {
           const {user_id, display_name, user_email} = responseData;
           await storeCredentials(log, pwd, user_id, display_name, user_email);
-          navigation.navigate('Main', {
-            screen: 'Videos',
-            initial: false,
-          });
+          navigation.navigate('Main', {screen: 'Videos', initial: false,});
         } else if (
           responseData.errors &&
           responseData.errors.incorrect_password
@@ -153,11 +150,11 @@ function LoginScreen(): React.JSX.Element {
             style={[styles.button, styles.shadowProp]}>
             <Text style={styles.label}>SUBSCRIBER LOGIN</Text>
           </Pressable>
-          <Pressable
-            onPress={handleBrowse}
-            style={[styles.button, styles.secondary, styles.shadowProp]}>
-            <Text style={styles.label}>BROWSE AS GUEST</Text>
-          </Pressable>
+          {/*<Pressable*/}
+          {/*  onPress={handleBrowse}*/}
+          {/*  style={[styles.button, styles.secondary, styles.shadowProp]}>*/}
+          {/*  <Text style={styles.label}>BROWSE AS GUEST</Text>*/}
+          {/*</Pressable>*/}
         </View>
       </View>
     </SafeAreaView>
