@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCachedVideos} from './redux/cachedVideoSlice';
 
 export const storeCredentials = async (
   username: string,
@@ -58,55 +60,4 @@ export const clearCredentials = async () => {
     console.error('Error clearing credentials:', error);
   }
 };
-
-export const setCachedVideos = async (videos: any) => {
-  try {
-    await AsyncStorage.setItem('cachedVideos', JSON.stringify(videos));
-  } catch (error) {
-    console.error('Error setting cached videos:', error);
-  }
-};
-
-export const getCachedVideos = async () => {
-  try {
-    const cachedVideos = await AsyncStorage.getItem('cachedVideos');
-    return cachedVideos ? JSON.parse(cachedVideos) : [];
-  } catch (error) {
-    console.error('Error getting cached videos:', error);
-    return [];
-  }
-};
-
-export const clearCachedVideos = async () => {
-  try {
-    // Use AsyncStorage.removeItem to clear the cached videos
-    await AsyncStorage.removeItem('cachedVideos');
-    return true; // Indicate success
-  } catch (error) {
-    console.error('Error clearing cached videos:', error);
-    return false; // Indicate failure
-  }
-};
-
-export const toggleFavoriteInCache = async (videoId: number) => {
-  try {
-    const cachedVideosString = await AsyncStorage.getItem('cachedVideos');
-
-    if (!cachedVideosString) {
-      return false;
-    }
-
-    const cachedVideos = JSON.parse(cachedVideosString);
-    const updatedCachedVideos = cachedVideos.map((video: any) =>
-      video.id === videoId ? { ...video, favorite: !video.favorite } : video
-    );
-
-    // Use AsyncStorage.setItem to update the cached videos
-    await AsyncStorage.setItem('cachedVideos', JSON.stringify(updatedCachedVideos));
-    return true;
-  } catch (error) {
-    console.error('Error toggling favorite status:', error);
-    return false;
-  }
-}
 

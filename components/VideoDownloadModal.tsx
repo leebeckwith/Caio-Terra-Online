@@ -99,7 +99,7 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onCl
       <View style={styles.modalContainer}>
         <View style={[styles.modalContent, styles.shadowProp]}>
           <Text style={styles.modalTitle}>DOWNLOAD VIDEO</Text>
-          <Text style={styles.modalBody}>Select the desired resolution for temporary playback on your device.</Text>
+          <Text style={styles.modalBody}>Select the desired resolution for temporary playback on your device. Your connection affects how quickly the download will proceed.</Text>
           <FlatList
             data={videoData}
             keyExtractor={(_, index) => index.toString()}

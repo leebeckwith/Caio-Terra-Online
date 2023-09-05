@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getCachedVideos, getCredentials} from '../storage';
+import {useSelector} from 'react-redux';
+import {getCredentials} from '../storage';
 
 interface Lesson {
   id: number;
@@ -25,6 +26,7 @@ const CurriculumListing: React.FC = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<Lesson[]>([]);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const cachedVideosData = useSelector((state) => state.cachedVideos);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
@@ -108,11 +110,9 @@ const CurriculumListing: React.FC = () => {
         throw new Error('Network response was not ok.');
       }
       const lessonVideos = await response.json();
-      const cachedVideos = await getCachedVideos();
-
       const mappedLessonVideos = lessonVideos
         .map(video => {
-          const cachedVideo = cachedVideos.find(
+          const cachedVideo = cachedVideosData.find(
             cachedVideo => cachedVideo.id === video.id,
           );
           if (cachedVideo) {

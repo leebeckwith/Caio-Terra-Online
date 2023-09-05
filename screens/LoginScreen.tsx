@@ -12,20 +12,23 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
-import {storeCredentials} from '../storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {setLoading} from '../redux/loadingSlice';
+import {setCachedVideos} from '../redux/cachedVideoSlice';
+import {storeCredentials, getCredentials} from '../storage';
 
-function LoginScreen(): React.JSX.Element {
+const LoginScreen = () => {
   // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  // useNavigation hook to access navigation object
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-  // use API to validate username and password
   const handleLogin = async () => {
+    dispatch(setLoading(true));
     if (!log || !pwd) {
       Alert.alert('Invalid Login', 'Please enter a username and password.');
       return;
@@ -50,7 +53,42 @@ function LoginScreen(): React.JSX.Element {
         if (responseData.user_id) {
           const {user_id, display_name, user_email} = responseData;
           await storeCredentials(log, pwd, user_id, display_name, user_email);
-          navigation.navigate('Main', {screen: 'Videos', initial: false,});
+
+          const response = await fetch(
+            'https://caioterra.com/app-api/get-videos.php',
+          );
+          const data = await response.json();
+
+          const { username, password } = await getCredentials();
+
+          if (username && password) {
+            const params = new URLSearchParams({
+              username,
+              password,
+            });
+
+            const apiUrl =
+              'https://caioterra.com/app-api/get-favorites.php?' +
+              params.toString();
+            const favoritesResponse = await fetch(apiUrl);
+            const favoritesData = await favoritesResponse.json();
+
+            if (Array.isArray(favoritesData)) {
+              const favoriteIds = favoritesData.map(item => Number(item.id));
+
+              const updatedData = data.map(video =>
+                favoriteIds.includes(video.id)
+                  ? { ...video, favorite: true }
+                  : video,
+              );
+              dispatch(setCachedVideos(updatedData));
+              console.log('login: new w/ fav');
+            } else {
+              dispatch(setCachedVideos(data));
+              console.log('login: new w/o fav');
+            }
+            navigation.navigate('Main', {screen: 'Videos', initial: false,});
+          }
         } else if (
           responseData.errors &&
           responseData.errors.incorrect_password
@@ -64,6 +102,8 @@ function LoginScreen(): React.JSX.Element {
       }
     } catch (error) {
       Alert.alert('Error', 'There was an error logging in.');
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

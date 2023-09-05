@@ -2,7 +2,9 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Image, StyleSheet, FlatList, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {getCachedVideos, getCredentials} from '../storage';
+import {setCachedVideos} from '../redux/cachedVideoSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -30,24 +32,24 @@ const VideoFilterviewScreen: React.FC = () => {
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [positionOpen, setPositionOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
+  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const cachedVideos = await getCachedVideos();
+        if (cachedVideosData && cachedVideosData.length > 0) {
+          console.log('vf: cached');
+          setVideos(cachedVideosData);
 
-        if (cachedVideos && cachedVideos.length > 0) {
-          setVideos(cachedVideos);
-
-          // Extract unique techniques, positions, and types from cachedVideos
           const uniqueTechniques: {[id: number]: {id: number; name: string}} =
             {};
           const uniquePositions: {[id: number]: {id: number; name: string}} =
             {};
           const uniqueTypes: {[id: number]: {id: number; name: string}} = {};
 
-          cachedVideos.forEach(video => {
+          cachedVideosData.forEach(video => {
             video.video_techniques.forEach(technique => {
               uniqueTechniques[technique.term_id] = technique;
             });
@@ -69,8 +71,7 @@ const VideoFilterviewScreen: React.FC = () => {
         console.error('Error fetching videos:', error);
       }
     };
-
-    // Call the fetchVideos function when the component mounts
+    
     fetchVideos();
   }, []);
 

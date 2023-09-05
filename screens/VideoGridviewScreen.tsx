@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {getCachedVideos, getCredentials} from '../storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCachedVideos} from '../redux/cachedVideoSlice';
+import {getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -33,6 +35,8 @@ const VideoGridview: React.FC = () => {
     Record<string, VideoData[]>
   >({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
@@ -60,14 +64,14 @@ const VideoGridview: React.FC = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const cachedVideos = await getCachedVideos();
-        if (cachedVideos && cachedVideos.length > 0) {
+        if (cachedVideosData && cachedVideosData.length > 0) {
+          console.log('vg: cached');
           const categorizedByTypes: Record<string, VideoData[]> =
-            categorizeVideosByField(cachedVideos, 'video_types');
+            categorizeVideosByField(cachedVideosData, 'video_types');
           const categorizedByPositions: Record<string, VideoData[]> =
-            categorizeVideosByField(cachedVideos, 'video_positions');
+            categorizeVideosByField(cachedVideosData, 'video_positions');
           const categorizedByTechniques: Record<string, VideoData[]> =
-            categorizeVideosByField(cachedVideos, 'video_techniques');
+            categorizeVideosByField(cachedVideosData, 'video_techniques');
 
           setVideoTypes(categorizedByTypes);
           setVideoPositions(categorizedByPositions);
@@ -220,13 +224,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   videoItemContainer: {
-    marginRight: 10, // Add margin to create consistent spacing
+    marginRight: 10,
     marginTop: 10,
     width: 165,
   },
   thumbnail: {
-    width: 160, // Use percentage to ensure consistent width
-    aspectRatio: 16 / 9, // Maintain a consistent aspect ratio
+    width: 160,
+    aspectRatio: 16 / 9,
     height: 90,
   },
   videoTitle: {
@@ -266,7 +270,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   carouselContainer: {
@@ -287,7 +291,7 @@ const styles = StyleSheet.create({
   },
   categoryName: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   icon: {

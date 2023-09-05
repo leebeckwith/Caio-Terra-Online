@@ -11,9 +11,10 @@ import {
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useFavorites} from '../components/FavoriteContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
-import {getCredentials, getCachedVideos, setCachedVideos, toggleFavoriteInCache} from '../storage';
+import {setCachedVideos} from '../redux/cachedVideoSlice';
+import {getCredentials} from '../storage';
 
 interface VideoData {
   id: number;
@@ -27,16 +28,16 @@ interface VideoData {
   video_techniques: {term_id: number; name: string}[];
 }
 
-// @ts-ignore
 const VideoListing = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const dispatch = useDispatch();
   const [showFavoritesButton, setShowFavoritesButton] =
     useState<boolean>(false);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
+  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const dispatch = useDispatch();
   const {favorites, toggleFavorite} = useFavorites();
   const {openVideoModal} = useVideoModal();
 
@@ -52,49 +53,11 @@ const VideoListing = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        dispatch(setLoading(true));
-        const cachedVideos = await getCachedVideos();
-
-        // If cached videos exist, set them directly
-        if (cachedVideos && cachedVideos.length > 0) {
-          setVideos(cachedVideos);
-          setFilteredVideos(cachedVideos);
-        } else {
-          // Make the API call and get the videos data
-          const response = await fetch(
-            'https://caioterra.com/app-api/get-videos.php',
-          );
-          const data = await response.json();
-
-          const { username, password } = await getCredentials();
-
-          if (username && password) {
-            const params = new URLSearchParams({
-              username,
-              password,
-            });
-
-            const apiUrl =
-              'https://caioterra.com/app-api/get-favorites.php?' +
-              params.toString();
-            const favoritesResponse = await fetch(apiUrl);
-            const favoritesData = await favoritesResponse.json();
-
-            if (Array.isArray(favoritesData)) {
-              const favoriteIds = favoritesData.map(item => item.id);
-
-              const updatedData = data.map(video =>
-                favoriteIds.includes(video.id.toString())
-                  ? { ...video, favorite: true }
-                  : video,
-              );
-
-              setVideos(updatedData);
-              setFilteredVideos(updatedData);
-
-              await setCachedVideos(updatedData);
-            }
-          }
+        if (cachedVideosData && cachedVideosData.length > 0) {
+          dispatch(setCachedVideos(cachedVideosData));
+          setVideos(cachedVideosData);
+          setFilteredVideos(cachedVideosData);
+          console.log('vl: cached');
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -103,7 +66,6 @@ const VideoListing = () => {
       }
     };
 
-    // Call the fetchVideos function when the component mounts
     fetchVideos();
   }, []);
 
@@ -116,7 +78,7 @@ const VideoListing = () => {
 
   const handleFavoritePress = async (id: number) => {
     try {
-      const newFavoriteStatus = Number(favorites?.includes(id) ? 0: 1);
+      const newFavoriteStatus = favorites?.includes(id) ? 0: 1;
       const {username, password} = await getCredentials();
 
       if (username && password) {
@@ -131,11 +93,11 @@ const VideoListing = () => {
         const response = await fetch(apiStr);
 
         if (response.ok) {
-          await toggleFavoriteInCache(id);
           toggleFavorite(id);
           const updatedVideos = videos.map(video =>
             video.id === id ? {...video, favorite: !video.favorite} : video,
           );
+          dispatch(setCachedVideos(updatedVideos));
           setVideos(updatedVideos);
           setFilteredVideos(updatedVideos);
         }
@@ -150,7 +112,7 @@ const VideoListing = () => {
     setFilteredVideos(prevFilteredVideos =>
       showFavoritesFilter
         ? videos
-        : prevFilteredVideos.filter(video => favorites.includes(Number(video.id))),
+        : prevFilteredVideos.filter(video => favorites.includes(video.id)),
     );
   };
 

@@ -12,7 +12,7 @@ import VideoDownloadModal from '../components/VideoDownloadModal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 import {useFavorites} from '../components/FavoriteContext';
-import {getCredentials, toggleFavoriteInCache} from '../storage';
+import {getCredentials} from '../storage';
 
 interface VideoNote {
   id: number;
@@ -110,7 +110,6 @@ const VideoPlayer = ({route}: {route: any}) => {
   const handleNoteSubmit = async () => {
     const formattedUserId = Number(userId);
     const formattedVideoId = Number(videoId);
-    //const encodedNoteContent = encodeURIComponent(noteContent);
     const formattedTimestamp = Number(formatTimeForSubmission(currentTime));
     const newNote = {
       id: 0,
@@ -157,7 +156,6 @@ const VideoPlayer = ({route}: {route: any}) => {
         if (response.ok) {
           toggleFavorite(videoId);
           setIsFavorite(!isFavorite);
-          await toggleFavoriteInCache(videoId);
         }
       }
     } catch (error) {

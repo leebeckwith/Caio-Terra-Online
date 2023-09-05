@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
-import {getCachedVideos, getCredentials} from '../storage';
+import {useSelector} from 'react-redux';
+import {getCredentials} from '../storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface VideoData {
@@ -16,6 +17,7 @@ const LessonPlansListing: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
+  const cachedVideosData = useSelector((state) => state.cachedVideos);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
@@ -32,9 +34,9 @@ const LessonPlansListing: React.FC = () => {
         if (Array.isArray(apiData)) {
           setVideos(apiData);
           setFilteredVideos(apiData);
-          console.log('Fetched video data from API');
+          //console.log('Fetched video data from API');
         } else {
-          console.log('API returned invalid data.');
+          //console.log('API returned invalid data.');
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -63,8 +65,7 @@ const LessonPlansListing: React.FC = () => {
   const fetchAndSetPlanVideos = async (id: number) => {
     const planVideoDetails = await fetchPlanVideoDetailsById(id);
     const newIDs = planVideoDetails.map((item: any) => item.id);
-    const cachedVideos = await getCachedVideos();
-    const mappedCachedVideos = cachedVideos.filter(item =>
+    const mappedCachedVideos = cachedVideosData.filter(item =>
       newIDs.includes(item.id),
     );
     setMappedVideos(mappedCachedVideos);
