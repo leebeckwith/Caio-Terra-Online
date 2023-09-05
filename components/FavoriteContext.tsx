@@ -1,42 +1,39 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
-import {getCachedVideos} from '../storage';
+import {useSelector, useDispatch} from 'react-redux';
+import {toggleFavorite, updateFavorites} from '../redux/favoriteSlice';
 
-const FavoriteContext = createContext();
+interface FavoriteContextProps {
+  favorites: string[];
+  toggleFavorite: (videoId: number) => void;
+}
 
-export const FavoriteProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]);
+const FavoriteContext = createContext<FavoriteContextProps | undefined>(undefined);
+
+export const FavoriteProvider = ({children}) => {
+  const cachedVideos = useSelector((state) => state.cachedVideos);
+  const favorites = useSelector((state: any) => state.favorites);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const initializeFavorites = async () => {
-      try {
-        const cachedVideos = await getCachedVideos();
-        const favoriteIds = cachedVideos.filter(video => video.favorite).map(video => video.id);
-        setFavorites(favoriteIds);
-      } catch (error) {
-        console.error('Error initializing favorites:', error);
-      }
-    };
+    const favoriteIds = cachedVideos.filter(video => video.favorite).map(video => video.id);
+    dispatch(updateFavorites(favoriteIds));
+  }, [cachedVideos, dispatch]);
 
-    initializeFavorites();
-    //console.log(favorites);
-  }, []);
-
-  // Add a function to toggle the favorite state
-  const toggleFavorite = (videoId) => {
-    setFavorites((prevFavorites) => {
-      if (prevFavorites.includes(videoId)) {
-        return prevFavorites.filter((id) => id !== videoId);
-      } else {
-        return [...prevFavorites, videoId];
-      }
-    });
+  const toggleFavoriteHandler = (videoId: number) => {
+    dispatch(toggleFavorite(videoId));
   };
 
   return (
-    <FavoriteContext.Provider value={{ favorites, toggleFavorite }}>
+    <FavoriteContext.Provider value={{ favorites, toggleFavorite: toggleFavoriteHandler }}>
       {children}
     </FavoriteContext.Provider>
   );
 };
 
-export const useFavorites = () => useContext(FavoriteContext);
+export const useFavorites = (): FavoriteContextProps => {
+  const context = useContext(FavoriteContext);
+  if (context === undefined) {
+    throw new Error('useFavorites must be used within a FavoriteProvider');
+  }
+  return context;
+};

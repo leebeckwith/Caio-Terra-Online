@@ -2,15 +2,17 @@ import React from 'react';
 import {Button, Alert, ScrollView, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
-import {clearCredentials, clearCachedVideos} from '../storage';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {clearCredentials} from '../storage';
+import {useDispatch} from 'react-redux';
+import {clearCachedVideos} from '../redux/cachedVideoSlice';
 
 function AccountScreen(): React.JSX.Element {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
       await clearCredentials();
-      await clearCachedVideos();
+      dispatch(clearCachedVideos());
       navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out:', error);
@@ -35,7 +37,7 @@ function AccountScreen(): React.JSX.Element {
             <Cell
               title="Log out"
               titleTextColor="#007AFF"
-              onPress={() => handleLogout()}
+              onPress={handleLogout}
             />
           </Section>
         </TableView>
