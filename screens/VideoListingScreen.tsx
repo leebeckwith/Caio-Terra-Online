@@ -160,6 +160,7 @@ const VideoListing = () => {
           placeholder={`Search ${filteredVideos.length} videos...`}
           placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           onChangeText={handleSearch}
+          autoCapitalize='none'
           value={searchTerm}
         />
         {showFavoritesButton && (

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Alert, View, Text, TextInput, Image, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
@@ -19,6 +19,7 @@ const LessonPlansListing: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
   const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const flatListRef = useRef<FlatList | null>(null);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
@@ -51,7 +52,11 @@ const LessonPlansListing: React.FC = () => {
       video.title.toLowerCase().includes(text.toLowerCase()),
     );
     setSearchTerm(text);
-    //setMappedVideos(filtered);
+    setMappedVideos([]);
+    setFilteredVideos(filtered);
+    if (filtered.length > 0 && flatListRef.current) {
+      flatListRef.current.scrollToIndex({ index: 0 });
+    }
   };
 
   const fetchPlanVideoDetailsById = async (id: number) => {
@@ -121,16 +126,15 @@ const LessonPlansListing: React.FC = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder={`Search ${filteredVideos.length} lesson plans...`}
+          placeholder={`Search ${filteredVideos.length} lesson plans (click for details)...`}
           placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           onChangeText={handleSearch}
+          autoCapitalize='none'
           value={searchTerm}
         />
       </View>
-      {/*<View>*/}
-      {/*  <Text style={styles.categoryName}>SWIPE AND CLICK FOR DETAILS</Text>*/}
-      {/*</View>*/}
       <FlatList
+        ref={(ref) => (flatListRef.current = ref)}
         horizontal
         data={filteredVideos}
         style={styles.carouselContainer}
