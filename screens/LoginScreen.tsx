@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Modal,
@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
+import Loader from '../components/Loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
@@ -23,9 +25,26 @@ const LoginScreen = () => {
   const [pwd, setPassword] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const navigation = useNavigation();
+  const loading = useSelector(state => state.loader.value);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getKeepSignedIn = async () => {
+      try {
+        const keepSignedIn = await AsyncStorage.getItem('keepSignedIn');
+        if (keepSignedIn !== null) {
+          setIsEnabled(JSON.parse(keepSignedIn));
+        }
+      } catch (error) {
+        console.error('Error reading "Keep me signed in" state: ', error);
+        Alert.alert('Error', `Error reading logged in state: ${error}`);
+      }
+    };
+
+    getKeepSignedIn();
+  }, []);
 
   const handleLogin = async () => {
     dispatch(setLoading(true));
@@ -51,6 +70,7 @@ const LoginScreen = () => {
 
       if (response.ok) {
         if (responseData.user_id) {
+          setIsSignedIn(true);
           const {user_id, display_name, user_email} = responseData;
           await storeCredentials(log, pwd, user_id, display_name, user_email);
 
@@ -97,8 +117,6 @@ const LoginScreen = () => {
         } else {
           Alert.alert('Error', 'Invalid username or password.');
         }
-      } else {
-        Alert.alert('Error', 'There was an error logging in.');
       }
     } catch (error) {
       Alert.alert('Error', 'There was an error logging in.');
@@ -106,13 +124,15 @@ const LoginScreen = () => {
       dispatch(setLoading(false));
     }
   };
+  const toggleSwitch = async () => {
+    setIsEnabled((previousState) => !previousState);
 
-  const handleBrowse = () => {
-    // @ts-ignore
-    navigation.navigate('Main', {
-      screen: 'Videos',
-      initial: false,
-    });
+    try {
+      await AsyncStorage.setItem('keepSignedIn', JSON.stringify(!isEnabled));
+    } catch (error) {
+      console.error('Error storing "Keep me signed in" state: ', error);
+      Alert.alert('Error', `There was an error storing your login: ${error}`);
+    }
   };
 
   return (
@@ -190,13 +210,14 @@ const LoginScreen = () => {
             style={[styles.button, styles.shadowProp]}>
             <Text style={styles.label}>SUBSCRIBER LOGIN</Text>
           </Pressable>
-          {/*<Pressable*/}
-          {/*  onPress={handleBrowse}*/}
-          {/*  style={[styles.button, styles.secondary, styles.shadowProp]}>*/}
-          {/*  <Text style={styles.label}>BROWSE AS GUEST</Text>*/}
-          {/*</Pressable>*/}
         </View>
       </View>
+      <Modal
+        visible={loading}
+        transparent
+        animationType="none">
+        <Loader />
+      </Modal>
     </SafeAreaView>
   );
 }

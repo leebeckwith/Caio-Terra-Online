@@ -23,8 +23,8 @@ function App(): React.JSX.Element {
         <VideoModalProvider>
           <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="Login" component={LoginManagerScreen} />
-              <Stack.Screen name="Main" component={MainManagerScreen} />
+              <Stack.Screen name="Login" component={LoginManagerScreen} options={{ gestureEnabled: false }}/>
+              <Stack.Screen name="Main" component={MainManagerScreen} options={{ gestureEnabled: false }}/>
             </Stack.Navigator>
             <VideoPlayerModal />
           </NavigationContainer>

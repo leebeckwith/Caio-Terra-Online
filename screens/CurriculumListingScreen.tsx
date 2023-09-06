@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
+import {Alert, Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
@@ -46,6 +46,7 @@ const CurriculumListing: React.FC = () => {
         setCategories(sortedCategories);
       } catch (error) {
         console.error('Error fetching curriculum data:', error);
+        Alert.alert('Error', `There was an error getting the curriculum details: ${error}`);
       }
     };
 
@@ -75,6 +76,7 @@ const CurriculumListing: React.FC = () => {
         setIsExpanded(true);
       } catch (error) {
         console.error('Error fetching lesson items:', error);
+        Alert.alert('Error', `There was an error getting the items: ${error}`);
       }
     } else {
       setIsExpanded(false);
@@ -82,7 +84,6 @@ const CurriculumListing: React.FC = () => {
   };
 
   const sortCategories = (categoryArray: Category[]): Category[] => {
-    // Sort categories by name
     const sortedCategories = categoryArray.sort((a, b) =>
       a.name.localeCompare(b.name),
     );
@@ -137,6 +138,7 @@ const CurriculumListing: React.FC = () => {
       );
     } catch (error) {
       console.error('Error fetching lesson items:', error);
+      Alert.alert('Error', `There was an error getting the items: ${error}`);
     }
   };
 
@@ -227,7 +229,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    paddingTop: 10,
   },
   title: {
     color: '#fff',
@@ -255,7 +256,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   lessonItemContainer: {
-    marginBottom: 10,
     marginLeft: 10,
     marginTop: 10,
   },
@@ -264,14 +264,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
-    marginTop: 0,
     marginBottom: 10,
     marginLeft: 10,
   },
   lessonThumb: {
     width: '100%',
     height: 150,
-    borderRadius: 5,
     marginBottom: 10,
   },
   subLessonThumbnail: {
