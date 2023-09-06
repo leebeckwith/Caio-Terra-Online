@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, FlatList, StyleSheet, Pressable} from 'react-native';
+import {Alert, View, Text, TextInput, Image, FlatList, StyleSheet, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
@@ -16,6 +16,7 @@ interface VideoData {
 const LessonPlansListing: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
   const cachedVideosData = useSelector((state) => state.cachedVideos);
   const {openVideoModal} = useVideoModal();
@@ -34,17 +35,24 @@ const LessonPlansListing: React.FC = () => {
         if (Array.isArray(apiData)) {
           setVideos(apiData);
           setFilteredVideos(apiData);
-          //console.log('Fetched video data from API');
         } else {
-          //console.log('API returned invalid data.');
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
+        Alert.alert('Error', `There was an error getting the lesson plans: ${error}`);
       }
     };
 
     fetchVideos();
   }, []);
+
+  const handleSearch = (text: string) => {
+    const filtered = videos.filter(video =>
+      video.title.toLowerCase().includes(text.toLowerCase()),
+    );
+    setSearchTerm(text);
+    //setMappedVideos(filtered);
+  };
 
   const fetchPlanVideoDetailsById = async (id: number) => {
     try {
@@ -58,6 +66,7 @@ const LessonPlansListing: React.FC = () => {
       return apiData;
     } catch (error) {
       console.error('Error fetching plan video details:', error);
+      Alert.alert('Error', `There was an error getting the plans details: ${error}`);
       return [];
     }
   };
@@ -109,9 +118,18 @@ const LessonPlansListing: React.FC = () => {
 
   return (
     <View style={styles.videoItemContainer}>
-      <View>
-        <Text style={styles.categoryName}>SWIPE AND CLICK FOR DETAILS</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder={`Search ${filteredVideos.length} lesson plans...`}
+          placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+          onChangeText={handleSearch}
+          value={searchTerm}
+        />
       </View>
+      {/*<View>*/}
+      {/*  <Text style={styles.categoryName}>SWIPE AND CLICK FOR DETAILS</Text>*/}
+      {/*</View>*/}
       <FlatList
         horizontal
         data={filteredVideos}
@@ -140,19 +158,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    padding: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   searchInput: {
     height: 40,
     color: '#050505',
     backgroundColor: '#fff',
-    borderRadius: 8,
-    marginBottom: 10,
-    marginTop: 10,
+    marginRight: 8,
     paddingHorizontal: 10,
+    width: '100%',
   },
   videoItemContainer: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   title: {
     color: '#fff',
@@ -193,7 +213,7 @@ const styles = StyleSheet.create({
     height: 250,
   },
   carouselContentContainer: {
-    paddingVertical: 16,
+    paddingVertical: 10,
   },
   carouselContent: {
     height: '100%',

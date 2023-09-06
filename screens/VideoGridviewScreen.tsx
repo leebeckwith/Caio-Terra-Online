@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {
+  Alert,
   View,
   Text,
   Image,
@@ -79,6 +80,7 @@ const VideoGridview: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
+        Alert.alert('Error', `There was an error getting the videos: ${error}`);
       } finally {
         setExpandedCategory('types');
       }

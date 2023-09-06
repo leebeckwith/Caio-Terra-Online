@@ -71,7 +71,7 @@ const VideoFilterviewScreen: React.FC = () => {
         console.error('Error fetching videos:', error);
       }
     };
-    
+
     fetchVideos();
   }, []);
 
@@ -152,9 +152,9 @@ const VideoFilterviewScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.filterContainer}>
         <DropDownPicker
-          placeholder="Select position"
+          placeholder="SELECT POSITION"
           listMode="MODAL"
-          modalTitle="Select position"
+          modalTitle="SELECT POSITION"
           modalProps={{
             animationType: 'fade',
           }}
@@ -169,9 +169,9 @@ const VideoFilterviewScreen: React.FC = () => {
           style={styles.dropDownContainer}
         />
         <DropDownPicker
-          placeholder="Select technique"
+          placeholder="SELECT TECHNIQUE"
           listMode="MODAL"
-          modalTitle="Select technique"
+          modalTitle="SELECT TECHNIQUE"
           modalProps={{
             animationType: 'fade',
           }}
@@ -186,9 +186,9 @@ const VideoFilterviewScreen: React.FC = () => {
           style={styles.dropDownContainer}
         />
         <DropDownPicker
-          placeholder="Select type"
+          placeholder="SELECT TYPE"
           listMode="MODAL"
-          modalTitle="Select type"
+          modalTitle="SELECT TYPE"
           modalProps={{
             animationType: 'fade',
           }}

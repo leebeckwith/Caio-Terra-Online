@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {
+  Alert,
   View,
   Text,
   FlatList,
@@ -61,6 +62,7 @@ const VideoListing = () => {
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
+        Alert.alert('Error', `There was an error getting the content: ${error}`);
       } finally {
         dispatch(setLoading(false));
       }
@@ -104,6 +106,7 @@ const VideoListing = () => {
       }
     } catch (error) {
       console.error('Error toggling favorite status:', error);
+      Alert.alert('Error', `There was an error toggling favorite status: ${error}`);
     }
   };
 
@@ -117,7 +120,6 @@ const VideoListing = () => {
   };
 
   const handleSearch = (text: string) => {
-    // Filter videos based on the search term
     const filtered = videos.filter(video =>
       video.title.toLowerCase().includes(text.toLowerCase()),
     );

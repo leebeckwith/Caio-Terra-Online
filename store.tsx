@@ -1,4 +1,4 @@
-import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import loadingReducer from './redux/loadingSlice';
 import cachedVideosReducer from './redux/cachedVideoSlice';
 import favoriteReducer from './redux/favoriteSlice';

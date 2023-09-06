@@ -1,8 +1,6 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
-import {Modal, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Loader from '../components/Loader';
 import VideoManagerScreen from './VideoManagerScreen';
 import AccountManagerScreen from './AccountManagerScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
@@ -12,9 +10,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Tab = createBottomTabNavigator();
 
 function MainManagerScreen() {
-  // @ts-ignore
-  const loading = useSelector(state => state.loader.value);
-
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.tabContainer}>
@@ -27,19 +22,10 @@ function MainManagerScreen() {
             headerShown: false,
             tabBarStyle: {
               backgroundColor: 'rgba(58, 58, 58, 1)',
-              ...Platform.select({
-                ios: {
-                  paddingTop: 5,
-                  paddingBottom: 10,
-                  marginBottom: 0,
-                  height: 60,
-                },
-                android: {
-                  paddingTop: 5,
-                  paddingBottom: 5,
-                  marginBottom: 0,
-                },
-              }),
+              paddingTop: 2,
+              paddingBottom: 8,
+              height: 60,
+              marginBottom: 0,
             },
             //tabBarActiveBackgroundColor: 'rgba(255, 255, 255, 0.2)',
             tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.4)',
@@ -50,7 +36,7 @@ function MainManagerScreen() {
             component={VideoManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="video-camera" color={color} size={size} />
+                <Icon name="film" color={color} size={22} />
               ),
             }}
           />
@@ -59,7 +45,7 @@ function MainManagerScreen() {
             component={LessonPlansListingScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="tasks" color={color} size={size} />
+                <Icon name="leanpub" color={color} size={size} />
               ),
             }}
           />
@@ -83,12 +69,7 @@ function MainManagerScreen() {
           />
         </Tab.Navigator>
       </View>
-      <Modal
-        visible={loading} // Show the Loader component when loading state is true
-        transparent
-        animationType="none">
-        <Loader />
-      </Modal>
+
     </SafeAreaView>
 
   );

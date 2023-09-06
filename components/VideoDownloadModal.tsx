@@ -39,6 +39,7 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onCl
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching download options:', error);
+        Alert.alert('Error', `There was an error getting the download options: ${error}`);
       }
     };
 

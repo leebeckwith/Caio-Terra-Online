@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {
+  Alert,
   View,
   StyleSheet,
   Text,
@@ -48,6 +49,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       setNotes(data);
     } catch (error) {
       console.error('Error fetching video notes:', error);
+      Alert.alert('Error', `There was an error getting the notes for this video: ${error}`);
     }
   };
 
@@ -71,6 +73,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       setSelectedVideo(videoData.files[3].link);
     } catch (error) {
       console.error('Error fetching video from Vimeo API:', error);
+      Alert.alert('Error', `There was an error getting the video: ${error}`);
       setSelectedVideo(null);
     }
   };
@@ -98,6 +101,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error fetching favorite status:', error);
+      Alert.alert('Error', `There was an error getting the favorite status: ${error}`);
     }
   };
 
@@ -135,6 +139,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error adding video note:', error);
+      Alert.alert('Error', `There was an error adding the note: ${error}`);
     }
   };
 
@@ -160,6 +165,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error toggling favorite status:', error);
+      Alert.alert('Error', `There was an error toggling favorite status: ${error}`);
     }
   };
 
@@ -183,6 +189,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error deleting video note:', error);
+      Alert.alert('Error', `There was an error deleting the note: ${error}`);
     }
   };
 
