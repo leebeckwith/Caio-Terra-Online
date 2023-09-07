@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {
+  Dimensions,
   Alert,
   View,
   StyleSheet,
@@ -8,6 +9,9 @@ import {
   Pressable,
   FlatList,
 } from 'react-native';
+import Orientation, {
+  useDeviceOrientationChange,
+} from 'react-native-orientation-locker';
 import Video from 'react-native-video';
 import VideoDownloadModal from '../components/VideoDownloadModal';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -38,6 +42,10 @@ const VideoPlayer = ({route}: {route: any}) => {
   const playerRef = useRef(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentOrientation, setCurrentOrientation] = useState<string>(
+    Orientation.getInitialOrientation(),
+  );
+  const [isLandscape, setIsLandscape] = useState(false);
   const {favorites, toggleFavorite} = useFavorites();
 
   const fetchVideoNotes = async () => {
@@ -49,7 +57,10 @@ const VideoPlayer = ({route}: {route: any}) => {
       setNotes(data);
     } catch (error) {
       console.error('Error fetching video notes:', error);
-      Alert.alert('Error', `There was an error getting the notes for this video: ${error}`);
+      Alert.alert(
+        'Error',
+        `There was an error getting the notes for this video: ${error}`,
+      );
     }
   };
 
@@ -101,11 +112,24 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error fetching favorite status:', error);
-      Alert.alert('Error', `There was an error getting the favorite status: ${error}`);
+      Alert.alert(
+        'Error',
+        `There was an error getting the favorite status: ${error}`,
+      );
     }
   };
 
+  useDeviceOrientationChange(o => {
+    setCurrentOrientation(o);
+    if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
+      setIsLandscape(true);
+    } else {
+      setIsLandscape(false);
+    }
+  });
+
   useEffect(() => {
+    setCurrentOrientation(Orientation.getInitialOrientation());
     getVimeoVideo();
     fetchVideoNotes();
     getFavoriteStatus();
@@ -165,7 +189,10 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     } catch (error) {
       console.error('Error toggling favorite status:', error);
-      Alert.alert('Error', `There was an error toggling favorite status: ${error}`);
+      Alert.alert(
+        'Error',
+        `There was an error toggling favorite status: ${error}`,
+      );
     }
   };
 
@@ -216,12 +243,16 @@ const VideoPlayer = ({route}: {route: any}) => {
   const NoteItem: React.FC<{item: VideoNote}> = React.memo(({item}) => {
     return (
       <View style={styles.noteItem}>
-        <Pressable style={styles.button} onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
+        <Pressable
+          style={styles.button}
+          onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
           <Text style={styles.noteTimestamp}>
             {formatTime(item.note_playback_timestamp)}
           </Text>
         </Pressable>
-        <Pressable style={[styles.inlineButton]} onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
+        <Pressable
+          style={[styles.inlineButton]}
+          onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
           <Text style={styles.noteContent}>{item.note_text}</Text>
         </Pressable>
         <View style={styles.deleteButtonContainer}>
@@ -257,14 +288,17 @@ const VideoPlayer = ({route}: {route: any}) => {
               ref={playerRef}
               source={{uri: selectedVideo}}
               style={styles.videoPlayer}
-              resizeMode="contain"
+              resizeMode="cover"
               controls={true}
               paused={isPaused}
+              fullscreen={isLandscape}
               onProgress={onProgress}
             />
             <View style={styles.wrapper}>
               <View style={[styles.iconsLeft, styles.iconContainer]}>
-                <Pressable style={[styles.button, styles.inactive]} onPress={openDownloadModal}>
+                <Pressable
+                  style={[styles.button, styles.inactive]}
+                  onPress={openDownloadModal}>
                   <Icon
                     name="download"
                     color="white"
@@ -430,6 +464,11 @@ const styles = StyleSheet.create({
   notesListContainer: {
     height: 160,
     marginBottom: 20,
+  },
+  fullscreenVideo: {
+    backgroundColor: 'black',
+    ...StyleSheet.absoluteFill,
+    elevation: 1,
   },
 });
 
