@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {
-  Dimensions,
   Alert,
   View,
   StyleSheet,
@@ -46,7 +45,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     Orientation.getInitialOrientation(),
   );
   const [isLandscape, setIsLandscape] = useState(false);
-  const {favorites, toggleFavorite} = useFavorites();
+  const {toggleFavorite} = useFavorites();
 
   const fetchVideoNotes = async () => {
     try {
@@ -122,6 +121,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   useDeviceOrientationChange(o => {
     setCurrentOrientation(o);
     if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
+      console.log('full screen video');
       setIsLandscape(true);
     } else {
       setIsLandscape(false);
@@ -291,7 +291,6 @@ const VideoPlayer = ({route}: {route: any}) => {
               resizeMode="cover"
               controls={true}
               paused={isPaused}
-              fullscreen={isLandscape}
               onProgress={onProgress}
             />
             <View style={styles.wrapper}>
@@ -357,8 +356,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     padding: 10,
-    height: 600,
-    borderColor: 'rgba(255, 255, 255, 0.4)',
+    maxHeight: '100%',
+    minHeight: 600,
+    borderColor: '#fff',
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
@@ -463,12 +463,6 @@ const styles = StyleSheet.create({
   },
   notesListContainer: {
     height: 160,
-    marginBottom: 20,
-  },
-  fullscreenVideo: {
-    backgroundColor: 'black',
-    ...StyleSheet.absoluteFill,
-    elevation: 1,
   },
 });
 
