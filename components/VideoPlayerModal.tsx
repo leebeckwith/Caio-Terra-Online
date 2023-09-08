@@ -14,7 +14,7 @@ const VideoPlayerModal = () => {
       onRequestClose={() => closeVideoModal}>
       <Pressable style={styles.modalBackground} onPress={closeVideoModal}>
         <Pressable>
-          <View style={styles.modalContent}>
+          <View style={[styles.modalContent, styles.shadowPropBottom]}>
             <VideoPlayer route={{params: selectedVideoInfo}} />
           </View>
         </Pressable>
@@ -28,13 +28,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+    backgroundColor: '#666',
   },
   modalContent: {
     backgroundColor: 'transparent',
     width: '100%',
     maxHeight: '100%',
     flexDirection: 'row',
+  },
+  shadowPropBottom: {
+    shadowColor: '#000',
+    shadowOffset: {width: -3, height: 3},
+    shadowOpacity: 0.6,
+    shadowRadius: 5,
   },
 });
 

@@ -2,7 +2,6 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Image, StyleSheet, FlatList, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {setCachedVideos} from '../redux/cachedVideoSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
 
@@ -17,7 +16,7 @@ interface VideoData {
   video_techniques: {term_id: number; name: string}[];
 }
 
-const VideoFilterviewScreen: React.FC = () => {
+const VideoFilterViewScreen: React.FC = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [techniques, setTechniques] = useState<{id: number; name: string}[]>(
@@ -32,7 +31,7 @@ const VideoFilterviewScreen: React.FC = () => {
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [positionOpen, setPositionOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
-  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const cachedVideosData = useSelector(state => state.cachedVideos);
   const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
@@ -300,4 +299,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoFilterviewScreen;
+export default VideoFilterViewScreen;

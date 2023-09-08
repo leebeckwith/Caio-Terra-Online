@@ -1,8 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, View, Text, Modal, Pressable, StyleSheet} from 'react-native'
+import {
+  Alert,
+  FlatList,
+  View,
+  Text,
+  Modal,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
-import RNFS from 'react-native-fs';
+import {
+  FileSaveOptions,
+  startDownloadAppSave,
+} from 'react-native-ios-files-app-save';
 
 interface VideoDownloadModalProps {
   isVisible: boolean;
@@ -20,68 +31,82 @@ interface VideoDownloadItem {
   size_short: string;
 }
 
-const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onClose, vimeoId }) => {
+const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
+  isVisible,
+  onClose,
+  vimeoId,
+}) => {
   const [videoData, setVideoData] = useState<VideoDownloadItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedDownloadLink, setSelectedDownloadLink] = useState<string | null>(null);
-
+  const [selectedDownloadLink, setSelectedDownloadLink] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     const fetchDownloadOptions = async () => {
       try {
         const response = await fetch(
-          `https://caioterra.com/app-api/get-video-download-links.php?id=${vimeoId}`
+          `https://caioterra.com/app-api/get-video-download-links.php?id=${vimeoId}`,
         );
         const data = await response.json();
-        const filteredVideoData = data.filter((item) => item.rendition !== 'adaptive').sort((a, b) => b.size - a.size);
+        const filteredVideoData = data
+          .filter(item => item.rendition !== 'adaptive')
+          .sort((a, b) => b.size - a.size);
 
         setVideoData(filteredVideoData);
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching download options:', error);
-        Alert.alert('Error', `There was an error getting the download options: ${error}`);
+        Alert.alert(
+          'Error',
+          `There was an error getting the download options: ${error}`,
+        );
       }
     };
 
     fetchDownloadOptions();
   }, []);
 
-  const handleDownload = async(downloadLink: string, resolution: string) => {
-    const downloadDest = `${RNFS.DocumentDirectoryPath}/${vimeoId}_${resolution}.mp4`;
+  const handleDownload = async (downloadLink: string, resolution: string) => {
     setSelectedDownloadLink(downloadLink);
-    console.log(downloadDest);
-    RNFS.downloadFile({
-      fromUrl: downloadLink,
-      toFile: downloadDest,
-      //background: true,
-      discretionary: true,
-      // progress: (res: RNFS.DownloadProgressCallbackResult) => {
-      //   const progress: number = (res.bytesWritten / res.contentLength) * 100;
-      //   console.log(`Progress: ${progress.toFixed(2)}%`);
-      // },
-    }).promise.then((response: RNFS.DownloadResult) => {
-      //console.log('File downloaded!', response);
-      Alert.alert('File Downloaded', `Your file, ${vimeoId}_${resolution}.mp4, downloaded successfully.`);
-      setSelectedDownloadLink(null);
-    }).catch((err: Error) => {
-      //console.log('Download error:', err);
-      Alert.alert('File Downloaded Error', `Your file didn't download successfully: ${err}`);
-      setSelectedDownloadLink(null);
-    });
+    let options: FileSaveOptions = {
+      url: downloadLink,
+      // isBase64: true,
+      fileName: `${vimeoId}_${resolution}.mp4`,
+    };
+
+    startDownloadAppSave(options)
+      .then(() => {
+        //const fileSaveSuccess = res as FileSaveSuccess;
+        Alert.alert(
+          'File Downloaded',
+          `Your file, ${vimeoId}_${resolution}.mp4, downloaded successfully.`,
+        );
+        setSelectedDownloadLink(null);
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
   };
 
-  const renderVideoItem = ({ item }: { item: VideoDownloadItem }) => (
+  const renderVideoItem = ({item}: {item: VideoDownloadItem}) => (
     <View>
-      <Pressable style={[styles.videoDownloadItem, selectedDownloadLink === item.link ? styles.active : null]} onPress={() => handleDownload(item.link, item.rendition)}>
-        <Text style={styles.buttonBody}>{item.rendition} ({item.width}x{item.height}) - {item.size_short}</Text>
+      <Pressable
+        style={[
+          styles.videoDownloadItem,
+          selectedDownloadLink === item.link ? styles.active : null,
+        ]}
+        onPress={() => handleDownload(item.link, item.rendition)}>
+        <Text style={styles.buttonBody}>
+          {item.rendition} ({item.width}x{item.height}) - {item.size_short}
+        </Text>
         {selectedDownloadLink === item.link && (
           <Animatable.View
             animation="rotate"
             easing="linear"
             iterationCount="infinite"
             duration={1000}
-            style={styles.spinnerIconContainer}
-          >
+            style={styles.spinnerIconContainer}>
             <Icon name="spinner" color="white" size={20} style={styles.icons} />
           </Animatable.View>
         )}
@@ -90,9 +115,7 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onCl
   );
 
   if (isLoading) {
-    return (
-      <></>
-    );
+    return <></>;
   }
 
   return (
@@ -100,14 +123,19 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({ isVisible, onCl
       <View style={styles.modalContainer}>
         <View style={[styles.modalContent, styles.shadowProp]}>
           <Text style={styles.modalTitle}>DOWNLOAD VIDEO</Text>
-          <Text style={styles.modalBody}>Select the desired resolution for temporary playback on your device. Your connection affects how quickly the download will proceed.</Text>
+          <Text style={styles.modalBody}>
+            Select the desired resolution for temporary playback on your device.
+            Your connection affects how quickly the download will proceed.
+          </Text>
           <FlatList
             data={videoData}
             keyExtractor={(_, index) => index.toString()}
             renderItem={renderVideoItem}
           />
-          <Pressable onPress={onClose} style={[styles.closeButton, styles.shadowProp]}>
-            <Text style={styles.buttonBody}>CANCEL</Text>
+          <Pressable
+            onPress={onClose}
+            style={[styles.closeButton, styles.shadowProp]}>
+            <Text style={styles.buttonBody}>CLOSE</Text>
           </Pressable>
         </View>
       </View>

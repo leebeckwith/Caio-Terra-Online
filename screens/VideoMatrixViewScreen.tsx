@@ -12,7 +12,6 @@ import {
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCachedVideos} from '../redux/cachedVideoSlice';
 import {getCredentials} from '../storage';
 
 interface VideoData {
@@ -27,7 +26,7 @@ interface VideoData {
   video_techniques: {term_id: number; name: string}[];
 }
 
-const VideoGridview: React.FC = () => {
+const VideoMatrixView: React.FC = () => {
   const [videoTypes, setVideoTypes] = useState<Record<string, VideoData[]>>({});
   const [videoPositions, setVideoPositions] = useState<
     Record<string, VideoData[]>
@@ -36,7 +35,7 @@ const VideoGridview: React.FC = () => {
     Record<string, VideoData[]>
   >({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
-  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const cachedVideosData = useSelector(state => state.cachedVideos);
   const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
@@ -66,7 +65,7 @@ const VideoGridview: React.FC = () => {
     const fetchVideos = async () => {
       try {
         if (cachedVideosData && cachedVideosData.length > 0) {
-          console.log('vg: cached');
+          console.log('vm: cached');
           const categorizedByTypes: Record<string, VideoData[]> =
             categorizeVideosByField(cachedVideosData, 'video_types');
           const categorizedByPositions: Record<string, VideoData[]> =
@@ -301,4 +300,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoGridview;
+export default VideoMatrixView;

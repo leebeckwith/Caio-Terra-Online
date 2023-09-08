@@ -1,15 +1,17 @@
 import React from 'react';
-import {Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import VideoManagerScreen from './VideoManagerScreen';
 import AccountManagerScreen from './AccountManagerScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
 import LessonPlansListingScreen from './LessonPlansListingScreen';
+import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
 function MainManagerScreen() {
+  Orientation.unlockAllOrientations();
   return (
     <SafeAreaView style={styles.background}>
       <View style={styles.tabContainer}>
@@ -22,7 +24,7 @@ function MainManagerScreen() {
             headerShown: false,
             tabBarStyle: {
               backgroundColor: 'rgba(58, 58, 58, 1)',
-              paddingTop: 2,
+              paddingTop: 8,
               paddingBottom: 8,
               height: 60,
               marginBottom: 0,
@@ -36,16 +38,16 @@ function MainManagerScreen() {
             component={VideoManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="film" color={color} size={22} />
+                <Icon name="film" color={color} size={20} />
               ),
             }}
           />
           <Tab.Screen
-            name="Lesson Plans"
+            name="Lessons"
             component={LessonPlansListingScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="leanpub" color={color} size={size} />
+                <Icon name="book" color={color} size={20} />
               ),
             }}
           />
@@ -54,7 +56,7 @@ function MainManagerScreen() {
             component={CurriculumListingScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="book" color={color} size={size} />
+                <Icon name="cubes" color={color} size={20} />
               ),
             }}
           />
@@ -63,7 +65,7 @@ function MainManagerScreen() {
             component={AccountManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="user" color={color} size={size} />
+                <Icon name="user-circle" color={color} size={20} />
               ),
             }}
           />

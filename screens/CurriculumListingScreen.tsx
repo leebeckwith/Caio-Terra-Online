@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, Image, View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
+import {
+  Alert,
+  Image,
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
@@ -26,7 +34,7 @@ const CurriculumListing: React.FC = () => {
   const [expandedCategory, setExpandedCategory] = useState<number | null>(null);
   const [lessonData, setLessonData] = useState<Lesson[]>([]);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const cachedVideosData = useSelector(state => state.cachedVideos);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
