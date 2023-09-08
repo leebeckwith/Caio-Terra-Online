@@ -32,7 +32,6 @@ const VideoFilterViewScreen: React.FC = () => {
   const [positionOpen, setPositionOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(false);
   const cachedVideosData = useSelector(state => state.cachedVideos);
-  const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {

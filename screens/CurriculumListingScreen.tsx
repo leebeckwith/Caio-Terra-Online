@@ -54,7 +54,10 @@ const CurriculumListing: React.FC = () => {
         setCategories(sortedCategories);
       } catch (error) {
         console.error('Error fetching curriculum data:', error);
-        Alert.alert('Error', `There was an error getting the curriculum details: ${error}`);
+        Alert.alert(
+          'Error',
+          `There was an error getting the curriculum details: ${error}`,
+        );
       }
     };
 

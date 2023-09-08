@@ -37,7 +37,7 @@ const VideoListing = () => {
     useState<boolean>(false);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
-  const cachedVideosData = useSelector((state) => state.cachedVideos);
+  const cachedVideosData = useSelector(state => state.cachedVideos);
   const dispatch = useDispatch();
   const {favorites, toggleFavorite} = useFavorites();
   const {openVideoModal} = useVideoModal();
@@ -62,7 +62,10 @@ const VideoListing = () => {
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
-        Alert.alert('Error', `There was an error getting the content: ${error}`);
+        Alert.alert(
+          'Error',
+          `There was an error getting the content: ${error}`,
+        );
       } finally {
         dispatch(setLoading(false));
       }
@@ -80,7 +83,7 @@ const VideoListing = () => {
 
   const handleFavoritePress = async (id: number) => {
     try {
-      const newFavoriteStatus = favorites?.includes(id) ? 0: 1;
+      const newFavoriteStatus = favorites?.includes(id) ? 0 : 1;
       const {username, password} = await getCredentials();
 
       if (username && password) {
@@ -106,7 +109,10 @@ const VideoListing = () => {
       }
     } catch (error) {
       console.error('Error toggling favorite status:', error);
-      Alert.alert('Error', `There was an error toggling favorite status: ${error}`);
+      Alert.alert(
+        'Error',
+        `There was an error toggling favorite status: ${error}`,
+      );
     }
   };
 

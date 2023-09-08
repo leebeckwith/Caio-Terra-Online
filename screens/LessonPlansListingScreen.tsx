@@ -12,7 +12,6 @@ import {
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface VideoData {
   id: number;
@@ -49,7 +48,10 @@ const LessonPlansListing: React.FC = () => {
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
-        Alert.alert('Error', `There was an error getting the lesson plans: ${error}`);
+        Alert.alert(
+          'Error',
+          `There was an error getting the lesson plans: ${error}`,
+        );
       }
     };
 
@@ -64,7 +66,7 @@ const LessonPlansListing: React.FC = () => {
     setMappedVideos([]);
     setFilteredVideos(filtered);
     if (filtered.length > 0 && flatListRef.current) {
-      flatListRef.current.scrollToIndex({ index: 0 });
+      flatListRef.current.scrollToIndex({index: 0});
     }
   };
 
@@ -80,7 +82,10 @@ const LessonPlansListing: React.FC = () => {
       return apiData;
     } catch (error) {
       console.error('Error fetching plan video details:', error);
-      Alert.alert('Error', `There was an error getting the plans details: ${error}`);
+      Alert.alert(
+        'Error',
+        `There was an error getting the plans details: ${error}`,
+      );
       return [];
     }
   };

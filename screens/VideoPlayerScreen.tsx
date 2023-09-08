@@ -33,9 +33,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [notes, setNotes] = useState<VideoNote[]>([]);
-  const [selectedNote, setSelectedNote] = useState<any>(null);
   const [noteContent, setNoteContent] = useState('');
-  const [showAdditionalContent, setShowAdditionalContent] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);

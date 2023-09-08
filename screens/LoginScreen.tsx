@@ -108,7 +108,7 @@ const LoginScreen = () => {
                 dispatch(setCachedVideos(data));
                 console.log('login: new w/o fav');
               }
-              navigation.navigate('Main', {screen: 'Videos', initial: false,});
+              navigation.navigate('Main', {screen: 'Videos', initial: false});
             }
           } else if (
             responseData.errors &&
