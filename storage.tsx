@@ -1,6 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch, useSelector} from 'react-redux';
-import {setCachedVideos} from './redux/cachedVideoSlice';
 
 export const storeCredentials = async (
   username: string,
@@ -60,4 +58,3 @@ export const clearCredentials = async () => {
     console.error('Error clearing credentials:', error);
   }
 };
-

@@ -5,14 +5,16 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Platform,
   Pressable,
   FlatList,
 } from 'react-native';
 import Orientation, {
   useDeviceOrientationChange,
 } from 'react-native-orientation-locker';
-import Video from 'react-native-video';
+import Video, {TextTrackType} from 'react-native-video';
 import VideoDownloadModal from '../components/VideoDownloadModal';
+import VideoPlaybackRateModal from '../components/VideoPlaybackRateModal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 import {useFavorites} from '../components/FavoriteContext';
@@ -31,90 +33,25 @@ const VideoPlayer = ({route}: {route: any}) => {
     ? route.params
     : '';
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedVideoCaptionFile, setSelectedVideoCaptionFile] = useState<
+    string | null
+  >(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
+  const [selectedPlaybackRate, setSelectedPlaybackRate] = useState<number>(1);
   const [notes, setNotes] = useState<VideoNote[]>([]);
   const [noteContent, setNoteContent] = useState('');
   const [currentTime, setCurrentTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const playerRef = useRef(null);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDownloadModalVisible, setIsDownloadModalVisible] = useState(false);
+  const [isPlaybackRateModalVisible, setIsPlaybackRateModalVisible] =
+    useState(false);
   const [currentOrientation, setCurrentOrientation] = useState<string>(
     Orientation.getInitialOrientation(),
   );
   const [isLandscape, setIsLandscape] = useState(false);
   const {toggleFavorite} = useFavorites();
-
-  const fetchVideoNotes = async () => {
-    try {
-      const response = await fetch(
-        `https://caioterra.com/app-api/get-video-notes.php?user_id=${userId}&video_id=${videoId}`,
-      );
-      const data = await response.json();
-      setNotes(data);
-    } catch (error) {
-      console.error('Error fetching video notes:', error);
-      Alert.alert(
-        'Error',
-        `There was an error getting the notes for this video: ${error}`,
-      );
-    }
-  };
-
-  const getVimeoVideo = async () => {
-    try {
-      // Construct the Vimeo API URL for the specific video
-      const vimeoApiUrl = `https://api.vimeo.com/videos/${vimeoId}`;
-
-      // Fetch the video data from the Vimeo API
-      const response = await fetch(vimeoApiUrl, {
-        headers: {
-          Authorization: `Bearer ${vimeoToken}`,
-        },
-      });
-
-      // Parse the response and get the video data
-      const videoData = await response.json();
-
-      // Set the video data
-      setSelectedTitle(videoData.name);
-      setSelectedVideo(videoData.files[3].link);
-    } catch (error) {
-      console.error('Error fetching video from Vimeo API:', error);
-      Alert.alert('Error', `There was an error getting the video: ${error}`);
-      setSelectedVideo(null);
-    }
-  };
-
-  const getFavoriteStatus = async () => {
-    try {
-      const {username, password} = await getCredentials();
-      if (username && password) {
-        const params = new URLSearchParams({
-          username,
-          password,
-        });
-
-        const apiUrl =
-          'https://caioterra.com/app-api/get-favorites.php?' +
-          params.toString();
-        const favoritesResponse = await fetch(apiUrl);
-        const favoritesData = await favoritesResponse.json();
-
-        if (Array.isArray(favoritesData)) {
-          const favoriteIds = favoritesData.map(item => Number(item.id));
-          const isVideoFavorite = favoriteIds.includes(videoId);
-          setIsFavorite(isVideoFavorite);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching favorite status:', error);
-      Alert.alert(
-        'Error',
-        `There was an error getting the favorite status: ${error}`,
-      );
-    }
-  };
 
   useDeviceOrientationChange(o => {
     setCurrentOrientation(o);
@@ -127,8 +64,114 @@ const VideoPlayer = ({route}: {route: any}) => {
   });
 
   useEffect(() => {
-    setCurrentOrientation(Orientation.getInitialOrientation());
+    const getVimeoVideo = async () => {
+      try {
+        // Construct the Vimeo API URL for the specific video
+        const vimeoApiUrl = `https://api.vimeo.com/videos/${vimeoId}`;
+
+        // Fetch the video data from the Vimeo API
+        const response = await fetch(vimeoApiUrl, {
+          headers: {
+            Authorization: `Bearer ${vimeoToken}`,
+          },
+        });
+
+        // Parse the response and get the video data
+        const videoData = await response.json();
+
+        setSelectedTitle(videoData.name);
+        //console.log(videoData.files[2].rendition);
+        setSelectedVideo(videoData.files[2].link);
+      } catch (error) {
+        console.error('Error fetching video from Vimeo API:', error);
+        Alert.alert(
+          'Error',
+          `There was an error getting the video from Vimeo: ${error}`,
+        );
+        setSelectedVideo(null);
+      }
+    };
+
+    const getVideoCaption = async () => {
+      try {
+        const vimeoCaptionUrl = `https://api.vimeo.com/videos/${vimeoId}/texttracks`;
+
+        // Fetch the video caption data from the Vimeo API
+        const captionResponse = await fetch(vimeoCaptionUrl, {
+          headers: {
+            Authorization: `Bearer ${vimeoToken}`,
+          },
+        });
+
+        // Parse the response and get the video data
+        const videoCaptionData = await captionResponse.json();
+
+        const videoCaptionDataLink = videoCaptionData.data[0].link.replace(
+          /&download=auto_generated_captions\.vtt/g,
+          '&cta.vtt',
+        );
+
+        console.log(videoCaptionDataLink);
+
+        setSelectedVideoCaptionFile(videoCaptionDataLink);
+      } catch (error) {
+        console.error('Error fetching video caption from Vimeo API:', error);
+        Alert.alert(
+          'Error',
+          `There was an error getting the video captino from Vimeo: ${error}`,
+        );
+        setSelectedVideo(null);
+      }
+    };
+
+    const fetchVideoNotes = async () => {
+      try {
+        const response = await fetch(
+          `https://caioterra.com/app-api/get-video-notes.php?user_id=${userId}&video_id=${videoId}`,
+        );
+        const data = await response.json();
+        setNotes(data);
+      } catch (error) {
+        console.error('Error fetching video notes:', error);
+        Alert.alert(
+          'Error',
+          `There was an error getting the notes for this video: ${error}`,
+        );
+      }
+    };
+
+    const getFavoriteStatus = async () => {
+      try {
+        const {username, password} = await getCredentials();
+        if (username && password) {
+          const params = new URLSearchParams({
+            username,
+            password,
+          });
+
+          const apiUrl =
+            'https://caioterra.com/app-api/get-favorites.php?' +
+            params.toString();
+          const favoritesResponse = await fetch(apiUrl);
+          const favoritesData = await favoritesResponse.json();
+
+          if (Array.isArray(favoritesData)) {
+            const favoriteIds = favoritesData.map(item => Number(item.id));
+            const isVideoFavorite = favoriteIds.includes(videoId);
+            setIsFavorite(isVideoFavorite);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching favorite status:', error);
+        Alert.alert(
+          'Error',
+          `There was an error getting the favorite status: ${error}`,
+        );
+      }
+    };
+    //setCurrentOrientation(Orientation.getInitialOrientation());
     getVimeoVideo();
+    //getVideoCaption();
     fetchVideoNotes();
     getFavoriteStatus();
   }, []);
@@ -195,8 +238,9 @@ const VideoPlayer = ({route}: {route: any}) => {
   };
 
   const handleSeekToTimestamp = timestamp => {
-    setIsPaused(true);
     playerRef.current.seek(Number(timestamp));
+    setIsPaused(true);
+    //setSelectedPlaybackRate(0);
   };
 
   const handleDeleteNote = async (noteId: number) => {
@@ -218,9 +262,24 @@ const VideoPlayer = ({route}: {route: any}) => {
     }
   };
 
+  const handlePlaybackRateChange = (rate: number) => {
+    setSelectedPlaybackRate(rate);
+    console.log(rate);
+    setIsPaused(true);
+  };
+
   const openDownloadModal = () => {
     setIsPaused(true);
-    setIsModalVisible(true);
+    setIsDownloadModalVisible(true);
+  };
+
+  const openPlaybackRateModal = () => {
+    setIsPaused(true);
+    setIsPlaybackRateModalVisible(true);
+  };
+
+  const changePlaybackRate = () => {
+    setSelectedPlaybackRate(2);
   };
 
   const formatTime = timeInSeconds => {
@@ -271,26 +330,49 @@ const VideoPlayer = ({route}: {route: any}) => {
 
   return (
     <View style={styles.container}>
-      {isModalVisible && (
+      {isDownloadModalVisible && (
         <VideoDownloadModal
-          isVisible={isModalVisible}
-          onClose={() => setIsModalVisible(false)}
+          isVisible={isDownloadModalVisible}
+          onClose={() => setIsDownloadModalVisible(false)}
           vimeoId={vimeoId}
+        />
+      )}
+      {isPlaybackRateModalVisible && (
+        <VideoPlaybackRateModal
+          isVisible={isPlaybackRateModalVisible}
+          onClose={() => setIsPlaybackRateModalVisible(false)}
+          playbackRate={selectedPlaybackRate}
+          onPlaybackRateChange={handlePlaybackRateChange}
         />
       )}
       {selectedVideo ? (
         <View>
           <Text style={styles.title}>{selectedTitle}</Text>
           <View>
-            <Video
-              ref={playerRef}
-              source={{uri: selectedVideo}}
-              style={styles.videoPlayer}
-              resizeMode="cover"
-              controls={true}
-              paused={isPaused}
-              onProgress={onProgress}
-            />
+            <View>
+              <Video
+                ref={playerRef}
+                source={{uri: selectedVideo}}
+                style={styles.videoPlayer}
+                resizeMode="cover"
+                controls={true}
+                paused={isPaused}
+                onProgress={onProgress}
+                rate={selectedPlaybackRate}
+                // selectedTextTrack={{
+                //   type: 'title',
+                //   value: 'English CC',
+                // }}
+                // textTracks={[
+                //   {
+                //     title: 'English CC',
+                //     language: 'en',
+                //     type: TextTrackType.VTT,
+                //     uri: selectedVideoCaptionFile,
+                //   },
+                // ]}
+              />
+            </View>
             <View style={styles.wrapper}>
               <View style={[styles.iconsLeft, styles.iconContainer]}>
                 <Pressable
@@ -303,6 +385,33 @@ const VideoPlayer = ({route}: {route: any}) => {
                     style={styles.iconsLeft}
                   />
                 </Pressable>
+                {/*<Pressable style={[styles.button, styles.inactive]}>*/}
+                {/*  /!* onPress={openDownloadModal}>*!/*/}
+                {/*  <Icon*/}
+                {/*    name="cc"*/}
+                {/*    color="white"*/}
+                {/*    size={20}*/}
+                {/*    style={styles.iconsLeft}*/}
+                {/*  />*/}
+                {/*</Pressable>*/}
+                {Platform.OS === 'android' && (
+                  <Pressable
+                    style={[styles.button, styles.inactive]}
+                    onPress={openPlaybackRateModal}>
+                    {/*onPress={changePlaybackRate}>*/}
+                    <View style={styles.playbackRateContainer}>
+                      <Icon
+                        name="clock-o"
+                        color="white"
+                        size={20}
+                        style={styles.iconsLeft}
+                      />
+                      <Text style={[styles.text, styles.iconToLeft]}>
+                        {selectedPlaybackRate.toFixed(2)}
+                      </Text>
+                    </View>
+                  </Pressable>
+                )}
               </View>
               <Pressable style={styles.button} onPress={handleFavoritePress}>
                 <Icon
@@ -461,6 +570,24 @@ const styles = StyleSheet.create({
   },
   notesListContainer: {
     height: 160,
+  },
+  playbackRateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconToLeft: {
+    fontWeight: 'bold',
+    marginLeft: 8,
+  },
+  captionText: {
+    fontSize: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
+  captionContainer: {
+    position: 'absolute',
+    top: '75%',
+    left: 0,
+    backgroundColor: 'transparent',
   },
 });
 

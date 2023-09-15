@@ -71,9 +71,7 @@ function MainManagerScreen() {
           />
         </Tab.Navigator>
       </View>
-
     </SafeAreaView>
-
   );
 }
 

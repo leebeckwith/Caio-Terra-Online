@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   wrapper: {
     position: 'absolute',
     bottom: 5,
-    right: 5,
+    right: 8,
   },
   buttonContent: {
     flexDirection: 'row',
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
-    paddingRight: 25,
+    paddingRight: 32,
     textAlign: 'left',
   },
 });
