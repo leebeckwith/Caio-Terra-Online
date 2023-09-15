@@ -54,7 +54,6 @@ const LoginScreen = () => {
       return false;
     } else {
       try {
-        dispatch(setLoading(true));
         const queryParams = new URLSearchParams({
           username: log,
           password: pwd,
@@ -71,6 +70,7 @@ const LoginScreen = () => {
 
         if (response.ok) {
           if (responseData.user_id) {
+            dispatch(setLoading(true));
             setIsSignedIn(true);
             const {user_id, display_name, user_email} = responseData;
             await storeCredentials(log, pwd, user_id, display_name, user_email);

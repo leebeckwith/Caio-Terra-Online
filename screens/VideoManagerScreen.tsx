@@ -3,6 +3,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import VideoListing from './VideoListingScreen';
 import VideoFilterView from './VideoFilterViewScreen';
 import VideoMatrixView from './VideoMatrixViewScreen';
+import VideoDownloadsScreen from './VideoDownloadsScreen';
 import {StyleSheet} from 'react-native';
 
 const Tab = createMaterialTopTabNavigator();
@@ -18,9 +19,6 @@ const VideoManagerScreen = () => {
           height: '100%',
           backgroundColor: 'rgba(255, 255, 255, 0.25)',
         },
-        tabBarIndicatorContainerStyle: {
-          //backgroundColor: 'rgba(255, 255, 255, 0)',
-        },
         tabBarStyle: {
           backgroundColor: 'transparent',
           elevation: 0,
@@ -31,6 +29,7 @@ const VideoManagerScreen = () => {
       <Tab.Screen name="Search" component={VideoListing} />
       <Tab.Screen name="Matrix" component={VideoMatrixView} />
       <Tab.Screen name="Filter" component={VideoFilterView} />
+      <Tab.Screen name="Offline" component={VideoDownloadsScreen} />
     </Tab.Navigator>
   );
 };

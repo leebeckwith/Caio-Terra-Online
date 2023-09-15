@@ -4,7 +4,7 @@ import cachedVideosReducer from './redux/cachedVideoSlice';
 import favoriteReducer from './redux/favoriteSlice';
 
 const store = configureStore({
-  middleware: (getDefaultMiddleware) => [
+  middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware({
       serializableCheck: false,
     }),

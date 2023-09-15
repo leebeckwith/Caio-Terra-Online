@@ -10,10 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
-import {
-  FileSaveOptions,
-  startDownloadAppSave,
-} from 'react-native-ios-files-app-save';
+import RNFS from 'react-native-fs';
 
 interface VideoDownloadModalProps {
   isVisible: boolean;
@@ -67,25 +64,40 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
     fetchDownloadOptions();
   }, []);
 
-  const handleDownload = async (downloadLink: string, resolution: string) => {
-    setSelectedDownloadLink(downloadLink);
-    let options: FileSaveOptions = {
-      url: downloadLink,
-      // isBase64: true,
-      fileName: `${vimeoId}_${resolution}.mp4`,
-    };
+  const formatDateForFileName = () => {
+    const now: Date = new Date();
 
-    startDownloadAppSave(options)
-      .then(() => {
-        //const fileSaveSuccess = res as FileSaveSuccess;
-        Alert.alert(
-          'File Downloaded',
-          `Your file, ${vimeoId}_${resolution}.mp4, downloaded successfully.`,
-        );
+    const year: string = String(now.getFullYear());
+    const month: string = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so we add 1
+    const day: string = String(now.getDate()).padStart(2, '0');
+    const hours: string = String(now.getHours()).padStart(2, '0');
+    const minutes: string = String(now.getMinutes()).padStart(2, '0');
+    const formattedDate: string = `${year}${month}${day}${hours}${minutes}`;
+
+    return formattedDate;
+  };
+
+  const handleDownload = async (downloadLink: string, resolution: string) => {
+    const downloadDate = formatDateForFileName();
+    const downloadDest = `${RNFS.DocumentDirectoryPath}/${vimeoId}_${resolution}_${downloadDate}.mp4`;
+    setSelectedDownloadLink(downloadLink);
+    RNFS.downloadFile({
+      fromUrl: downloadLink,
+      toFile: downloadDest,
+      discretionary: true,
+    })
+      .promise.then((response: RNFS.DownloadResult) => {
+        //console.log('File downloaded!', response);
+        Alert.alert('File Downloaded', `Your file downloaded successfully.`);
         setSelectedDownloadLink(null);
       })
-      .catch(error => {
-        console.log('error', error);
+      .catch((err: Error) => {
+        //console.log('Download error:', err);
+        Alert.alert(
+          'File Downloaded Error',
+          `Your file didn't download successfully: ${err}`,
+        );
+        setSelectedDownloadLink(null);
       });
   };
 
@@ -157,11 +169,13 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   modalTitle: {
+    color: '#000',
     textAlign: 'center',
     fontWeight: 'bold',
     marginBottom: 5,
   },
   modalBody: {
+    color: '#000',
     fontSize: 14,
     marginBottom: 10,
   },
