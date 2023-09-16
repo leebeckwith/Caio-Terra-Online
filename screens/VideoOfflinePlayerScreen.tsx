@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 import {StyleSheet, View} from 'react-native';
 import Orientation, {
   useDeviceOrientationChange,
@@ -13,14 +13,14 @@ const VideoOfflinePlayer = ({route}: {route: any}) => {
   );
   const [isLandscape, setIsLandscape] = useState(false);
 
-  useDeviceOrientationChange(o => {
-    setCurrentOrientation(o);
-    if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
-      setIsLandscape(true);
-    } else {
-      setIsLandscape(false);
-    }
-  });
+  // useDeviceOrientationChange(o => {
+  //   setCurrentOrientation(o);
+  //   if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
+  //     setIsLandscape(true);
+  //   } else {
+  //     setIsLandscape(false);
+  //   }
+  // });
 
   return (
     <View>
@@ -28,9 +28,9 @@ const VideoOfflinePlayer = ({route}: {route: any}) => {
         ref={playerRef}
         source={{uri: selectedVideoPath}}
         style={styles.videoPlayer}
-        controls={!isLandscape}
+        controls={true}
         resizeMode="cover"
-        fullscreen={isLandscape}
+        //fullscreen={isLandscape}
       />
     </View>
   );

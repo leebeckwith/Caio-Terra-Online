@@ -11,7 +11,7 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import {useVideoOfflineModal} from '../components/VideoOfflinePlayerModalContext';
 import {useSelector} from 'react-redux';
-import RNFS from 'react-native-fs';
+import RNFS, {unlink} from 'react-native-fs';
 
 const VideoDownloadsScreen = () => {
   const [downloadedFiles, setDownloadedFiles] = useState({});
@@ -27,6 +27,40 @@ const VideoDownloadsScreen = () => {
       Alert.alert('Error', `There was an error playing the video: ${error}`);
     }
   };
+
+  function parseDateFromString(inputString) {
+    const year = parseInt(inputString.slice(0, 4));
+    const month = parseInt(inputString.slice(4, 6)) - 1;
+    const day = parseInt(inputString.slice(6, 8));
+    const hour = parseInt(inputString.slice(8, 10));
+    const minute = parseInt(inputString.slice(10, 12));
+    const date = new Date(year, month, day, hour, minute);
+
+    return date;
+  }
+
+  function calculateRemainingTime(dateDifference) {
+    const totalMilliseconds = 30 * 24 * 60 * 60 * 1000;
+    const remainingMilliseconds = totalMilliseconds - dateDifference;
+
+    if (remainingMilliseconds <= 0) {
+      return '0:00:00';
+    }
+
+    const daysRemaining = Math.floor(
+      remainingMilliseconds / (24 * 60 * 60 * 1000),
+    );
+    const hoursRemaining = Math.floor(
+      (remainingMilliseconds % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000),
+    );
+    const minutesRemaining = Math.floor(
+      (remainingMilliseconds % (60 * 60 * 1000)) / (60 * 1000),
+    );
+
+    return `${daysRemaining}d:${hoursRemaining
+      .toString()
+      .padStart(2, '0')}h:${minutesRemaining.toString().padStart(2, '0')}m`;
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -46,12 +80,33 @@ const VideoDownloadsScreen = () => {
             const datePart = parts[2].split('.')[0];
             const videoData = downloadedVideos.find(video => video.vimeoid.toString() === videoId);
 
+            const currentDate = new Date();
+            const videoDate = parseDateFromString(datePart);
+            const dateDifference = currentDate - videoDate;
+            const daysRemaining = calculateRemainingTime(dateDifference);
+
+            if (daysRemaining === '0:00:00') {
+              // Delete the video file
+              unlink(`${RNFS.DocumentDirectoryPath}/${videoFile}`)
+                .then(() => {
+                  console.log('Video deleted:', videoFile);
+                  const updatedMergedArray = mergedArray.filter(
+                    item => item.videoFile !== videoFile,
+                  );
+                  setDownloadedFiles(updatedMergedArray);
+                })
+                .catch(error => {
+                  console.error('Error deleting video:', error);
+                });
+            }
+
             return {
               id: videoData.id,
               videoFile,
               videoData,
               resolution,
               date: datePart,
+              timeRemaining: daysRemaining,
             };
           });
 
@@ -85,6 +140,8 @@ const VideoDownloadsScreen = () => {
       </Pressable>
       <Text style={styles.titleOverlay}>
         {item.videoData.title.toUpperCase()} ({item.resolution.toUpperCase()})
+        {'\n'}
+        PLAYBACK EXPIRES IN {item.timeRemaining}
       </Text>
     </View>
   );
@@ -92,7 +149,7 @@ const VideoDownloadsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.categoryHeader}>
-        <Text style={styles.categoryName}>DOWNLOADED VIDEOS</Text>
+        <Text style={styles.categoryName}>OFFLINE VIDEOS</Text>
       </View>
       {downloadedFiles.toString() === '' ? (
         <Text style={styles.categoryName}>No downloaded files available.</Text>
