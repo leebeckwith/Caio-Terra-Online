@@ -12,9 +12,10 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useVideoOfflineModal} from '../components/VideoOfflinePlayerModalContext';
 import {useSelector} from 'react-redux';
 import RNFS, {unlink} from 'react-native-fs';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const VideoDownloadsScreen = () => {
-  const [downloadedFiles, setDownloadedFiles] = useState({});
+  const [downloadedFiles, setDownloadedFiles] = useState([]);
   const cachedVideosData = useSelector(state => state.cachedVideos);
   const {openOfflineVideoModal} = useVideoOfflineModal();
 
@@ -26,6 +27,26 @@ const VideoDownloadsScreen = () => {
       console.error('Error playing offline video:', error);
       Alert.alert('Error', `There was an error playing the video: ${error}`);
     }
+  };
+
+  const handleDeleteFile = async video => {
+    unlink(`${RNFS.DocumentDirectoryPath}/${video}`)
+      .then(() => {
+        const updatedMergedArray = downloadedFiles.filter(
+          item => item.videoFile !== video,
+        );
+        setDownloadedFiles(updatedMergedArray);
+        Alert.alert(
+          'File deleted',
+          'Your offline video was successfully deleted.',
+        );
+      })
+      .catch(error => {
+        Alert.alert(
+          'Error',
+          `There was an error deleting the offline video: ${error}`,
+        );
+      });
   };
 
   function parseDateFromString(inputString) {
@@ -78,7 +99,9 @@ const VideoDownloadsScreen = () => {
             const parts = videoFile.split('_');
             const resolution = parts[1];
             const datePart = parts[2].split('.')[0];
-            const videoData = downloadedVideos.find(video => video.vimeoid.toString() === videoId);
+            const videoData = downloadedVideos.find(
+              video => video.vimeoid.toString() === videoId,
+            );
 
             const currentDate = new Date();
             const videoDate = parseDateFromString(datePart);
@@ -143,6 +166,13 @@ const VideoDownloadsScreen = () => {
         {'\n'}
         PLAYBACK EXPIRES IN {item.timeRemaining}
       </Text>
+      <View style={styles.wrapper}>
+        <Pressable
+          style={styles.iconButton}
+          onPress={() => handleDeleteFile(item.videoFile)}>
+          <Icon name={'trash'} color="white" size={20} />
+        </Pressable>
+      </View>
     </View>
   );
 
@@ -191,7 +221,7 @@ const styles = StyleSheet.create({
   videoDownloadItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 8,
     justifyContent: 'space-between',
   },
   thumbnail: {
@@ -200,7 +230,7 @@ const styles = StyleSheet.create({
   },
   titleOverlay: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 4,
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
@@ -208,7 +238,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
+    paddingRight: 32,
     textAlign: 'left',
+  },
+  wrapper: {
+    position: 'absolute',
+    bottom: 8,
+    right: 0,
+  },
+  iconButton: {
+    backgroundColor: 'red',
+    padding: 11,
   },
 });
 

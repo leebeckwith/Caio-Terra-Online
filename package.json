@@ -31,7 +31,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-tableview-simple": "^4.4.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-video": "^6.0.0-alpha.8",
+    "react-native-video": "^6.0.0-alpha.7",
     "react-native-vimeo-iframe": "^1.2.1",
     "react-native-webview": "^13.6.0",
     "react-redux": "^8.1.2",

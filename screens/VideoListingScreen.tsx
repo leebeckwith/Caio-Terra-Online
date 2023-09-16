@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   videoItemContainer: {
-    marginBottom: 20,
+    marginBottom: 8,
   },
   title: {
     width: '95%',
