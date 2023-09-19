@@ -13,6 +13,7 @@ import Orientation, {
   useDeviceOrientationChange,
 } from 'react-native-orientation-locker';
 import Video, {TextTrackType} from 'react-native-video';
+import RNFS from 'react-native-fs';
 import VideoDownloadModal from '../components/VideoDownloadModal';
 import VideoPlaybackRateModal from '../components/VideoPlaybackRateModal';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -34,7 +35,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     : '';
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedVideoCaptionFile, setSelectedVideoCaptionFile] = useState<
-    string | null
+    string | ''
   >(null);
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [selectedPlaybackRate, setSelectedPlaybackRate] = useState<number>(1);
@@ -76,11 +77,9 @@ const VideoPlayer = ({route}: {route: any}) => {
           },
         });
 
-        // Parse the response and get the video data
         const videoData = await response.json();
 
         setSelectedTitle(videoData.name);
-        //console.log(videoData.files[2].rendition);
         setSelectedVideo(videoData.files[2].link);
       } catch (error) {
         console.error('Error fetching video from Vimeo API:', error);
@@ -103,22 +102,33 @@ const VideoPlayer = ({route}: {route: any}) => {
           },
         });
 
-        // Parse the response and get the video data
         const videoCaptionData = await captionResponse.json();
+        if (videoCaptionData.data[0]) {
+          const videoCaptionDataLink = videoCaptionData.data[0].link.replace(
+            /&download=auto_generated_captions\.vtt/g,
+            '&cta.vtt',
+          );
 
-        const videoCaptionDataLink = videoCaptionData.data[0].link.replace(
-          /&download=auto_generated_captions\.vtt/g,
-          '&cta.vtt',
-        );
+          const localFilePath = `${RNFS.DocumentDirectoryPath}/video_caption.vtt`;
 
-        console.log(videoCaptionDataLink);
+          const downloadResult = RNFS.downloadFile({
+            fromUrl: videoCaptionDataLink,
+            toFile: localFilePath,
+          });
 
-        setSelectedVideoCaptionFile(videoCaptionDataLink);
+          if (downloadResult.jobId) {
+            setSelectedVideoCaptionFile(localFilePath);
+          } else {
+            console.error('Failed to download VTT file:', downloadResult);
+          }
+        } else {
+          setSelectedVideoCaptionFile('');
+        }
       } catch (error) {
         console.error('Error fetching video caption from Vimeo API:', error);
         Alert.alert(
           'Error',
-          `There was an error getting the video captino from Vimeo: ${error}`,
+          `There was an error getting the video caption from Vimeo: ${error}`,
         );
         setSelectedVideo(null);
       }
@@ -171,7 +181,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     };
     //setCurrentOrientation(Orientation.getInitialOrientation());
     getVimeoVideo();
-    //getVideoCaption();
+    getVideoCaption();
     fetchVideoNotes();
     getFavoriteStatus();
   }, []);
@@ -240,7 +250,6 @@ const VideoPlayer = ({route}: {route: any}) => {
   const handleSeekToTimestamp = timestamp => {
     playerRef.current.seek(Number(timestamp));
     setIsPaused(true);
-    //setSelectedPlaybackRate(0);
   };
 
   const handleDeleteNote = async (noteId: number) => {
@@ -350,28 +359,41 @@ const VideoPlayer = ({route}: {route: any}) => {
           <Text style={styles.title}>{selectedTitle}</Text>
           <View>
             <View>
-              <Video
-                ref={playerRef}
-                source={{uri: selectedVideo}}
-                style={styles.videoPlayer}
-                resizeMode="cover"
-                controls={true}
-                paused={isPaused}
-                onProgress={onProgress}
-                rate={selectedPlaybackRate}
-                // selectedTextTrack={{
-                //   type: 'title',
-                //   value: 'English CC',
-                // }}
-                // textTracks={[
-                //   {
-                //     title: 'English CC',
-                //     language: 'en',
-                //     type: TextTrackType.VTT,
-                //     uri: selectedVideoCaptionFile,
-                //   },
-                // ]}
-              />
+              {selectedVideoCaptionFile ? (
+                <Video
+                  ref={playerRef}
+                  source={{uri: selectedVideo}}
+                  style={styles.videoPlayer}
+                  resizeMode="cover"
+                  controls={true}
+                  paused={isPaused}
+                  onProgress={onProgress}
+                  rate={selectedPlaybackRate}
+                  selectedTextTrack={{
+                    type: 'title',
+                    value: 'English CC',
+                  }}
+                  textTracks={[
+                    {
+                      title: 'English CC',
+                      language: 'en',
+                      type: TextTrackType.VTT,
+                      uri: selectedVideoCaptionFile,
+                    },
+                  ]}
+                />
+              ) : (
+                <Video
+                  ref={playerRef}
+                  source={{uri: selectedVideo}}
+                  style={styles.videoPlayer}
+                  resizeMode="cover"
+                  controls={true}
+                  paused={isPaused}
+                  onProgress={onProgress}
+                  rate={selectedPlaybackRate}
+                />
+              )}
             </View>
             <View style={styles.wrapper}>
               <View style={[styles.iconsLeft, styles.iconContainer]}>
@@ -385,20 +407,10 @@ const VideoPlayer = ({route}: {route: any}) => {
                     style={styles.iconsLeft}
                   />
                 </Pressable>
-                {/*<Pressable style={[styles.button, styles.inactive]}>*/}
-                {/*  /!* onPress={openDownloadModal}>*!/*/}
-                {/*  <Icon*/}
-                {/*    name="cc"*/}
-                {/*    color="white"*/}
-                {/*    size={20}*/}
-                {/*    style={styles.iconsLeft}*/}
-                {/*  />*/}
-                {/*</Pressable>*/}
                 {Platform.OS === 'android' && (
                   <Pressable
                     style={[styles.button, styles.inactive]}
                     onPress={openPlaybackRateModal}>
-                    {/*onPress={changePlaybackRate}>*/}
                     <View style={styles.playbackRateContainer}>
                       <Icon
                         name="clock-o"

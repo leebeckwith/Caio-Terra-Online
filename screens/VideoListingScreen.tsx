@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {
   Alert,
+  Modal,
   View,
   Text,
   FlatList,
@@ -34,22 +35,15 @@ const VideoListing = () => {
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showFavoritesButton, setShowFavoritesButton] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
   const cachedVideosData = useSelector(state => state.cachedVideos);
   const dispatch = useDispatch();
   const {favorites, toggleFavorite} = useFavorites();
+  const [showFavoriteButtonOverlay, setShowFavoriteButtonOverlay] =
+    useState(false);
   const {openVideoModal} = useVideoModal();
-
-  useEffect(() => {
-    const checkCredentials = async () => {
-      const {username, password} = await getCredentials();
-      setShowFavoritesButton(!!username && !!password);
-    };
-
-    checkCredentials();
-  }, []);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -125,6 +119,10 @@ const VideoListing = () => {
     );
   };
 
+  const handleHideFavroritesOverlay = () => {
+    setShowFavoriteButtonOverlay(false);
+  };
+
   const handleSearch = (text: string) => {
     const filtered = videos.filter(video =>
       video.title.toLowerCase().includes(text.toLowerCase()),
@@ -142,17 +140,15 @@ const VideoListing = () => {
           <Text style={styles.titleOverlay}>{item.title.toUpperCase()}</Text>
         </Pressable>
         <View style={styles.wrapper}>
-          {showFavoritesButton && (
-            <Pressable
-              style={styles.iconButton}
-              onPress={() => handleFavoritePress(item.id)}>
-              <Icon
-                name={isFavorite ? 'star' : 'star-o'}
-                color="white"
-                size={20}
-              />
-            </Pressable>
-          )}
+          <Pressable
+            style={styles.iconButton}
+            onPress={() => handleFavoritePress(item.id)}>
+            <Icon
+              name={isFavorite ? 'star' : 'star-o'}
+              color="white"
+              size={20}
+            />
+          </Pressable>
         </View>
       </View>
     );
@@ -169,16 +165,30 @@ const VideoListing = () => {
           autoCapitalize="none"
           value={searchTerm}
         />
-        {showFavoritesButton && (
-          <Pressable
-            onPress={showFavorites}
-            style={[styles.button, showFavoritesFilter ? styles.active : null]}>
-            <View style={styles.buttonContent}>
-              <Icon name="star" color="#fff" size={18} />
-            </View>
-          </Pressable>
-        )}
+        <Pressable
+          onPress={showFavorites}
+          style={[styles.button, showFavoritesFilter ? styles.active : null]}>
+          <View style={styles.buttonContent}>
+            <Icon name="star" color="#fff" size={18} />
+          </View>
+        </Pressable>
       </View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showFavoriteButtonOverlay}
+        onRequestClose={() => setShowFavoriteButtonOverlay(false)}>
+        <Pressable
+          style={styles.overlayContainer}
+          onPress={handleHideFavroritesOverlay}>
+          <View style={styles.overlayContent}>
+            <Text style={styles.buttonBody}>
+              This is the "Favorite" button. You can tap it to filter by your
+              favorite videos.
+            </Text>
+          </View>
+        </Pressable>
+      </Modal>
       {filteredVideos.length > 0 ? (
         <FlatList
           data={filteredVideos}
@@ -271,8 +281,41 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
-    paddingRight: 32,
+    paddingRight: 35,
     textAlign: 'left',
+  },
+  closeButton: {
+    backgroundColor: '#666',
+    padding: 10,
+    alignItems: 'center',
+  },
+  shadowProp: {
+    shadowColor: '#000',
+    shadowOffset: {width: -3, height: 5},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  buttonBody: {
+    color: '#fff',
+    textAlign: 'left',
+  },
+  overlayContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  overlayContent: {
+    position: 'absolute',
+    top: 177,
+    right: 10,
+    width: 250,
+    backgroundColor: 'rgba(0, 166, 255, 0.8)',
+    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
 });
 

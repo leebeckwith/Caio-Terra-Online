@@ -191,11 +191,11 @@ const LoginScreen = () => {
             value={pwd}
             onChange={text => setPassword(text)}
           />
-          <Pressable
-            onPress={() => setModalVisible(true)}
-            style={styles.forgot}>
-            <Text style={styles.label}>Forgot password?</Text>
-          </Pressable>
+          {/*<Pressable*/}
+          {/*  onPress={() => setModalVisible(true)}*/}
+          {/*  style={styles.forgot}>*/}
+          {/*  <Text style={styles.label}>Forgot password?</Text>*/}
+          {/*</Pressable>*/}
           <View style={styles.switchContainer}>
             <Text style={styles.label}>Keep me signed in</Text>
             <Switch
@@ -214,7 +214,7 @@ const LoginScreen = () => {
               styles.shadowProp,
               log && pwd ? styles.active : styles.inactive,
             ]}>
-            <Text style={styles.label}>SUBSCRIBER LOGIN</Text>
+            <Text style={styles.label}>SUBSCRIBER SIGN IN</Text>
           </Pressable>
         </View>
       </View>
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#fff',
     color: '#000',
-    width: '80%',
+    width: '80.5%',
     marginBottom: 20,
     padding: 10,
   },
