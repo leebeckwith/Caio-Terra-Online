@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
     justifyContent: 'space-between',
+    position: 'relative',
   },
   thumbnail: {
     width: '100%',
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
-    paddingRight: 32,
+    paddingRight: 44,
     textAlign: 'left',
   },
   wrapper: {

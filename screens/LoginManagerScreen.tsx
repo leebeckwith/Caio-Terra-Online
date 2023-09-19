@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageBackground, StyleSheet} from 'react-native';
+import {ImageBackground, Platform, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import LoginScreen from './LoginScreen';
 import CreateAccountScreen from './CreateAccountScreen';
@@ -7,6 +7,8 @@ import CreateAccountScreen from './CreateAccountScreen';
 const Tab = createMaterialTopTabNavigator();
 
 function LoginManagerScreen(): React.JSX.Element {
+  const tabBarMarginTop = Platform.OS === 'android' ? '10%' : '40%';
+
   return (
     <ImageBackground
       source={require('../assets/images/caio-terra-app.jpg')}
@@ -18,7 +20,7 @@ function LoginManagerScreen(): React.JSX.Element {
           tabBarScrollEnabled: false,
           tabBarIndicatorStyle: {
             height: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.25)',
+            backgroundColor: 'rgba(0, 166, 255, 0.25)',
           },
           tabBarIndicatorContainerStyle: {
             //backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -26,10 +28,13 @@ function LoginManagerScreen(): React.JSX.Element {
           tabBarStyle: {
             backgroundColor: 'transparent',
             elevation: 0,
-            marginTop: '40%',
+            marginTop: tabBarMarginTop,
+          },
+          tabBarLabelStyle: {
+            fontWeight: 'bold',
           },
           tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
-          tabBarActiveTintColor: '#00a6ff',
+          tabBarActiveTintColor: '#fff',
         }}>
         <Tab.Screen name="Sign In" component={LoginScreen} />
         <Tab.Screen name="Create Account" component={CreateAccountScreen} />
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sceneContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: 'rgba(0, 166, 255, 0.25)',
   },
   tabContainer: {
     minHeight: '50%',

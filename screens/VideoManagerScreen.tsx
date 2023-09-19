@@ -17,14 +17,17 @@ const VideoManagerScreen = () => {
         tabBarScrollEnabled: false,
         tabBarIndicatorStyle: {
           height: '100%',
-          backgroundColor: 'rgba(255, 255, 255, 0.25)',
+          backgroundColor: 'rgba(0, 166, 255, 0.25)',
         },
         tabBarStyle: {
           backgroundColor: 'transparent',
           elevation: 0,
         },
+        tabBarLabelStyle: {
+          fontWeight: 'bold',
+        },
         tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
-        tabBarActiveTintColor: '#00a6ff',
+        tabBarActiveTintColor: '#fff',
       }}>
       <Tab.Screen name="Search" component={VideoListing} />
       <Tab.Screen name="Matrix" component={VideoMatrixView} />

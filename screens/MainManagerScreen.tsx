@@ -26,7 +26,7 @@ function MainManagerScreen() {
               backgroundColor: 'rgba(58, 58, 58, 1)',
               paddingTop: 8,
               paddingBottom: 8,
-              height: 60,
+              height: 55,
               marginBottom: 0,
             },
             //tabBarActiveBackgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -38,7 +38,7 @@ function MainManagerScreen() {
             component={VideoManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="film" color={color} size={20} />
+                <Icon name="youtube-play" color={color} size={24} />
               ),
             }}
           />
@@ -47,7 +47,7 @@ function MainManagerScreen() {
             component={LessonPlansListingScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="book" color={color} size={20} />
+                <Icon name="book" color={color} size={24} />
               ),
             }}
           />
@@ -56,7 +56,7 @@ function MainManagerScreen() {
             component={CurriculumListingScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="cubes" color={color} size={20} />
+                <Icon name="cubes" color={color} size={21} />
               ),
             }}
           />
@@ -65,7 +65,7 @@ function MainManagerScreen() {
             component={AccountManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="user-circle" color={color} size={20} />
+                <Icon name="user-circle" color={color} size={22} />
               ),
             }}
           />

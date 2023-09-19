@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, Image, StyleSheet, FlatList, Pressable} from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
 
 interface VideoData {
@@ -61,9 +61,19 @@ const VideoFilterViewScreen: React.FC = () => {
             });
           });
 
-          setTechniques(Object.values(uniqueTechniques));
-          setPositions(Object.values(uniquePositions));
-          setTypes(Object.values(uniqueTypes));
+          const sortedTechniques = Object.values(uniqueTechniques).sort((a, b) =>
+            a.name.localeCompare(b.name),
+          );
+          const sortedPositions = Object.values(uniquePositions).sort((a, b) =>
+            a.name.localeCompare(b.name),
+          );
+          const sortedTypes = Object.values(uniqueTypes).sort((a, b) =>
+            a.name.localeCompare(b.name),
+          );
+
+          setTechniques(Object.values(sortedTechniques));
+          setPositions(Object.values(sortedPositions));
+          setTypes(Object.values(sortedTypes));
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -156,6 +166,12 @@ const VideoFilterViewScreen: React.FC = () => {
           modalProps={{
             animationType: 'fade',
           }}
+          textStyle={{
+            fontSize: 14,
+          }}
+          modalTitleStyle={{
+            fontWeight: 'bold',
+          }}
           open={positionOpen}
           setOpen={setPositionOpen}
           value={selectedPosition}
@@ -173,6 +189,12 @@ const VideoFilterViewScreen: React.FC = () => {
           modalProps={{
             animationType: 'fade',
           }}
+          textStyle={{
+            fontSize: 14,
+          }}
+          modalTitleStyle={{
+            fontWeight: 'bold',
+          }}
           open={techniqueOpen}
           setOpen={setTechniqueOpen}
           value={selectedTechnique}
@@ -189,6 +211,12 @@ const VideoFilterViewScreen: React.FC = () => {
           modalTitle="SELECT TYPE"
           modalProps={{
             animationType: 'fade',
+          }}
+          textStyle={{
+            fontSize: 14,
+          }}
+          modalTitleStyle={{
+            fontWeight: 'bold',
           }}
           open={typeOpen}
           setOpen={setTypeOpen}

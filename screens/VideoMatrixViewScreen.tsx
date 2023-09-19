@@ -45,6 +45,7 @@ const VideoMatrixView: React.FC = () => {
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
     openVideoModal(vimeoId, vimeoToken, user_id, videoId);
   };
+
   const categorizeVideosByField = (videos: VideoData[], field: string) => {
     const categorizedVideos: Record<string, VideoData[]> = {};
 
@@ -52,6 +53,7 @@ const VideoMatrixView: React.FC = () => {
       video[field].forEach(category => {
         const termKey = `${category.term_id}-${category.name.toLowerCase()}`;
         if (!categorizedVideos[termKey]) {
+          //console.log(field + ': ' + termKey);
           categorizedVideos[termKey] = [];
         }
         categorizedVideos[termKey].push(video);
@@ -81,7 +83,7 @@ const VideoMatrixView: React.FC = () => {
         console.error('Error fetching videos:', error);
         Alert.alert('Error', `There was an error getting the videos: ${error}`);
       } finally {
-        setExpandedCategory('types');
+        setExpandedCategory('video_types');
       }
     };
 
@@ -115,7 +117,9 @@ const VideoMatrixView: React.FC = () => {
   ) => {
     return (
       <View key={`category-${termId}-${categoryName}`}>
-        <Text style={styles.headerTitle}>{categoryName}</Text>
+        <Text style={styles.headerTitle}>
+          {termId.split('-').slice(1).join('-').toUpperCase()}
+        </Text>
         <FlatList
           data={category}
           renderItem={renderVideoItem}
@@ -132,17 +136,17 @@ const VideoMatrixView: React.FC = () => {
   return (
     <View style={styles.container}>
       <Pressable
-        onPress={() => toggleCategory('types')}
+        onPress={() => toggleCategory('video_types')}
         style={styles.categoryHeader}>
         <Icon
-          name={expandedCategory === 'types' ? 'minus' : 'plus'}
+          name={expandedCategory === 'video_types' ? 'minus' : 'plus'}
           size={18}
           color="white"
           style={styles.icon}
         />
         <Text style={styles.categoryName}>TYPES</Text>
       </Pressable>
-      {expandedCategory === 'types' && (
+      {expandedCategory === 'video_types' && (
         <ScrollView style={styles.categoryView}>
           {Object.keys(videoTypes).map(termId =>
             renderCategory(
@@ -154,17 +158,17 @@ const VideoMatrixView: React.FC = () => {
         </ScrollView>
       )}
       <Pressable
-        onPress={() => toggleCategory('positions')}
+        onPress={() => toggleCategory('video_positions')}
         style={styles.categoryHeader}>
         <Icon
-          name={expandedCategory === 'positions' ? 'minus' : 'plus'}
+          name={expandedCategory === 'video_positions' ? 'minus' : 'plus'}
           size={18}
           color="white"
           style={styles.icon}
         />
         <Text style={styles.categoryName}>POSITIONS</Text>
       </Pressable>
-      {expandedCategory === 'positions' && (
+      {expandedCategory === 'video_positions' && (
         <ScrollView style={styles.categoryView}>
           {Object.keys(videoPositions).map(termId =>
             renderCategory(
@@ -176,17 +180,17 @@ const VideoMatrixView: React.FC = () => {
         </ScrollView>
       )}
       <Pressable
-        onPress={() => toggleCategory('techniques')}
+        onPress={() => toggleCategory('video_techniques')}
         style={styles.categoryHeader}>
         <Icon
-          name={expandedCategory === 'techniques' ? 'minus' : 'plus'}
+          name={expandedCategory === 'video_techniques' ? 'minus' : 'plus'}
           size={18}
           color="white"
           style={styles.icon}
         />
         <Text style={styles.categoryTitle}>TECHNIQUES</Text>
       </Pressable>
-      {expandedCategory === 'techniques' && (
+      {expandedCategory === 'video_techniques' && (
         <ScrollView style={styles.categoryView}>
           {Object.keys(videoTechniques).map(termId =>
             renderCategory(

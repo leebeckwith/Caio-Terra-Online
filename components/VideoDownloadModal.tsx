@@ -137,7 +137,9 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
           <Text style={styles.modalTitle}>DOWNLOAD VIDEO</Text>
           <Text style={styles.modalBody}>
             Select the desired resolution for temporary playback on your device.
-            Your connection affects how quickly the download will proceed.
+            {'\n'}
+            {'\n'}
+            You have 25 downloads left until December 31, 2023
           </Text>
           <FlatList
             data={videoData}
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
     elevation: 5,
-    width: '80%',
+    width: '85%',
   },
   modalTitle: {
     color: '#000',

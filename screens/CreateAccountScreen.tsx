@@ -1,19 +1,13 @@
-/**
- * Caio Terra Online
- * Author: Mateo Nares
- *
- * @format
- */
 import React, {useState} from 'react';
 import {
   Alert,
-  Button, Pressable,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View
-} from "react-native";
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 
@@ -21,44 +15,22 @@ function CreateAccountScreen(): React.JSX.Element {
   // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [repeat_pwd, setRepeatPassword] = useState('');
   // useNavigation hook to access navigation object
   const navigation = useNavigation();
 
   // use API to validate username and password
-  const handleLogin = async () => {
-    if (!log || !pwd) {
-      Alert.alert('Invalid Login', 'Please enter a username and password.');
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append('log', log);
-      formData.append('pwd', pwd);
-      formData.append('lwa', '1');
-      formData.append('login-with-ajax', 'login');
-
-      const response = await fetch(
-        'https://caioterra.com/wp-admin/admin-ajax.php',
-        {
-          method: 'POST',
-          body: formData,
-        },
+  const handleCreateAccount = async productId => {
+    if (!log || !pwd || !email || !repeat_pwd) {
+      Alert.alert(
+        'Error',
+        'Please enter the required information to create your account.',
       );
-
-      const responseData = await response.json();
-      //console.log(responseData);
-
-      if (response.ok) {
-        if (responseData.result === false) {
-          Alert.alert('Error', responseData.error);
-        } else {
-          //Alert.alert('Login Successful', 'Welcome!');
-          navigation.navigate('Videos' as never); // Navigate to Videos after successful login
-        }
-      }
-    } catch (error) {
-      Alert.alert('Error', 'There was an error logging in.');
+      return false;
+    } else {
+      console.log(productId);
+      // enable payment and account activation
     }
   };
 
@@ -68,7 +40,8 @@ function CreateAccountScreen(): React.JSX.Element {
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>
-            Sign up and get access to over 2100 crystal-clear HD videos!
+            Sign up and get access to over 2600 crystal-clear HD videos,
+            including 25 offline video downloads per month!
           </Text>
           <TextInput
             autoCapitalize="none"
@@ -95,19 +68,37 @@ function CreateAccountScreen(): React.JSX.Element {
           <Password
             autoCapitalize="none"
             label="Repeat Password"
-            value={pwd}
+            value={repeat_pwd}
             onChange={text => setPassword(text)}
             style={styles.input}
           />
+          <View style={styles.terms}>
+            <Pressable>
+              <Text style={[styles.text, styles.link]}>Terms & Conditions</Text>
+            </Pressable>
+            <Pressable>
+              <Text style={[styles.text, styles.link]}>Privacy Policy</Text>
+            </Pressable>
+          </View>
           <Pressable
-            //onPress={handleBrowse}
-            style={[styles.button, styles.shadowProp]}>
-            <Text style={styles.label}>Annual Subscription ($249.99)</Text>
+            onPress={() => handleCreateAccount('annual_sub')}
+            style={[
+              styles.button,
+              styles.shadowProp,
+              log && email && pwd && repeat_pwd
+                ? styles.active
+                : styles.inactive,
+            ]}>
+            <Text style={styles.label}>ANNUAL SUBSCRIPTION ($249.99)</Text>
           </Pressable>
           <Pressable
-            //onPress={handleBrowse}
-            style={[styles.button, styles.shadowProp]}>
-            <Text style={styles.label}>Monthly Subscription ($24.99)</Text>
+            onPress={() => handleCreateAccount('monthly_sub')}
+            style={[
+              styles.button,
+              styles.shadowProp,
+              log && pwd ? styles.active : styles.inactive,
+            ]}>
+            <Text style={styles.label}>MONTHLY SUBSCRIPTION ($24.99)</Text>
           </Pressable>
         </View>
       </View>
@@ -120,15 +111,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     height: '100%',
     width: '100%',
-    marginTop: 35,
+    marginTop: 20,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: '#00a6ff',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
     marginBottom: 20,
+  },
+  inactive: {
+    backgroundColor: '#555',
+  },
+  active: {
+    backgroundColor: '#00a6ff',
   },
   container: {
     backgroundColor: 'transparent',
@@ -143,13 +140,20 @@ const styles = StyleSheet.create({
     marginRight: 30,
     paddingBottom: 20,
   },
+  terms: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   label: {
     color: '#fff',
+  },
+  link: {
+    color: '#00a6ff',
   },
   input: {
     backgroundColor: '#fff',
     color: '#000',
-    width: '80%',
+    width: '80.5%',
     marginBottom: 20,
     padding: 10,
   },
