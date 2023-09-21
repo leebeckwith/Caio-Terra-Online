@@ -30,7 +30,7 @@ function CreateAccountScreen(): React.JSX.Element {
       return false;
     } else {
       console.log(productId);
-      // enable payment and account activation
+      // enable Adapty payment and account activation
     }
   };
 

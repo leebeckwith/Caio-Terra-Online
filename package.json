@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.1",
+    "@react-native-community/netinfo": "^9.4.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/material-top-tabs": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
@@ -31,7 +32,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-tableview-simple": "^4.4.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-video": "^6.0.0-alpha.7",
+    "react-native-video": "^6.0.0-alpha.8",
     "react-native-vimeo-iframe": "^1.2.1",
     "react-native-webview": "^13.6.0",
     "react-redux": "^8.1.2",

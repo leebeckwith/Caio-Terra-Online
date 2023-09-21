@@ -80,25 +80,37 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
   const handleDownload = async (downloadLink: string, resolution: string) => {
     const downloadDate = formatDateForFileName();
     const downloadDest = `${RNFS.DocumentDirectoryPath}/${vimeoId}_${resolution}_${downloadDate}.mp4`;
-    setSelectedDownloadLink(downloadLink);
-    RNFS.downloadFile({
-      fromUrl: downloadLink,
-      toFile: downloadDest,
-      discretionary: true,
-    })
-      .promise.then((response: RNFS.DownloadResult) => {
-        //console.log('File downloaded!', response);
-        Alert.alert('File Downloaded', `Your file downloaded successfully.`);
-        setSelectedDownloadLink(null);
+
+    const fileExists = await RNFS.exists(downloadDest);
+
+    if (fileExists) {
+      Alert.alert(
+        'File Already Exists',
+        'The file you are trying to download already exists.',
+      );
+    } else {
+      setSelectedDownloadLink(downloadLink);
+      RNFS.downloadFile({
+        fromUrl: downloadLink,
+        toFile: downloadDest,
+        discretionary: true,
       })
-      .catch((err: Error) => {
-        //console.log('Download error:', err);
-        Alert.alert(
-          'File Downloaded Error',
-          `Your file didn't download successfully: ${err}`,
-        );
-        setSelectedDownloadLink(null);
-      });
+        .promise.then((response: RNFS.DownloadResult) => {
+          Alert.alert(
+            'File Downloaded',
+            'Your file downloaded successfully. You can find it on the OFFLINE tab.',
+          );
+          setSelectedDownloadLink(null);
+        })
+        .catch((err: Error) => {
+          //console.log('Download error:', err);
+          Alert.alert(
+            'File Downloaded Error',
+            `Your file didn't download successfully: ${err}`,
+          );
+          setSelectedDownloadLink(null);
+        });
+    }
   };
 
   const renderVideoItem = ({item}: {item: VideoDownloadItem}) => (
