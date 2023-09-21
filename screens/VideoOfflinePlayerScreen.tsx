@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Orientation, {
   useDeviceOrientationChange,

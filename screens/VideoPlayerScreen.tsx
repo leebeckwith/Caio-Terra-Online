@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   View,
@@ -43,7 +43,6 @@ const VideoPlayer = ({route}: {route: any}) => {
   const [noteContent, setNoteContent] = useState('');
   const [currentTime, setCurrentTime] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const playerRef = useRef(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isDownloadModalVisible, setIsDownloadModalVisible] = useState(false);
   const [isPlaybackRateModalVisible, setIsPlaybackRateModalVisible] =
@@ -104,10 +103,7 @@ const VideoPlayer = ({route}: {route: any}) => {
 
         const videoCaptionData = await captionResponse.json();
         if (videoCaptionData.data[0]) {
-          const videoCaptionDataLink = videoCaptionData.data[0].link.replace(
-            /&download=auto_generated_captions\.vtt/g,
-            '&cta.vtt',
-          );
+          const videoCaptionDataLink = videoCaptionData.data[0].link;
 
           const localFilePath = `${RNFS.DocumentDirectoryPath}/video_caption.vtt`;
 
@@ -248,7 +244,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   };
 
   const handleSeekToTimestamp = timestamp => {
-    playerRef.current.seek(Number(timestamp));
+    this.video.seek(Number(timestamp));
     setIsPaused(true);
   };
 
@@ -273,7 +269,6 @@ const VideoPlayer = ({route}: {route: any}) => {
 
   const handlePlaybackRateChange = (rate: number) => {
     setSelectedPlaybackRate(rate);
-    console.log(rate);
     setIsPaused(true);
   };
 
@@ -285,10 +280,6 @@ const VideoPlayer = ({route}: {route: any}) => {
   const openPlaybackRateModal = () => {
     setIsPaused(true);
     setIsPlaybackRateModalVisible(true);
-  };
-
-  const changePlaybackRate = () => {
-    setSelectedPlaybackRate(2);
   };
 
   const formatTime = timeInSeconds => {
@@ -361,10 +352,12 @@ const VideoPlayer = ({route}: {route: any}) => {
             <View>
               {selectedVideoCaptionFile ? (
                 <Video
-                  ref={playerRef}
+                  ref={ref => {
+                    this.video = ref;
+                  }}
                   source={{uri: selectedVideo}}
                   style={styles.videoPlayer}
-                  resizeMode="cover"
+                  resizeMode="contain"
                   controls={true}
                   paused={isPaused}
                   onProgress={onProgress}
@@ -384,10 +377,12 @@ const VideoPlayer = ({route}: {route: any}) => {
                 />
               ) : (
                 <Video
-                  ref={playerRef}
+                  ref={ref => {
+                    this.player = ref;
+                  }}
                   source={{uri: selectedVideo}}
                   style={styles.videoPlayer}
-                  resizeMode="cover"
+                  resizeMode="contain"
                   controls={true}
                   paused={isPaused}
                   onProgress={onProgress}

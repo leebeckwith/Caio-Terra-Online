@@ -12,7 +12,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useVideoOfflineModal} from '../components/VideoOfflinePlayerModalContext';
 import {useSelector} from 'react-redux';
 import RNFS, {unlink} from 'react-native-fs';
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const VideoDownloadsScreen = () => {
   const [downloadedFiles, setDownloadedFiles] = useState([]);
@@ -30,23 +30,40 @@ const VideoDownloadsScreen = () => {
   };
 
   const handleDeleteFile = async video => {
-    unlink(`${RNFS.DocumentDirectoryPath}/${video}`)
-      .then(() => {
-        const updatedMergedArray = downloadedFiles.filter(
-          item => item.videoFile !== video,
-        );
-        setDownloadedFiles(updatedMergedArray);
-        Alert.alert(
-          'File deleted',
-          'Your offline video was successfully deleted.',
-        );
-      })
-      .catch(error => {
-        Alert.alert(
-          'Error',
-          `There was an error deleting the offline video: ${error}`,
-        );
-      });
+    Alert.alert(
+      'Confirm Delete',
+      'Are you sure you want to delete this offline video?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            unlink(`${RNFS.DocumentDirectoryPath}/${video}`)
+              .then(() => {
+                const updatedMergedArray = downloadedFiles.filter(
+                  item => item.videoFile !== video,
+                );
+                setDownloadedFiles(updatedMergedArray);
+                Alert.alert(
+                  'File deleted',
+                  'Your offline video was successfully deleted.',
+                );
+              })
+              .catch(error => {
+                Alert.alert(
+                  'Error',
+                  `There was an error deleting the offline video: ${error}`,
+                );
+              });
+          },
+          style: 'destructive',
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   function parseDateFromString(inputString) {
@@ -161,17 +178,19 @@ const VideoDownloadsScreen = () => {
           style={styles.thumbnail}
         />
       </Pressable>
-      <Text style={styles.titleOverlay}>
-        {item.videoData.title.toUpperCase()} ({item.resolution.toUpperCase()})
-        {'\n'}
-        PLAYBACK EXPIRES IN {item.timeRemaining}
-      </Text>
-      <View style={styles.wrapper}>
-        <Pressable
-          style={styles.iconButton}
-          onPress={() => handleDeleteFile(item.videoFile)}>
-          <Icon name={'trash'} color="white" size={20} />
-        </Pressable>
+      <View style={styles.titleOverlayContainer}>
+        <Text style={styles.titleOverlay}>
+          {item.videoData.title.toUpperCase()} ({item.resolution.toUpperCase()})
+          {'\n'}
+          PLAYBACK EXPIRES IN {item.timeRemaining}
+        </Text>
+        <View style={styles.wrapper}>
+          <Pressable
+            style={styles.iconButton}
+            onPress={() => handleDeleteFile(item.videoFile)}>
+            <Icon name={'trash'} color="white" size={20} />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -223,33 +242,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
     justifyContent: 'space-between',
-    position: 'relative',
   },
   thumbnail: {
     width: '100%',
     height: 200,
   },
   titleOverlay: {
-    position: 'absolute',
-    bottom: 4,
-    left: 0,
-    right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
-    paddingRight: 44,
     textAlign: 'left',
+    width: '90%',
   },
   wrapper: {
-    position: 'absolute',
-    bottom: 8,
-    right: 0,
+    width: '10%',
+    alignItems: 'center',
   },
   iconButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#d11a2a',
     padding: 11,
+    height: '100%',
+  },
+  titleOverlayContainer: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 8,
+    left: 0,
+    right: 0,
+    flex: 1,
+    flexDirection: 'row',
   },
 });
 
