@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
+import CTAStyles from '../styles/styles';
 
 function CreateAccountScreen(): React.JSX.Element {
   // Data for login
@@ -39,14 +40,14 @@ function CreateAccountScreen(): React.JSX.Element {
     <ScrollView style={styles.background}>
       <View>
         <View style={styles.container}>
-          <Text style={styles.text}>
+          <Text style={[CTAStyles.text_light, styles.text]}>
             Sign up and get access to over 2600 crystal-clear HD videos,
             including 25 offline video downloads per month!
           </Text>
           <TextInput
             autoCapitalize="none"
             placeholder="Username"
-            style={styles.input}
+            style={[CTAStyles.cta_input, styles.input]}
             onChangeText={text => setUsername(text)}
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
             value={log}
@@ -55,7 +56,7 @@ function CreateAccountScreen(): React.JSX.Element {
             autoCapitalize="none"
             placeholder="Email"
             inputMode="email"
-            style={styles.input}
+            style={[CTAStyles.cta_input, styles.input]}
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           />
           <Password
@@ -63,42 +64,50 @@ function CreateAccountScreen(): React.JSX.Element {
             label="Password"
             value={pwd}
             onChange={text => setPassword(text)}
-            style={styles.input}
+            style={[CTAStyles.cta_input, styles.input]}
           />
           <Password
             autoCapitalize="none"
             label="Repeat Password"
             value={repeat_pwd}
             onChange={text => setPassword(text)}
-            style={styles.input}
+            style={[CTAStyles.cta_input, styles.input]}
           />
           <View style={styles.terms}>
             <Pressable>
-              <Text style={[styles.text, styles.link]}>Terms & Conditions</Text>
+              <Text style={[styles.text, CTAStyles.text_link]}>
+                Terms & Conditions
+              </Text>
             </Pressable>
             <Pressable>
-              <Text style={[styles.text, styles.link]}>Privacy Policy</Text>
+              <Text style={[styles.text, CTAStyles.text_link]}>
+                Privacy Policy
+              </Text>
             </Pressable>
           </View>
           <Pressable
             onPress={() => handleCreateAccount('annual_sub')}
             style={[
               styles.button,
-              styles.shadowProp,
+              CTAStyles.shadowProp,
               log && email && pwd && repeat_pwd
-                ? styles.active
-                : styles.inactive,
+                ? CTAStyles.active
+                : CTAStyles.inactive,
             ]}>
-            <Text style={styles.label}>ANNUAL SUBSCRIPTION ($249.99)</Text>
+            <Text style={CTAStyles.text_light}>
+              ANNUAL SUBSCRIPTION ($249.99)
+            </Text>
           </Pressable>
           <Pressable
             onPress={() => handleCreateAccount('monthly_sub')}
             style={[
               styles.button,
-              styles.shadowProp,
-              log && pwd ? styles.active : styles.inactive,
+              CTAStyles.shadowProp,
+              log && pwd ? CTAStyles.active : CTAStyles.inactive,
             ]}>
-            <Text style={styles.label}>MONTHLY SUBSCRIPTION ($24.99)</Text>
+            <Text style={CTAStyles.text_light}>
+              MONTHLY SUBSCRIPTION ($24.99)
+            </Text>
           </Pressable>
         </View>
       </View>
@@ -121,12 +130,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 20,
   },
-  inactive: {
-    backgroundColor: '#555',
-  },
-  active: {
-    backgroundColor: '#00a6ff',
-  },
   container: {
     backgroundColor: 'transparent',
     flex: 1,
@@ -134,7 +137,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#fff',
     display: 'flex',
     marginLeft: 30,
     marginRight: 30,
@@ -144,27 +146,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  label: {
-    color: '#fff',
-  },
-  link: {
-    color: '#00a6ff',
-  },
   input: {
-    backgroundColor: '#fff',
-    color: '#000',
     width: '80.5%',
     marginBottom: 20,
     padding: 10,
-  },
-  secondary: {
-    backgroundColor: '#666',
-  },
-  shadowProp: {
-    shadowColor: '#000',
-    shadowOffset: {width: -3, height: 5},
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
   },
 });
 

@@ -6,6 +6,7 @@ import AccountManagerScreen from './AccountManagerScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
 import LessonPlansListingScreen from './LessonPlansListingScreen';
 import Orientation from 'react-native-orientation-locker';
+import CTAStyles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
@@ -13,7 +14,7 @@ const Tab = createBottomTabNavigator();
 function MainManagerScreen() {
   Orientation.unlockAllOrientations();
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView style={[CTAStyles.cta_black, styles.background]}>
       <View style={styles.tabContainer}>
         <Tab.Navigator
           initialRouteName="Videos"
@@ -77,16 +78,12 @@ function MainManagerScreen() {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#000',
     flex: 1,
   },
   tabContainer: {
     flex: 1,
     position: 'relative',
     padding: 10,
-  },
-  sceneContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
   },
 });
 

@@ -1,10 +1,11 @@
 import React from 'react';
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
 import {clearCredentials} from '../storage';
 import {useDispatch} from 'react-redux';
 import {clearCachedVideos} from '../redux/cachedVideoSlice';
+import CTAStyles from '../styles/styles';
 //import {WebView} from 'react-native-webview';
 //import {Vimeo} from 'react-native-vimeo-iframe';
 
@@ -22,7 +23,7 @@ function AccountScreen(): React.JSX.Element {
   };
 
   return (
-    <View style={styles.stage}>
+    <View style={CTAStyles.container}>
       <ScrollView>
         <TableView>
           {/*<Section>*/}
@@ -66,10 +67,7 @@ function AccountScreen(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  stage: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
+
 });
 
 export default AccountScreen;

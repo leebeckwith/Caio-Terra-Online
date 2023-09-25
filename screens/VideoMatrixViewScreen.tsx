@@ -67,7 +67,7 @@ const VideoMatrixView: React.FC = () => {
     const fetchVideos = async () => {
       try {
         if (cachedVideosData && cachedVideosData.length > 0) {
-          console.log('vm: cached');
+          //console.log('vm: cached');
           const categorizedByTypes: Record<string, VideoData[]> =
             categorizeVideosByField(cachedVideosData, 'video_types');
           const categorizedByPositions: Record<string, VideoData[]> =

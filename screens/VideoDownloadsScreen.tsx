@@ -9,20 +9,24 @@ import {
   View,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {useVideoOfflineModal} from '../components/VideoOfflinePlayerModalContext';
+import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
+import {getCredentials} from '../storage';
 import RNFS, {unlink} from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const VideoDownloadsScreen = () => {
   const [downloadedFiles, setDownloadedFiles] = useState([]);
   const cachedVideosData = useSelector(state => state.cachedVideos);
-  const {openOfflineVideoModal} = useVideoOfflineModal();
+  const {openVideoModal} = useVideoModal();
 
   const handleVideoPress = async video => {
+    const {user_id} = await getCredentials();
+    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
     const selectedVideoPath = `${RNFS.DocumentDirectoryPath}/${video}`;
+    const vimeoId = video.split('_')[0];
     try {
-      openOfflineVideoModal(selectedVideoPath);
+      openVideoModal(vimeoId, vimeoToken, user_id, null, selectedVideoPath);
     } catch (error) {
       console.error('Error playing offline video:', error);
       Alert.alert('Error', `There was an error playing the video: ${error}`);

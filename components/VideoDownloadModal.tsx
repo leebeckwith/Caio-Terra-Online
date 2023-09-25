@@ -149,9 +149,6 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
           <Text style={styles.modalTitle}>DOWNLOAD VIDEO</Text>
           <Text style={styles.modalBody}>
             Select the desired resolution for temporary playback on your device.
-            {'\n'}
-            {'\n'}
-            You have 25 downloads left until December 31, 2023
           </Text>
           <FlatList
             data={videoData}

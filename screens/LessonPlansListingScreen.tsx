@@ -12,6 +12,7 @@ import {
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
+import CTAStyles from '../styles/styles';
 
 interface VideoData {
   id: number;
@@ -139,7 +140,7 @@ const LessonPlansListing: React.FC = () => {
     <View style={styles.videoItemContainer}>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.searchInput}
+          style={[CTAStyles.cta_input, styles.searchInput]}
           placeholder={`Search ${filteredVideos.length} lessons (click for details)...`}
           placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           onChangeText={handleSearch}
@@ -173,18 +174,12 @@ const LessonPlansListing: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   searchInput: {
     height: 40,
-    color: '#050505',
-    backgroundColor: '#fff',
     marginRight: 8,
     paddingHorizontal: 10,
     width: '100%',

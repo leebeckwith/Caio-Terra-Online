@@ -20,6 +20,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 import {useFavorites} from '../components/FavoriteContext';
 import {getCredentials} from '../storage';
+import {useSelector} from 'react-redux';
+import CTAStyles from '../styles/styles';
 
 interface VideoNote {
   id: number;
@@ -30,13 +32,16 @@ interface VideoNote {
 }
 
 const VideoPlayer = ({route}: {route: any}) => {
-  const {vimeoId, vimeoToken, userId, videoId} = route.params
+  const {vimeoId, vimeoToken, userId, videoId, videoPath} = route.params
     ? route.params
     : '';
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [selectedVideoCaptionFile, setSelectedVideoCaptionFile] = useState<
     string | ''
   >(null);
+  const [selectedVideoId, setSelectedVideoId] = useState<number | null>(
+    videoId,
+  );
   const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
   const [selectedPlaybackRate, setSelectedPlaybackRate] = useState<number>(1);
   const [notes, setNotes] = useState<VideoNote[]>([]);
@@ -51,6 +56,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     Orientation.getInitialOrientation(),
   );
   const [isLandscape, setIsLandscape] = useState(false);
+  const cachedVideosData = useSelector(state => state.cachedVideos);
   const {toggleFavorite} = useFavorites();
 
   useDeviceOrientationChange(o => {
@@ -64,6 +70,16 @@ const VideoPlayer = ({route}: {route: any}) => {
   });
 
   useEffect(() => {
+    const setVideoFromPath = async () => {
+      const videoInfo = cachedVideosData.filter(video =>
+        vimeoId.includes(video.vimeoid.toString()),
+      );
+      const videoId = videoInfo[0].id;
+
+      setSelectedVideoId(videoId);
+      setSelectedTitle(videoInfo[0].title);
+      setSelectedVideo(videoPath);
+    };
     const getVimeoVideo = async () => {
       try {
         // Construct the Vimeo API URL for the specific video
@@ -126,14 +142,14 @@ const VideoPlayer = ({route}: {route: any}) => {
           'Error',
           `There was an error getting the video caption from Vimeo: ${error}`,
         );
-        setSelectedVideo(null);
+        setSelectedVideoCaptionFile('');
       }
     };
 
     const fetchVideoNotes = async () => {
       try {
         const response = await fetch(
-          `https://caioterra.com/app-api/get-video-notes.php?user_id=${userId}&video_id=${videoId}`,
+          `https://caioterra.com/app-api/get-video-notes.php?user_id=${userId}&video_id=${selectedVideoId}`,
         );
         const data = await response.json();
         setNotes(data);
@@ -176,10 +192,14 @@ const VideoPlayer = ({route}: {route: any}) => {
       }
     };
     //setCurrentOrientation(Orientation.getInitialOrientation());
-    getVimeoVideo();
-    getVideoCaption();
-    fetchVideoNotes();
-    getFavoriteStatus();
+    if (videoPath) {
+      setVideoFromPath();
+    } else {
+      getVimeoVideo();
+      getVideoCaption();
+      fetchVideoNotes();
+      getFavoriteStatus();
+    };
   }, []);
 
   const handleNoteSubmit = async () => {
@@ -303,7 +323,7 @@ const VideoPlayer = ({route}: {route: any}) => {
         <Pressable
           style={styles.button}
           onPress={() => handleSeekToTimestamp(item.note_playback_timestamp)}>
-          <Text style={styles.noteTimestamp}>
+          <Text style={CTAStyles.text_link}>
             {formatTime(item.note_playback_timestamp)}
           </Text>
         </Pressable>
@@ -315,7 +335,7 @@ const VideoPlayer = ({route}: {route: any}) => {
         <View style={styles.deleteButtonContainer}>
           <Pressable
             onPress={() => handleDeleteNote(item.id)}
-            style={[styles.button, styles.delete]}>
+            style={[styles.button, CTAStyles.delete]}>
             <Icon
               name="trash"
               color="white"
@@ -329,7 +349,11 @@ const VideoPlayer = ({route}: {route: any}) => {
   });
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        CTAStyles.container,
+        videoPath ? styles.containerOffline : styles.container,
+      ]}>
       {isDownloadModalVisible && (
         <VideoDownloadModal
           isVisible={isDownloadModalVisible}
@@ -381,7 +405,7 @@ const VideoPlayer = ({route}: {route: any}) => {
                     this.player = ref;
                   }}
                   source={{uri: selectedVideo}}
-                  style={styles.videoPlayer}
+                  style={[styles.videoPlayer, styles.noCap]}
                   resizeMode="contain"
                   controls={true}
                   paused={isPaused}
@@ -390,76 +414,82 @@ const VideoPlayer = ({route}: {route: any}) => {
                 />
               )}
             </View>
-            <View style={styles.wrapper}>
-              <View style={[styles.iconsLeft, styles.iconContainer]}>
-                <Pressable
-                  style={[styles.button, styles.inactive]}
-                  onPress={openDownloadModal}>
+            {!videoPath && (
+              <View style={styles.wrapper}>
+                <View style={[styles.iconsLeft, styles.iconContainer]}>
+                  <Pressable
+                    style={[styles.button, CTAStyles.inactive]}
+                    onPress={openDownloadModal}>
+                    <Icon
+                      name="download"
+                      color="white"
+                      size={20}
+                      style={styles.iconsLeft}
+                    />
+                  </Pressable>
+                  {Platform.OS === 'android' && (
+                    <Pressable
+                      style={[styles.button, CTAStyles.inactive]}
+                      onPress={openPlaybackRateModal}>
+                      <View style={styles.playbackRateContainer}>
+                        <Icon
+                          name="clock-o"
+                          color="white"
+                          size={20}
+                          style={styles.iconsLeft}
+                        />
+                        <Text style={[CTAStyles.text_light, styles.iconToLeft]}>
+                          {selectedPlaybackRate.toFixed(2)}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  )}
+                </View>
+                <Pressable style={styles.button} onPress={handleFavoritePress}>
                   <Icon
-                    name="download"
+                    name={isFavorite ? 'star' : 'star-o'}
                     color="white"
                     size={20}
-                    style={styles.iconsLeft}
+                    style={styles.iconsRight}
                   />
                 </Pressable>
-                {Platform.OS === 'android' && (
-                  <Pressable
-                    style={[styles.button, styles.inactive]}
-                    onPress={openPlaybackRateModal}>
-                    <View style={styles.playbackRateContainer}>
-                      <Icon
-                        name="clock-o"
-                        color="white"
-                        size={20}
-                        style={styles.iconsLeft}
-                      />
-                      <Text style={[styles.text, styles.iconToLeft]}>
-                        {selectedPlaybackRate.toFixed(2)}
-                      </Text>
-                    </View>
-                  </Pressable>
-                )}
               </View>
-              <Pressable style={styles.button} onPress={handleFavoritePress}>
-                <Icon
-                  name={isFavorite ? 'star' : 'star-o'}
-                  color="white"
-                  size={20}
-                  style={styles.iconsRight}
+            )}
+          </View>
+          {!videoPath && (
+            <View>
+              <View>
+                <TextInput
+                  placeholder={`Add note at ${formatTime(currentTime)}`}
+                  placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+                  value={noteContent}
+                  onChangeText={setNoteContent}
+                  style={[CTAStyles.cta_input, styles.noteInput]}
                 />
-              </Pressable>
+                <Pressable
+                  onPress={handleNoteSubmit}
+                  disabled={!noteContent}
+                  style={[
+                    styles.button,
+                    styles.noteButton,
+                    noteContent ? CTAStyles.active : CTAStyles.inactive,
+                  ]}>
+                  <Text style={styles.noteButtonText}>ADD NOTE</Text>
+                </Pressable>
+              </View>
+              <FlatList
+                style={styles.notesListContainer}
+                data={notes.sort((a, b) => b.id - a.id)}
+                keyExtractor={(item, id) => id.toString()}
+                showsVerticalScrollIndicator={true}
+                indicatorStyle={'white'}
+                renderItem={({item}) => <NoteItem item={item} />}
+              />
             </View>
-          </View>
-          <View>
-            <TextInput
-              placeholder={`Add note at ${formatTime(currentTime)}`}
-              placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-              value={noteContent}
-              onChangeText={setNoteContent}
-              style={styles.noteInput}
-            />
-            <Pressable
-              onPress={handleNoteSubmit}
-              disabled={!noteContent}
-              style={[
-                styles.button,
-                styles.noteButton,
-                noteContent ? styles.active : styles.inactive,
-              ]}>
-              <Text style={styles.noteButtonText}>ADD NOTE</Text>
-            </Pressable>
-          </View>
-          <FlatList
-            style={styles.notesListContainer}
-            data={notes.sort((a, b) => b.id - a.id)}
-            keyExtractor={(item, id) => id.toString()}
-            showsVerticalScrollIndicator={true}
-            indicatorStyle={'white'}
-            renderItem={({item}) => <NoteItem item={item} />}
-          />
+          )}
         </View>
       ) : (
-        <Loader />
+        !videoPath && <Loader />
       )}
     </View>
   );
@@ -467,8 +497,6 @@ const VideoPlayer = ({route}: {route: any}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#000',
     padding: 10,
     maxHeight: '100%',
     minHeight: 600,
@@ -476,13 +504,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
-  text: {
-    color: '#fff',
+  containerOffline: {
+    padding: 10,
+    paddingBottom: 20,
+    borderColor: '#fff',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
   videoPlayer: {
     width: '100%',
     aspectRatio: 16 / 9,
     backgroundColor: '#000',
+  },
+  noCap: {
+    borderColor: '#555',
+    borderWidth: 1,
   },
   wrapper: {
     flexDirection: 'row',
@@ -514,15 +550,6 @@ const styles = StyleSheet.create({
   iconsLeft: {
     alignItems: 'flex-start',
   },
-  inactive: {
-    backgroundColor: '#555',
-  },
-  active: {
-    backgroundColor: '#00a6ff',
-  },
-  delete: {
-    backgroundColor: '#d11a2a',
-  },
   button: {
     padding: 11,
     marginHorizontal: 2.5,
@@ -541,9 +568,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   noteInput: {
-    backgroundColor: '#fff',
     height: 40,
-    color: '#050505',
     marginBottom: 10,
     paddingHorizontal: 10,
   },
@@ -560,9 +585,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 5,
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
-  },
-  noteTimestamp: {
-    color: '#00a6ff',
   },
   inlineButton: {
     flex: 1,
@@ -585,16 +607,6 @@ const styles = StyleSheet.create({
   iconToLeft: {
     fontWeight: 'bold',
     marginLeft: 8,
-  },
-  captionText: {
-    fontSize: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-  },
-  captionContainer: {
-    position: 'absolute',
-    top: '75%',
-    left: 0,
-    backgroundColor: 'transparent',
   },
 });
 

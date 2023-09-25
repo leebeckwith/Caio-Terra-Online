@@ -38,7 +38,7 @@ const VideoFilterViewScreen: React.FC = () => {
     const fetchVideos = async () => {
       try {
         if (cachedVideosData && cachedVideosData.length > 0) {
-          console.log('vf: cached');
+          //console.log('vf: cached');
           setVideos(cachedVideosData);
 
           const uniqueTechniques: {[id: number]: {id: number; name: string}} =

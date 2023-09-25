@@ -12,6 +12,7 @@ import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
+import CTAStyles from '../styles/styles';
 
 interface Lesson {
   id: number;
@@ -222,7 +223,7 @@ const CurriculumListing: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={CTAStyles.container}>
       {categories.length > 0 ? (
         <FlatList
           data={categories}
@@ -237,10 +238,6 @@ const CurriculumListing: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
   title: {
     color: '#fff',
     fontSize: 14,

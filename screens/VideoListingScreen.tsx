@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
 import {getCredentials} from '../storage';
+import CTAStyles from '../styles/styles';
 
 interface VideoData {
   id: number;
@@ -52,7 +53,7 @@ const VideoListing = () => {
           dispatch(setCachedVideos(cachedVideosData));
           setVideos(cachedVideosData);
           setFilteredVideos(cachedVideosData);
-          console.log('vl: cached');
+          //console.log('vl: cached');
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -72,7 +73,7 @@ const VideoListing = () => {
     const {user_id} = await getCredentials();
     // CTA App Vimeo Bearer token
     const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+    openVideoModal(vimeoId, vimeoToken, user_id, videoId, null);
   };
 
   const handleFavoritePress = async (id: number) => {
@@ -137,7 +138,9 @@ const VideoListing = () => {
       <View style={styles.videoItemContainer}>
         <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
           <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-          <Text style={styles.titleOverlay}>{item.title.toUpperCase()}</Text>
+          <Text style={[CTAStyles.text_light, styles.titleOverlay]}>
+            {item.title.toUpperCase()}
+          </Text>
         </Pressable>
         <View style={styles.wrapper}>
           <Pressable
@@ -155,10 +158,10 @@ const VideoListing = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[CTAStyles.container]}>
       <View style={styles.inputContainer}>
         <TextInput
-          style={styles.searchInput}
+          style={[CTAStyles.cta_input, styles.searchInput]}
           placeholder={`Search ${filteredVideos.length} videos...`}
           placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           onChangeText={handleSearch}
@@ -167,7 +170,11 @@ const VideoListing = () => {
         />
         <Pressable
           onPress={showFavorites}
-          style={[styles.button, showFavoritesFilter ? styles.active : null]}>
+          style={[
+            CTAStyles.inactive,
+            styles.button,
+            showFavoritesFilter ? CTAStyles.active : null,
+          ]}>
           <View style={styles.buttonContent}>
             <Icon name="star" color="#fff" size={18} />
           </View>
@@ -182,7 +189,7 @@ const VideoListing = () => {
           style={styles.overlayContainer}
           onPress={handleHideFavroritesOverlay}>
           <View style={styles.overlayContent}>
-            <Text style={styles.buttonBody}>
+            <Text style={[CTAStyles.text_light, styles.buttonBody]}>
               This is the "Favorite" button. You can tap it to filter by your
               favorite videos.
             </Text>
@@ -200,17 +207,15 @@ const VideoListing = () => {
           keyExtractor={item => item.id.toString()}
         />
       ) : (
-        <Text style={styles.title}>No videos found.</Text>
+        <Text style={[CTAStyles.text_light, styles.title]}>
+          No videos found.
+        </Text>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -219,8 +224,6 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     height: 40,
-    color: '#050505',
-    backgroundColor: '#fff',
     marginBottom: 10,
     marginTop: 10,
     marginRight: 8,
@@ -228,14 +231,11 @@ const styles = StyleSheet.create({
   },
   videoItemContainer: {
     marginBottom: 8,
+    position: 'relative',
   },
   title: {
-    width: '95%',
-    color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
-    marginTop: 8,
-    marginBottom: 10,
   },
   thumbnail: {
     width: '100%',
@@ -251,19 +251,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#555',
     padding: 11,
     marginHorizontal: 2.5,
-  },
-  flex: {
-    flex: 1,
-  },
-  active: {
-    backgroundColor: '#00a6ff',
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
   },
   left: {
     marginLeft: 8,
@@ -277,26 +266,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
     padding: 8,
     paddingRight: 35,
     textAlign: 'left',
   },
-  closeButton: {
-    backgroundColor: '#666',
-    padding: 10,
-    alignItems: 'center',
-  },
-  shadowProp: {
-    shadowColor: '#000',
-    shadowOffset: {width: -3, height: 5},
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-  },
   buttonBody: {
-    color: '#fff',
     textAlign: 'left',
   },
   overlayContainer: {

@@ -10,6 +10,7 @@ export const VideoModalProvider = ({children}) => {
     vimeoToken: null,
     userId: null,
     videoId: null,
+    videoPath: null,
   });
 
   const deleteLocalVTTFile = async () => {
@@ -25,8 +26,8 @@ export const VideoModalProvider = ({children}) => {
     }
   };
 
-  const openVideoModal = (vimeoId, vimeoToken, userId, videoId) => {
-    setSelectedVideoInfo({vimeoId, vimeoToken, userId, videoId});
+  const openVideoModal = (vimeoId, vimeoToken, userId, videoId, videoPath) => {
+    setSelectedVideoInfo({vimeoId, vimeoToken, userId, videoId, videoPath});
     setVideoModalVisible(true);
   };
 
@@ -38,6 +39,7 @@ export const VideoModalProvider = ({children}) => {
       vimeoToken: null,
       userId: null,
       videoId: null,
+      videoPath: null,
     });
   };
 

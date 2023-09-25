@@ -1,5 +1,6 @@
 import React, {useState, FC} from 'react';
 import {StyleSheet, Platform, TextInput, View} from 'react-native';
+import CTAStyles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface PasswordProps {
@@ -7,7 +8,7 @@ interface PasswordProps {
   onChange: (text: string) => void;
   label?: string;
   height?: number;
-  validators?: any[]; // You can replace 'any' with a more specific type for validators if needed
+  validators?: any[];
 }
 
 const Password: FC<PasswordProps> = props => {
@@ -20,10 +21,10 @@ const Password: FC<PasswordProps> = props => {
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.container}>
+      <View style={[CTAStyles.input_bg, styles.container]}>
         <TextInput
           autoCapitalize="none"
-          style={styles.input}
+          style={[CTAStyles.cta_input, styles.input]}
           onChangeText={text => {
             onChangeText(text);
             props.onChange(text);
@@ -40,7 +41,7 @@ const Password: FC<PasswordProps> = props => {
           name={icon}
           color={iconColor}
           onPress={() => setVisibility(!visible)}
-          style={styles.icons}
+          style={[CTAStyles.input_bg, styles.icons]}
         />
       </View>
     </View>
@@ -57,7 +58,6 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   container: {
-    backgroundColor: '#fff',
     display: 'flex',
     flexDirection: 'row',
     ...Platform.select({
@@ -76,13 +76,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    backgroundColor: '#fff',
-    color: '#000',
     width: '95%',
     textAlignVertical: 'center',
   },
   icons: {
-    backgroundColor: '#fff',
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 1,

@@ -19,6 +19,7 @@ import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
 import Orientation from 'react-native-orientation-locker';
 import {storeCredentials, getCredentials} from '../storage';
+import CTAStyles from '../styles/styles';
 
 const LoginScreen = () => {
   // Data for login
@@ -103,10 +104,10 @@ const LoginScreen = () => {
                     : video,
                 );
                 dispatch(setCachedVideos(updatedData));
-                console.log('login: new w/ fav');
+                //console.log('login: new w/ fav');
               } else {
                 dispatch(setCachedVideos(data));
-                console.log('login: new w/o fav');
+                //console.log('login: new w/o fav');
               }
               navigation.navigate('Main', {screen: 'Videos', initial: false});
             }
@@ -166,7 +167,7 @@ const LoginScreen = () => {
               <Pressable
                 style={[styles.button]}
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.label}>Reset Password</Text>
+                <Text style={CTAStyles.text_light}>Reset Password</Text>
               </Pressable>
             </View>
           </Pressable>
@@ -179,7 +180,7 @@ const LoginScreen = () => {
             autoCapitalize="none"
             placeholder="Username"
             keyboardType="default"
-            style={styles.input}
+            style={[CTAStyles.cta_input, styles.input]}
             returnKeyType="next"
             onChangeText={text => setUsername(text)}
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
@@ -197,7 +198,7 @@ const LoginScreen = () => {
           {/*  <Text style={styles.label}>Forgot password?</Text>*/}
           {/*</Pressable>*/}
           <View style={styles.switchContainer}>
-            <Text style={styles.label}>Keep me signed in</Text>
+            <Text style={CTAStyles.text_light}>Keep me signed in</Text>
             <Switch
               trackColor={{false: '#333', true: '#00a6ff'}}
               thumbColor={isEnabled ? '#fff' : '#fff'}
@@ -211,10 +212,10 @@ const LoginScreen = () => {
             onPress={handleLogin}
             style={[
               styles.button,
-              styles.shadowProp,
-              log && pwd ? styles.active : styles.inactive,
+              CTAStyles.shadowProp,
+              log && pwd ? CTAStyles.active : CTAStyles.inactive,
             ]}>
-            <Text style={styles.label}>SUBSCRIBER SIGN IN</Text>
+            <Text style={CTAStyles.text_light}>SUBSCRIBER SIGN IN</Text>
           </Pressable>
         </View>
       </View>
@@ -223,7 +224,7 @@ const LoginScreen = () => {
       </Modal>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   background: {
@@ -261,24 +262,10 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginBottom: 20,
   },
-  inactive: {
-    backgroundColor: '#555',
-  },
-  active: {
-    backgroundColor: '#00a6ff',
-  },
-  secondary: {
-    backgroundColor: '#666',
-  },
   input: {
-    backgroundColor: '#fff',
-    color: '#000',
     width: '80.5%',
     marginBottom: 20,
     padding: 10,
-  },
-  label: {
-    color: '#fff',
   },
   logo: {
     padding: 0,
@@ -301,12 +288,6 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginLeft: 10,
-  },
-  shadowProp: {
-    shadowColor: '#000',
-    shadowOffset: {width: -3, height: 5},
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
   },
 });
 

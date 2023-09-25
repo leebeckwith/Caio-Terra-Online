@@ -5,13 +5,14 @@ import VideoFilterView from './VideoFilterViewScreen';
 import VideoMatrixView from './VideoMatrixViewScreen';
 import VideoDownloadsScreen from './VideoDownloadsScreen';
 import {StyleSheet} from 'react-native';
+import CTAStyles from '../styles/styles';
 
 const Tab = createMaterialTopTabNavigator();
 
 const VideoManagerScreen = () => {
   return (
     <Tab.Navigator
-      sceneContainerStyle={styles.sceneContainer}
+      sceneContainerStyle={CTAStyles.activeAlpha}
       style={styles.tabContainer}
       screenOptions={{
         tabBarScrollEnabled: false,

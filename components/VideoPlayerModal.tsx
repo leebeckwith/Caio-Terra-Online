@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, View, StyleSheet, Pressable} from 'react-native';
+import {Modal, View, StyleSheet, Pressable, Text} from 'react-native';
 import VideoPlayer from '../screens/VideoPlayerScreen';
 import {useVideoModal} from './VideoPlayerModalContext';
 
@@ -15,6 +15,9 @@ const VideoPlayerModal = () => {
       <Pressable style={styles.modalBackground} onPress={closeVideoModal}>
         <Pressable>
           <View style={[styles.modalContent, styles.shadowPropBottom]}>
+            {/*<Pressable onPress={closeVideoModal} style={styles.closeButton}>*/}
+            {/*  <Text style={styles.buttonText}>CLICK ANYWHERE OUTSIDE OF PLAYER TO CLOSE WINDOW</Text>*/}
+            {/*</Pressable>*/}
             <VideoPlayer route={{params: selectedVideoInfo}} />
           </View>
         </Pressable>
@@ -41,6 +44,19 @@ const styles = StyleSheet.create({
     shadowOffset: {width: -3, height: 3},
     shadowOpacity: 0.6,
     shadowRadius: 5,
+  },
+  closeButton: {
+    backgroundColor: 'transparent',
+    padding: 5,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: -20,
+  },
+  buttonText: {
+    fontSize: 9,
+    color: '#ccc',
+    textAlign: 'center',
   },
 });
 
