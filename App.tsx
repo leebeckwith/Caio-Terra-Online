@@ -9,12 +9,14 @@ import {VideoModalProvider} from './components/VideoPlayerModalContext';
 import VideoPlayerModal from './components/VideoPlayerModal';
 import {Provider} from 'react-redux';
 import store from './store';
+import {adapty} from 'react-native-adapty';
 
 const Stack = createStackNavigator();
 
 function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
+    adapty.activate('public_live_JypviS8L.RoQCUaMMNOPiIJBMqtqN');
   }, []);
 
   return (

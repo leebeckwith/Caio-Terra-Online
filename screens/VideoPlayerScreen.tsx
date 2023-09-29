@@ -264,7 +264,7 @@ const VideoPlayer = ({route}: {route: any}) => {
   };
 
   const handleSeekToTimestamp = timestamp => {
-    this.video.seek(Number(timestamp));
+    this.player.seek(Number(timestamp));
     setIsPaused(true);
   };
 

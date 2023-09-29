@@ -1,22 +1,42 @@
-import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
 import {clearCredentials} from '../storage';
 import {useDispatch} from 'react-redux';
 import {clearCachedVideos} from '../redux/cachedVideoSlice';
 import CTAStyles from '../styles/styles';
-//import {WebView} from 'react-native-webview';
-//import {Vimeo} from 'react-native-vimeo-iframe';
 
-function AccountScreen(): React.JSX.Element {
+function AccountScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
-      await clearCredentials();
-      dispatch(clearCachedVideos());
-      navigation.navigate('Login');
+      Alert.alert(
+        'Confirm Sign Out',
+        'Are you sure you want to sign out?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Sign Out',
+            onPress: () => {
+              clearCredentials();
+              dispatch(clearCachedVideos());
+              navigation.navigate('Login');
+            },
+          },
+        ],
+        {cancelable: false},
+      );
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -24,50 +44,47 @@ function AccountScreen(): React.JSX.Element {
 
   return (
     <View style={CTAStyles.container}>
-      <ScrollView>
+      <View>
         <TableView>
-          {/*<Section>*/}
-          {/*  <WebView*/}
-          {/*    source={{*/}
-          {/*      uri: 'https://player.vimeo.com/video/854515055',*/}
-          {/*      headers: {Referer: 'https://caioterra.com'},*/}
-          {/*    }}*/}
-          {/*    params={*/}
-          {/*      'api=1&playsinline=1&pip=0'*/}
-          {/*    }*/}
-          {/*    style={styles.videoPlayer}*/}
-          {/*    // javaScriptEnabled={true}*/}
-          {/*    allowsFullscreenVideo={false}*/}
-          {/*    allowsInlineMediaPlayback*/}
-          {/*    reference="https://caioterra.com"*/}
-          {/*    scrollEnabled={false}*/}
-          {/*    // injectedJavaScript='*/}
-          {/*    // document.body.style.backgroundColor = "transparent";*/}
-          {/*    // true;*/}
-          {/*    // '*/}
-          {/*    overScrollMode="never"*/}
-          {/*  />*/}
-          {/*</Section>*/}
-          <Section footer="Caio Terra Online &copy; All rights reserved.">
+          <Section
+            header="CTA ONLINE APP"
+            footer="Caio Terra Online &copy; All rights reserved.">
             <Cell
-              title="Help / FAQ"
-              titleTextColor="#007AFF"
-              onPress={() => console.log('open Help/FAQ')}
-            />
-            <Cell
-              title="Log out"
-              titleTextColor="#007AFF"
-              onPress={handleLogout}
+              backgroundColor={'black'}
+              cellStyle="RightDetail"
+              titleTextColor="#fff"
+              title="Version"
+              titleTextStyle={styles.text}
+              detailTextStyle={styles.text}
+              detail="2.0.0-alpha"
             />
           </Section>
         </TableView>
-      </ScrollView>
+        <Pressable
+          onPress={handleLogout}
+          style={[styles.button, CTAStyles.active]}>
+          <Text style={[styles.buttonText, CTAStyles.text_light]}>
+            SIGN OUT
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
+  buttonText: {
+    textAlign: 'center',
+  },
+  button: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  text: {
+    fontSize: 14,
+  },
 });
 
 export default AccountScreen;

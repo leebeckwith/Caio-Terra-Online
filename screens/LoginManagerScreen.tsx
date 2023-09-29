@@ -20,7 +20,7 @@ function LoginManagerScreen(): React.JSX.Element {
           tabBarScrollEnabled: false,
           tabBarIndicatorStyle: {
             height: '100%',
-            backgroundColor: 'rgba(0, 166, 255, 0.25)',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
           },
           tabBarIndicatorContainerStyle: {
             //backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sceneContainer: {
-    backgroundColor: 'rgba(0, 166, 255, 0.25)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   tabContainer: {
     minHeight: '50%',
