@@ -22,12 +22,10 @@ import {storeCredentials, getCredentials} from '../storage';
 import CTAStyles from '../styles/styles';
 
 const LoginScreen = () => {
-  // Data for login
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
   const navigation = useNavigation();
   const loading = useSelector(state => state.loader.value);
   const dispatch = useDispatch();
@@ -72,7 +70,6 @@ const LoginScreen = () => {
         if (response.ok) {
           if (responseData.user_id) {
             dispatch(setLoading(true));
-            setIsSignedIn(true);
             const {user_id, display_name, user_email} = responseData;
             await storeCredentials(log, pwd, user_id, display_name, user_email);
 
@@ -104,10 +101,8 @@ const LoginScreen = () => {
                     : video,
                 );
                 dispatch(setCachedVideos(updatedData));
-                //console.log('login: new w/ fav');
               } else {
                 dispatch(setCachedVideos(data));
-                //console.log('login: new w/o fav');
               }
               navigation.navigate('Main', {screen: 'Videos', initial: false});
             }
@@ -178,7 +173,7 @@ const LoginScreen = () => {
           <TextInput
             autoFocus={true}
             autoCapitalize="none"
-            placeholder="Username"
+            placeholder="Username or Email"
             keyboardType="default"
             style={[CTAStyles.cta_input, styles.input]}
             returnKeyType="next"
@@ -197,17 +192,17 @@ const LoginScreen = () => {
           {/*  style={styles.forgot}>*/}
           {/*  <Text style={styles.label}>Forgot password?</Text>*/}
           {/*</Pressable>*/}
-          <View style={styles.switchContainer}>
-            <Text style={CTAStyles.text_light}>Keep me signed in</Text>
-            <Switch
-              trackColor={{false: '#333', true: '#00a6ff'}}
-              thumbColor={isEnabled ? '#fff' : '#fff'}
-              ios_backgroundColor="#222"
-              onValueChange={toggleSwitch}
-              style={styles.switch}
-              value={isEnabled}
-            />
-          </View>
+          {/*<View style={styles.switchContainer}>*/}
+          {/*  <Text style={CTAStyles.text_light}>Keep me signed in</Text>*/}
+          {/*  <Switch*/}
+          {/*    trackColor={{false: '#333', true: '#00a6ff'}}*/}
+          {/*    thumbColor={isEnabled ? '#fff' : '#fff'}*/}
+          {/*    ios_backgroundColor="#222"*/}
+          {/*    onValueChange={toggleSwitch}*/}
+          {/*    style={styles.switch}*/}
+          {/*    value={isEnabled}*/}
+          {/*  />*/}
+          {/*</View>*/}
           <Pressable
             onPress={handleLogin}
             style={[

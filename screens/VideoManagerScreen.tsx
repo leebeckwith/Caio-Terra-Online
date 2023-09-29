@@ -18,7 +18,7 @@ const VideoManagerScreen = () => {
         tabBarScrollEnabled: false,
         tabBarIndicatorStyle: {
           height: '100%',
-          backgroundColor: 'rgba(0, 166, 255, 0.25)',
+          backgroundColor: 'rgba(255, 255, 255, 0.2)',
         },
         tabBarStyle: {
           backgroundColor: 'transparent',

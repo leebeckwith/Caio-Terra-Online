@@ -1,5 +1,5 @@
 import React, {useState, FC} from 'react';
-import {StyleSheet, Platform, TextInput, View} from 'react-native';
+import {StyleSheet, Pressable, Platform, TextInput, View} from 'react-native';
 import CTAStyles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -14,8 +14,6 @@ interface PasswordProps {
 const Password: FC<PasswordProps> = props => {
   const [value, onChangeText] = useState<string>(props.value);
   const [visible, setVisibility] = useState<boolean>(false);
-  //const [errorStatus, displayErrors] = useState<boolean>(false);
-
   const icon = !visible ? 'eye' : 'eye-slash';
   const iconColor = !visible ? '#333' : '#333';
 
@@ -37,12 +35,16 @@ const Password: FC<PasswordProps> = props => {
           secureTextEntry={!visible}
           blurOnSubmit={true}
         />
-        <Icon
-          name={icon}
-          color={iconColor}
-          onPress={() => setVisibility(!visible)}
-          style={[CTAStyles.input_bg, styles.icons]}
-        />
+        <Pressable
+          style={styles.button}
+          onPress={() => setVisibility(!visible)}>
+          <Icon
+            name={icon}
+            size={15}
+            color={iconColor}
+            style={[styles.icons]}
+          />
+        </Pressable>
       </View>
     </View>
   );
@@ -62,13 +64,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     ...Platform.select({
       ios: {
-        padding: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
       },
       android: {
-        height: 50,
+        height: 40,
         paddingTop: 0,
         paddingBottom: 0,
-        paddingLeft: 8,
+        paddingLeft: 10,
         paddingRight: 10,
       },
     }),
@@ -76,13 +79,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: '95%',
+    width: '100%',
     textAlignVertical: 'center',
   },
   icons: {
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 1,
+  },
+  button: {
+    position: 'absolute',
+    right: 0,
+    padding: 10,
+    backgroundColor: '#fff',
   },
 });
 

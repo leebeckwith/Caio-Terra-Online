@@ -21,7 +21,7 @@ const CTAStyles = StyleSheet.create({
     backgroundColor: '#d11a2a',
   },
   activeAlpha: {
-    backgroundColor: 'rgba(0, 166, 255, 0.25)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
   // background colors
   text_light: {
@@ -41,6 +41,7 @@ const CTAStyles = StyleSheet.create({
   cta_input: {
     backgroundColor: '#fff',
     color: '#000',
+    height: 40,
   },
   // dropshadows
   shadowProp: {

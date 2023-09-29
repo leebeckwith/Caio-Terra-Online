@@ -1,18 +1,51 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import AccountScreen from './AccountScreen';
 import VideoManagerScreen from './VideoManagerScreen';
-import AccountManagerScreen from './AccountManagerScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
 import LessonPlansListingScreen from './LessonPlansListingScreen';
 import Orientation from 'react-native-orientation-locker';
+import {useNavigation} from '@react-navigation/native';
+import {clearCredentials} from '../storage';
+import {useDispatch} from 'react-redux';
 import CTAStyles from '../styles/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {clearCachedVideos} from '../redux/cachedVideoSlice';
 
 const Tab = createBottomTabNavigator();
 
 function MainManagerScreen() {
   Orientation.unlockAllOrientations();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      Alert.alert(
+        'Confirm Sign Out',
+        'Are you sure you want to sign out?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Sign Out',
+            onPress: () => {
+              clearCredentials();
+              dispatch(clearCachedVideos());
+              navigation.navigate('Login');
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={[CTAStyles.cta_black, styles.background]}>
       <View style={styles.tabContainer}>
@@ -62,11 +95,11 @@ function MainManagerScreen() {
             }}
           />
           <Tab.Screen
-            name="Account"
-            component={AccountManagerScreen}
+            name="Info"
+            component={AccountScreen}
             options={{
               tabBarIcon: ({color, size}) => (
-                <Icon name="user-circle" color={color} size={22} />
+                <Icon name="info-circle" color={color} size={22} />
               ),
             }}
           />
