@@ -146,21 +146,22 @@ const LoginScreen = () => {
           <Pressable>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Please enter your username or email address. You will receive a
-                a link to create a new password via email.
+                Please enter your email address. You will receive a link to a
+                link to create a new password via email.
               </Text>
               <TextInput
                 autoFocus={true}
+                autoComplete="email"
                 autoCapitalize="none"
-                placeholder="Username or email address"
+                placeholder="Email address"
                 keyboardType="default"
-                style={styles.input}
+                style={[CTAStyles.cta_input, styles.input, styles.wide]}
                 returnKeyType="next"
                 placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
                 blurOnSubmit={false}
               />
               <Pressable
-                style={[styles.button]}
+                style={[CTAStyles.active, styles.button]}
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={CTAStyles.text_light}>Reset Password</Text>
               </Pressable>
@@ -173,7 +174,7 @@ const LoginScreen = () => {
           <TextInput
             autoFocus={true}
             autoCapitalize="none"
-            placeholder="Username or Email"
+            placeholder="Email"
             keyboardType="default"
             style={[CTAStyles.cta_input, styles.input]}
             returnKeyType="next"
@@ -187,11 +188,11 @@ const LoginScreen = () => {
             value={pwd}
             onChange={text => setPassword(text)}
           />
-          {/*<Pressable*/}
-          {/*  onPress={() => setModalVisible(true)}*/}
-          {/*  style={styles.forgot}>*/}
-          {/*  <Text style={styles.label}>Forgot password?</Text>*/}
-          {/*</Pressable>*/}
+          <Pressable
+            onPress={() => setModalVisible(true)}
+            style={styles.forgot}>
+            <Text style={[CTAStyles.text_light, styles.label]}>Forgot password?</Text>
+          </Pressable>
           {/*<View style={styles.switchContainer}>*/}
           {/*  <Text style={CTAStyles.text_light}>Keep me signed in</Text>*/}
           {/*  <Switch*/}
@@ -241,8 +242,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '85%',
-    backgroundColor: '#000',
-    padding: 35,
+    backgroundColor: '#333',
+    paddingTop: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     alignItems: 'center',
   },
   modalText: {
@@ -261,6 +264,12 @@ const styles = StyleSheet.create({
     width: '80.5%',
     marginBottom: 20,
     padding: 10,
+  },
+  wide: {
+    width: 300,
+  },
+  label: {
+    paddingBottom: 20,
   },
   logo: {
     padding: 0,

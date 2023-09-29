@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import {
-  Alert, Modal,
+  Alert,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View
-} from "react-native";
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 import CTAStyles from '../styles/styles';
 
 function CreateAccountScreen(): React.JSX.Element {
   // Data for login
-  const [log, setUsername] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [pwd, setPassword] = useState('');
@@ -26,7 +26,7 @@ function CreateAccountScreen(): React.JSX.Element {
 
   // use API to validate username and password
   const handleCreateAccount = async productId => {
-    if (!log || !pwd || !email || !repeat_pwd) {
+    if (!pwd || !email || !repeat_pwd) {
       Alert.alert(
         'Error',
         'Please enter all information to create your account.',
@@ -48,33 +48,25 @@ function CreateAccountScreen(): React.JSX.Element {
           </Text>
           <TextInput
             autoCapitalize="none"
-            placeholder="Username"
-            style={[CTAStyles.cta_input, styles.input]}
-            onChangeText={text => setUsername(text)}
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-            value={log}
-          />
-          <TextInput
-            autoCapitalize="none"
             placeholder="Email"
             inputMode="email"
             style={[CTAStyles.cta_input, styles.input]}
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
           />
-          <TextInput
-            placeholder="First Name"
-            style={[CTAStyles.cta_input, styles.input]}
-            onChangeText={text => setFirstName(text)}
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-            value={firstName}
-          />
-          <TextInput
-            placeholder="Last Name"
-            style={[CTAStyles.cta_input, styles.input]}
-            onChangeText={text => setLastName(text)}
-            placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-            value={lastName}
-          />
+          {/*<TextInput*/}
+          {/*  placeholder="First Name"*/}
+          {/*  style={[CTAStyles.cta_input, styles.input]}*/}
+          {/*  onChangeText={text => setFirstName(text)}*/}
+          {/*  placeholderTextColor={'rgba(0, 0, 0, 0.5)'}*/}
+          {/*  value={firstName}*/}
+          {/*/>*/}
+          {/*<TextInput*/}
+          {/*  placeholder="Last Name"*/}
+          {/*  style={[CTAStyles.cta_input, styles.input]}*/}
+          {/*  onChangeText={text => setLastName(text)}*/}
+          {/*  placeholderTextColor={'rgba(0, 0, 0, 0.5)'}*/}
+          {/*  value={lastName}*/}
+          {/*/>*/}
           <Password
             label="Password"
             value={pwd}
@@ -98,7 +90,7 @@ function CreateAccountScreen(): React.JSX.Element {
             style={[
               styles.button,
               CTAStyles.shadowProp,
-              log && email && firstName && lastName && email && repeat_pwd
+              email && firstName && lastName && email && repeat_pwd
                 ? CTAStyles.active
                 : CTAStyles.inactive,
             ]}>
@@ -111,7 +103,9 @@ function CreateAccountScreen(): React.JSX.Element {
             style={[
               styles.button,
               CTAStyles.shadowProp,
-              log && pwd ? CTAStyles.active : CTAStyles.inactive,
+              email && firstName && lastName && email && repeat_pwd
+                ? CTAStyles.active
+                : CTAStyles.inactive,
             ]}>
             <Text style={CTAStyles.text_light}>
               MONTHLY SUBSCRIPTION ($24.99)

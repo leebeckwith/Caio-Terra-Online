@@ -3,6 +3,7 @@ import {ImageBackground, Platform, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import LoginScreen from './LoginScreen';
 import CreateAccountScreen from './CreateAccountScreen';
+import VideoDownloadsScreen from './VideoDownloadsScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -37,14 +38,9 @@ function LoginManagerScreen(): React.JSX.Element {
           tabBarActiveTintColor: '#fff',
         }}>
         <Tab.Screen name="Sign In" component={LoginScreen} />
-        <Tab.Screen name="Create Account" component={CreateAccountScreen} />
+        <Tab.Screen name="Sign Up" component={CreateAccountScreen} />
+        {/*<Tab.Screen name="Offline" component={VideoDownloadsScreen} />*/}
       </Tab.Navigator>
-      {/*<View style={styles.container}>*/}
-      {/*  <Image*/}
-      {/*    source={require('../assets/images/logo.png')}*/}
-      {/*    style={styles.logo}*/}
-      {/*  />*/}
-      {/*</View>*/}
     </ImageBackground>
   );
 }

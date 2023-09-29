@@ -377,7 +377,7 @@ const VideoPlayer = ({route}: {route: any}) => {
               {selectedVideoCaptionFile ? (
                 <Video
                   ref={ref => {
-                    this.video = ref;
+                    this.player = ref;
                   }}
                   source={{uri: selectedVideo}}
                   style={styles.videoPlayer}
