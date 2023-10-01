@@ -3,7 +3,6 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import VideoListing from './VideoListingScreen';
 import VideoFilterView from './VideoFilterViewScreen';
 import VideoMatrixView from './VideoMatrixViewScreen';
-import VideoDownloadsScreen from './VideoDownloadsScreen';
 import {StyleSheet} from 'react-native';
 import CTAStyles from '../styles/styles';
 
@@ -33,7 +32,6 @@ const VideoManagerScreen = () => {
       <Tab.Screen name="Search" component={VideoListing} />
       <Tab.Screen name="Matrix" component={VideoMatrixView} />
       <Tab.Screen name="Filter" component={VideoFilterView} />
-      <Tab.Screen name="Offline" component={VideoDownloadsScreen} />
     </Tab.Navigator>
   );
 };

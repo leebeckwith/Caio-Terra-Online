@@ -161,9 +161,9 @@ const LoginScreen = () => {
                 blurOnSubmit={false}
               />
               <Pressable
-                style={[CTAStyles.active, styles.button]}
+                style={[CTAStyles.active, CTAStyles.shadowProp, styles.button]}
                 onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={CTAStyles.text_light}>Reset Password</Text>
+                <Text style={CTAStyles.text_light}>REQUEST PASSWORD RESET</Text>
               </Pressable>
             </View>
           </Pressable>
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
   },
