@@ -1,32 +1,23 @@
 import React, {useState} from 'react';
-import {
-  Alert,
-  FlatList,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Alert, FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
-import {useSelector} from 'react-redux';
-import {getCredentials} from '../storage';
 import RNFS, {unlink} from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CTAStyles from '../styles/styles';
+import SInfo from 'react-native-sensitive-info';
+import CryptoJS from 'react-native-crypto-js';
 
 const VideoDownloadsScreen = () => {
   const [downloadedFiles, setDownloadedFiles] = useState([]);
-  const cachedVideosData = useSelector(state => state.cachedVideos);
   const {openVideoModal} = useVideoModal();
 
-  const handleVideoPress = async video => {
-    const {user_id} = await getCredentials();
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    const selectedVideoPath = `${RNFS.DocumentDirectoryPath}/${video}`;
+  const handleVideoPress = async (video: string) => {
+    const gettingCTAPlayKey = await SInfo.getItem('cta-play-key', {});
+    console.log(gettingCTAPlayKey);
     const vimeoId = video.split('_')[0];
     try {
-      openVideoModal(vimeoId, vimeoToken, user_id, null, selectedVideoPath);
+      openVideoModal(vimeoId, null, null, null, video);
     } catch (error) {
       console.error('Error playing offline video:', error);
       Alert.alert('Error', `There was an error playing the video: ${error}`);
@@ -45,7 +36,7 @@ const VideoDownloadsScreen = () => {
         {
           text: 'Delete',
           onPress: () => {
-            unlink(`${RNFS.DocumentDirectoryPath}/${video}`)
+            unlink(`${RNFS.CachesDirectoryPath}/${video}`)
               .then(() => {
                 const updatedMergedArray = downloadedFiles.filter(
                   item => item.videoFile !== video,
@@ -108,46 +99,40 @@ const VideoDownloadsScreen = () => {
     React.useCallback(() => {
       async function loadDownloadedFiles() {
         try {
-          const files = await RNFS.readdir(RNFS.DocumentDirectoryPath);
+          const files = await RNFS.readdir(RNFS.CachesDirectoryPath);
           const videoFiles = files.filter(file => file.endsWith('.mp4'));
           const videoIds = videoFiles.map(file => file.split('_')[0]);
-          const downloadedVideos = cachedVideosData.filter(video =>
-            videoIds.includes(video.vimeoid.toString()),
-          );
 
           const mergedArray = videoIds.map(videoId => {
             const videoFile = videoFiles.find(file => file.startsWith(videoId));
             const parts = videoFile.split('_');
+            const maskedVideoFile = parts[0];
             const resolution = parts[1];
             const datePart = parts[2].split('.')[0];
-            const videoData = downloadedVideos.find(
-              video => video.vimeoid.toString() === videoId,
-            );
-
             const currentDate = new Date();
             const videoDate = parseDateFromString(datePart);
             const dateDifference = currentDate - videoDate;
             const daysRemaining = calculateRemainingTime(dateDifference);
 
-            if (daysRemaining === '0:00:00') {
-              // Delete the video file
-              unlink(`${RNFS.DocumentDirectoryPath}/${videoFile}`)
-                .then(() => {
-                  console.log('Video deleted:', videoFile);
-                  const updatedMergedArray = mergedArray.filter(
-                    item => item.videoFile !== videoFile,
-                  );
-                  setDownloadedFiles(updatedMergedArray);
-                })
-                .catch(error => {
-                  console.error('Error deleting video:', error);
-                });
-            }
+            // if (daysRemaining === '0:00:00') {
+            //   // Delete the video file
+            //   unlink(`${RNFS.DocumentDirectoryPath}/${videoFile}`)
+            //     .then(() => {
+            //       console.log('Video deleted:', videoFile);
+            //       const updatedMergedArray = mergedArray.filter(
+            //         item => item.videoFile !== videoFile,
+            //       );
+            //       setDownloadedFiles(updatedMergedArray);
+            //     })
+            //     .catch(error => {
+            //       console.error('Error deleting video:', error);
+            //     });
+            // }
 
             return {
-              id: videoData.id,
+              id: videoId,
+              maskedVideoFile,
               videoFile,
-              videoData,
               resolution,
               date: datePart,
               timeRemaining: daysRemaining,
@@ -157,7 +142,6 @@ const VideoDownloadsScreen = () => {
           mergedArray.sort((a, b) => {
             return b.date - a.date;
           });
-
           setDownloadedFiles(mergedArray);
         } catch (error) {
           console.error('Error loading downloaded videos:', error);
@@ -174,57 +158,63 @@ const VideoDownloadsScreen = () => {
 
   const renderVideoItem = ({item}) => (
     <View>
-      <Pressable
-        style={styles.videoDownloadItem}
-        onPress={() => handleVideoPress(item.videoFile)}>
-        <Image
-          source={{uri: item.videoData.thumburl}}
-          style={styles.thumbnail}
-        />
-      </Pressable>
-      <View style={styles.titleOverlayContainer}>
-        <Text style={styles.titleOverlay}>
-          {item.videoData.title.toUpperCase()} ({item.resolution.toUpperCase()})
-          {'\n'}
-          PLAYBACK EXPIRES IN {item.timeRemaining}
-        </Text>
-        <View style={styles.wrapper}>
-          <Pressable
-            style={styles.iconButton}
-            onPress={() => handleDeleteFile(item.videoFile)}>
-            <Icon name={'trash'} color="white" size={20} />
-          </Pressable>
-        </View>
+      <View style={styles.videoItemContainer}>
+        <Pressable
+          style={styles.videoDownloadItem}
+          onPress={() => handleVideoPress(item.videoFile)}>
+          <Text style={[CTAStyles.text_light, styles.fileName]}>
+            {item.maskedVideoFile}
+          </Text>
+          <Text style={[CTAStyles.text_light, styles.fileInfo]}>
+            {item.resolution}, {item.timeRemaining} remaining
+          </Text>
+        </Pressable>
+        <Pressable
+          style={styles.wrapper}
+          onPress={() => handleDeleteFile(item.videoFile)}>
+          <Icon name={'trash'} color="white" size={20} />
+        </Pressable>
       </View>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.categoryHeader}>
-        <Text style={styles.categoryName}>OFFLINE VIDEOS</Text>
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <View style={styles.categoryHeader}>
+          <Text style={styles.categoryName}>OFFLINE VIDEOS</Text>
+        </View>
+        <Text style={[CTAStyles.text_light, styles.description]}>
+          These are the video files previously downloaded to this device. They
+          are available 30 days from the original download time.
+        </Text>
+        {downloadedFiles.toString() === '' ? (
+          <Text style={styles.categoryName}>
+            No downloaded files available.
+          </Text>
+        ) : (
+          <FlatList
+            data={downloadedFiles}
+            showsVerticalScrollIndicator={true}
+            indicatorStyle={'white'}
+            keyExtractor={item => item.id.toString()}
+            renderItem={renderVideoItem}
+          />
+        )}
       </View>
-      {downloadedFiles.toString() === '' ? (
-        <Text style={styles.categoryName}>No downloaded files available.</Text>
-      ) : (
-        <FlatList
-          data={downloadedFiles}
-          showsVerticalScrollIndicator={true}
-          indicatorStyle={'white'}
-          keyExtractor={item => item.videoData.vimeoid.toString()}
-          renderItem={renderVideoItem}
-        />
-      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: 'transparent',
+    height: '100%',
+    width: '100%',
+    padding: 10,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#000',
-    paddingTop: 10,
-    paddingBottom: 10,
   },
   categoryHeader: {
     backgroundColor: '#00a6ff',
@@ -238,45 +228,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  buttonBody: {
-    color: '#fff',
+  description: {
+    marginBottom: 20,
+  },
+  fileName: {
+    marginTop: 10,
+    marginRight: 10,
+    marginLeft: 10,
+  },
+  fileInfo: {
+    fontSize: 10,
+    marginRight: 10,
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+  videoItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    marginBottom: 8,
   },
   videoDownloadItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-    justifyContent: 'space-between',
-  },
-  thumbnail: {
-    width: '100%',
-    height: 200,
-  },
-  titleOverlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-    padding: 8,
-    textAlign: 'left',
-    width: '90%',
+    flex: 1,
   },
   wrapper: {
-    width: '10%',
-    alignItems: 'center',
-  },
-  iconButton: {
     backgroundColor: '#d11a2a',
-    padding: 11,
-    height: '100%',
-  },
-  titleOverlayContainer: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 8,
-    left: 0,
-    right: 0,
-    flex: 1,
-    flexDirection: 'row',
+    padding: 15,
+    alignItems: 'center',
   },
 });
 

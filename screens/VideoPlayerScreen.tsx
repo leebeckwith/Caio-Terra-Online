@@ -12,7 +12,7 @@ import {
 import Orientation, {
   useDeviceOrientationChange,
 } from 'react-native-orientation-locker';
-import Video, {TextTrackType} from 'react-native-video';
+import Video from 'react-native-video';
 import RNFS from 'react-native-fs';
 import VideoDownloadModal from '../components/VideoDownloadModal';
 import VideoPlaybackRateModal from '../components/VideoPlaybackRateModal';
@@ -36,9 +36,6 @@ const VideoPlayer = ({route}: {route: any}) => {
     ? route.params
     : '';
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-  const [selectedVideoCaptionFile, setSelectedVideoCaptionFile] = useState<
-    string | ''
-  >(null);
   const [selectedVideoId, setSelectedVideoId] = useState<number | null>(
     videoId,
   );
@@ -59,26 +56,20 @@ const VideoPlayer = ({route}: {route: any}) => {
   const cachedVideosData = useSelector(state => state.cachedVideos);
   const {toggleFavorite} = useFavorites();
 
-  useDeviceOrientationChange(o => {
-    setCurrentOrientation(o);
-    if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
-      console.log('full screen video');
-      setIsLandscape(true);
-    } else {
-      setIsLandscape(false);
-    }
-  });
+  // useDeviceOrientationChange(o => {
+  //   setCurrentOrientation(o);
+  //   if (o === 'LANDSCAPE-RIGHT' || o === 'LANDSCAPE-LEFT') {
+  //     console.log('full screen video');
+  //     setIsLandscape(true);
+  //   } else {
+  //     setIsLandscape(false);
+  //   }
+  // });
 
   useEffect(() => {
     const setVideoFromPath = async () => {
-      const videoInfo = cachedVideosData.filter(video =>
-        vimeoId.includes(video.vimeoid.toString()),
-      );
-      const videoId = videoInfo[0].id;
-
-      setSelectedVideoId(videoId);
-      setSelectedTitle(videoInfo[0].title);
-      setSelectedVideo(videoPath);
+      const videoFile = `${RNFS.CachesDirectoryPath}/${videoPath}`;
+      setSelectedVideo(videoFile);
     };
     const getVimeoVideo = async () => {
       try {
@@ -95,7 +86,7 @@ const VideoPlayer = ({route}: {route: any}) => {
         const videoData = await response.json();
 
         setSelectedTitle(videoData.name);
-        setSelectedVideo(videoData.files[2].link);
+        setSelectedVideo(videoData.play.hls.link);
       } catch (error) {
         console.error('Error fetching video from Vimeo API:', error);
         Alert.alert(
@@ -103,46 +94,6 @@ const VideoPlayer = ({route}: {route: any}) => {
           `There was an error getting the video from Vimeo: ${error}`,
         );
         setSelectedVideo(null);
-      }
-    };
-
-    const getVideoCaption = async () => {
-      try {
-        const vimeoCaptionUrl = `https://api.vimeo.com/videos/${vimeoId}/texttracks`;
-
-        // Fetch the video caption data from the Vimeo API
-        const captionResponse = await fetch(vimeoCaptionUrl, {
-          headers: {
-            Authorization: `Bearer ${vimeoToken}`,
-          },
-        });
-
-        const videoCaptionData = await captionResponse.json();
-        if (videoCaptionData.data[0]) {
-          const videoCaptionDataLink = videoCaptionData.data[0].link;
-
-          const localFilePath = `${RNFS.DocumentDirectoryPath}/video_caption.vtt`;
-
-          const downloadResult = RNFS.downloadFile({
-            fromUrl: videoCaptionDataLink,
-            toFile: localFilePath,
-          });
-
-          if (downloadResult.jobId) {
-            setSelectedVideoCaptionFile(localFilePath);
-          } else {
-            console.error('Failed to download VTT file:', downloadResult);
-          }
-        } else {
-          setSelectedVideoCaptionFile('');
-        }
-      } catch (error) {
-        console.error('Error fetching video caption from Vimeo API:', error);
-        Alert.alert(
-          'Error',
-          `There was an error getting the video caption from Vimeo: ${error}`,
-        );
-        setSelectedVideoCaptionFile('');
       }
     };
 
@@ -196,10 +147,9 @@ const VideoPlayer = ({route}: {route: any}) => {
       setVideoFromPath();
     } else {
       getVimeoVideo();
-      getVideoCaption();
       fetchVideoNotes();
       getFavoriteStatus();
-    };
+    }
   }, []);
 
   const handleNoteSubmit = async () => {
@@ -371,48 +321,20 @@ const VideoPlayer = ({route}: {route: any}) => {
       )}
       {selectedVideo ? (
         <View>
-          <Text style={styles.title}>{selectedTitle}</Text>
           <View>
             <View>
-              {selectedVideoCaptionFile ? (
-                <Video
-                  ref={ref => {
-                    this.player = ref;
-                  }}
-                  source={{uri: selectedVideo}}
-                  style={styles.videoPlayer}
-                  resizeMode="contain"
-                  controls={true}
-                  paused={isPaused}
-                  onProgress={onProgress}
-                  rate={selectedPlaybackRate}
-                  selectedTextTrack={{
-                    type: 'title',
-                    value: 'English CC',
-                  }}
-                  textTracks={[
-                    {
-                      title: 'English CC',
-                      language: 'en',
-                      type: TextTrackType.VTT,
-                      uri: selectedVideoCaptionFile,
-                    },
-                  ]}
-                />
-              ) : (
-                <Video
-                  ref={ref => {
-                    this.player = ref;
-                  }}
-                  source={{uri: selectedVideo}}
-                  style={[styles.videoPlayer, styles.noCap]}
-                  resizeMode="contain"
-                  controls={true}
-                  paused={isPaused}
-                  onProgress={onProgress}
-                  rate={selectedPlaybackRate}
-                />
-              )}
+              <Video
+                ref={ref => {
+                  this.player = ref;
+                }}
+                source={{uri: selectedVideo}}
+                style={styles.videoPlayer}
+                resizeMode="contain"
+                controls={true}
+                paused={isPaused}
+                onProgress={onProgress}
+                rate={selectedPlaybackRate}
+              />
             </View>
             {!videoPath && (
               <View style={styles.wrapper}>
@@ -505,8 +427,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   containerOffline: {
-    padding: 10,
-    paddingBottom: 20,
+    padding: 20,
     borderColor: '#fff',
     borderTopWidth: 1,
     borderBottomWidth: 1,

@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {
   Alert,
   FlatList,
-  View,
-  Text,
   Modal,
   Pressable,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Animatable from 'react-native-animatable';
@@ -77,16 +77,30 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
     return formattedDate;
   };
 
+  const checkIfVideoExists = async (videoFileString: string) => {
+    try {
+      const files = await RNFS.readdir(RNFS.CachesDirectoryPath);
+      const matchingFiles = files.filter(file =>
+        file.startsWith(videoFileString),
+      );
+      return matchingFiles.length > 0;
+    } catch (error) {
+      console.error('Error checking if video exists:', error);
+      return false;
+    }
+  };
+
   const handleDownload = async (downloadLink: string, resolution: string) => {
     const downloadDate = formatDateForFileName();
-    const downloadDest = `${RNFS.DocumentDirectoryPath}/${vimeoId}_${resolution}_${downloadDate}.mp4`;
+    const downloadDest = `${RNFS.CachesDirectoryPath}/${vimeoId}_${resolution}_${downloadDate}.mp4`;
+    const checkDuplicate = `${vimeoId}_${resolution}`;
 
-    const fileExists = await RNFS.exists(downloadDest);
+    const fileExists = await checkIfVideoExists(checkDuplicate);
 
     if (fileExists) {
       Alert.alert(
-        'File Already Exists',
-        'The file you are trying to download already exists.',
+        'Video Already Exists',
+        'The video you are trying to download already exists.',
       );
     } else {
       setSelectedDownloadLink(downloadLink);
@@ -98,12 +112,11 @@ const VideoDownloadModal: React.FC<VideoDownloadModalProps> = ({
         .promise.then((response: RNFS.DownloadResult) => {
           Alert.alert(
             'File Downloaded',
-            'Your file downloaded successfully. You can find it on the OFFLINE tab.',
+            'Your file downloaded successfully. You can find it on the OFFLINE tab when you are logged out of the app.',
           );
           setSelectedDownloadLink(null);
         })
         .catch((err: Error) => {
-          //console.log('Download error:', err);
           Alert.alert(
             'File Downloaded Error',
             `Your file didn't download successfully: ${err}`,
@@ -171,7 +184,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   modalContent: {
     backgroundColor: '#fff',

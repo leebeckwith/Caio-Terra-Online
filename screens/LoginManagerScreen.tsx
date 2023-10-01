@@ -1,14 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ImageBackground, Platform, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import LoginScreen from './LoginScreen';
 import CreateAccountScreen from './CreateAccountScreen';
+import RNFS from 'react-native-fs';
 import VideoDownloadsScreen from './VideoDownloadsScreen';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Tab = createMaterialTopTabNavigator();
 
 function LoginManagerScreen(): React.JSX.Element {
   const tabBarMarginTop = Platform.OS === 'android' ? '10%' : '40%';
+  const [showOfflineTab, setShowOfflineTab] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      RNFS.readdir(RNFS.CachesDirectoryPath)
+        .then(files => {
+          const videoFiles = files.filter(file => file.endsWith('.mp4'));
+          if (videoFiles.length > 0) {
+            setShowOfflineTab(true);
+          } else {
+            setShowOfflineTab(false);
+          }
+        })
+        .catch(error => {
+          console.error('Error checking files:', error);
+        });
+    }, []),
+  );
 
   return (
     <ImageBackground
@@ -39,7 +59,9 @@ function LoginManagerScreen(): React.JSX.Element {
         }}>
         <Tab.Screen name="Sign In" component={LoginScreen} />
         <Tab.Screen name="Sign Up" component={CreateAccountScreen} />
-        {/*<Tab.Screen name="Offline" component={VideoDownloadsScreen} />*/}
+        {showOfflineTab && (
+          <Tab.Screen name="Offline" component={VideoDownloadsScreen} />
+        )}
       </Tab.Navigator>
     </ImageBackground>
   );
