@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import {useVideoModal} from '../components/VideoPlayerModalContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
+import SInfo from 'react-native-sensitive-info';
 
 interface VideoData {
   id: number;
@@ -36,14 +37,12 @@ const VideoMatrixView: React.FC = () => {
   >({});
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const cachedVideosData = useSelector(state => state.cachedVideos);
-  const dispatch = useDispatch();
   const {openVideoModal} = useVideoModal();
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
     const {user_id} = await getCredentials();
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
+    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId);
   };
 
   const categorizeVideosByField = (videos: VideoData[], field: string) => {

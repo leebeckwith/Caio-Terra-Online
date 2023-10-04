@@ -10,12 +10,14 @@ interface FavoriteContextProps {
 const FavoriteContext = createContext<FavoriteContextProps | undefined>(undefined);
 
 export const FavoriteProvider = ({children}) => {
-  const cachedVideos = useSelector((state) => state.cachedVideos);
+  const cachedVideos = useSelector(state => state.cachedVideos);
   const favorites = useSelector((state: any) => state.favorites);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const favoriteIds = cachedVideos.filter(video => video.favorite).map(video => video.id);
+    const favoriteIds = cachedVideos
+      .filter(video => video.favorite)
+      .map(video => video.id);
     dispatch(updateFavorites(favoriteIds));
   }, [cachedVideos, dispatch]);
 
@@ -24,7 +26,8 @@ export const FavoriteProvider = ({children}) => {
   };
 
   return (
-    <FavoriteContext.Provider value={{ favorites, toggleFavorite: toggleFavoriteHandler }}>
+    <FavoriteContext.Provider
+      value={{favorites, toggleFavorite: toggleFavoriteHandler}}>
       {children}
     </FavoriteContext.Provider>
   );

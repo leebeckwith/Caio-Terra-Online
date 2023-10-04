@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
 import CTAStyles from '../styles/styles';
+import SInfo from 'react-native-sensitive-info';
 
 interface Lesson {
   id: number;
@@ -36,23 +37,14 @@ const CurriculumListing: React.FC = () => {
   const [lessonData, setLessonData] = useState<Lesson[]>([]);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const cachedVideosData = useSelector(state => state.cachedVideos);
+  const cachedCurriculumVideosData = useSelector(state => state.cachedCurriculumVideos);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     // Fetch curriculum data
     const fetchCurriculumData = async () => {
       try {
-        const response = await fetch(
-          'https://caioterra.com/app-api/get-curriculum.php',
-        );
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-
-        const data: Record<string, Category> = await response.json();
-        const categoryArray = Object.values(data);
-        const sortedCategories = sortCategories(categoryArray);
-        setCategories(sortedCategories);
+        setCategories(cachedCurriculumVideosData);
       } catch (error) {
         console.error('Error fetching curriculum data:', error);
         Alert.alert(
@@ -95,25 +87,6 @@ const CurriculumListing: React.FC = () => {
     }
   };
 
-  const sortCategories = (categoryArray: Category[]): Category[] => {
-    const sortedCategories = categoryArray.sort((a, b) =>
-      a.name.localeCompare(b.name),
-    );
-
-    // Find and move "Introduction" category to the beginning
-    const introductionCategoryIndex = sortedCategories.findIndex(
-      category => category.name === 'Introduction',
-    );
-    if (introductionCategoryIndex !== -1) {
-      const introductionCategory = sortedCategories.splice(
-        introductionCategoryIndex,
-        1,
-      )[0];
-      sortedCategories.unshift(introductionCategory);
-    }
-
-    return sortedCategories;
-  };
   const showPlan = async (lessonId: number) => {
     try {
       const response = await fetch(
@@ -217,22 +190,17 @@ const CurriculumListing: React.FC = () => {
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
     const {user_id} = await getCredentials();
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
+    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId);
   };
 
   return (
     <View style={CTAStyles.container}>
-      {categories.length > 0 ? (
-        <FlatList
-          data={categories}
-          renderItem={renderCategoryItem}
-          keyExtractor={category => category.term_id.toString()}
-        />
-      ) : (
-        <Text style={styles.loadingText}>Loading...</Text>
-      )}
+      <FlatList
+        data={categories}
+        renderItem={renderCategoryItem}
+        keyExtractor={category => category.term_id.toString()}
+      />
     </View>
   );
 };

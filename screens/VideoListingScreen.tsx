@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
 import {getCredentials} from '../storage';
+import SInfo from 'react-native-sensitive-info';
 import CTAStyles from '../styles/styles';
 
 interface VideoData {
@@ -35,8 +36,6 @@ const VideoListing = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showFavoritesButton, setShowFavoritesButton] =
-    useState<boolean>(true);
   const [showFavoritesFilter, setShowFavoritesFilter] =
     useState<boolean>(false);
   const cachedVideosData = useSelector(state => state.cachedVideos);
@@ -53,7 +52,6 @@ const VideoListing = () => {
           dispatch(setCachedVideos(cachedVideosData));
           setVideos(cachedVideosData);
           setFilteredVideos(cachedVideosData);
-          //console.log('vl: cached');
         }
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -71,9 +69,8 @@ const VideoListing = () => {
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
     const {user_id} = await getCredentials();
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId, null);
+    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
+    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId, null);
   };
 
   const handleFavoritePress = async (id: number) => {

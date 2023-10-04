@@ -13,6 +13,7 @@ import {useVideoModal} from '../components/VideoPlayerModalContext';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
 import CTAStyles from '../styles/styles';
+import SInfo from 'react-native-sensitive-info';
 
 interface VideoData {
   id: number;
@@ -28,25 +29,15 @@ const LessonPlansListing: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
   const cachedVideosData = useSelector(state => state.cachedVideos);
+  const cachedLessonVideosData = useSelector(state => state.cachedLessonVideos);
   const flatListRef = useRef<FlatList | null>(null);
   const {openVideoModal} = useVideoModal();
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(
-          'https://caioterra.com/app-api/get-plans.php',
-        );
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const apiData = await response.json();
-
-        if (Array.isArray(apiData)) {
-          setVideos(apiData);
-          setFilteredVideos(apiData);
-        } else {
-        }
+        setVideos(cachedLessonVideosData);
+        setFilteredVideos(cachedLessonVideosData);
       } catch (error) {
         console.error('Error fetching videos:', error);
         Alert.alert(
@@ -102,9 +93,8 @@ const LessonPlansListing: React.FC = () => {
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
     const {user_id} = await getCredentials();
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
+    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId);
   };
 
   const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {

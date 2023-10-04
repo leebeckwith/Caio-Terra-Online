@@ -17,9 +17,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
+import {setCachedLessonVideos} from '../redux/cachedLessonVideoSlice';
+import {setCachedCurriculumVideos} from '../redux/cachedCurriculumVideoSlice';
 import Orientation from 'react-native-orientation-locker';
 import {storeCredentials, getCredentials} from '../storage';
+import SInfo from 'react-native-sensitive-info';
 import CTAStyles from '../styles/styles';
+
+interface Category {
+  term_id: number;
+  name: string;
+  slug: string;
+  lessons: Lesson[];
+}
+
+interface Lesson {
+  id: number;
+  title: string;
+  thumburl: string;
+  lessonData: [];
+  vimeoid: number;
+  showSubItems: boolean;
+}
 
 const LoginScreen = () => {
   const [log, setUsername] = useState('');
@@ -70,6 +89,11 @@ const LoginScreen = () => {
         if (response.ok) {
           if (responseData.user_id) {
             dispatch(setLoading(true));
+            await SInfo.setItem(
+              'cta-vimeo-key',
+              '91657ec3585779ea01b973f69aae2c9c',
+              {},
+            );
             const {user_id, display_name, user_email} = responseData;
             await storeCredentials(log, pwd, user_id, display_name, user_email);
 
@@ -104,6 +128,29 @@ const LoginScreen = () => {
               } else {
                 dispatch(setCachedVideos(data));
               }
+
+              const lessonDataResponse = await fetch(
+                'https://caioterra.com/app-api/get-plans.php',
+              );
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              const lessonData = await lessonDataResponse.json();
+              dispatch(setCachedLessonVideos(lessonData));
+
+              const curriculumResponse = await fetch(
+                'https://caioterra.com/app-api/get-curriculum.php',
+              );
+              if (!response.ok) {
+                throw new Error('Network response was not ok.');
+              }
+
+              const curriculumData: Record<string, Category> =
+                await curriculumResponse.json();
+              const categoryArray = Object.values(curriculumData);
+              const sortedCategories = sortCategories(categoryArray);
+              dispatch(setCachedCurriculumVideos(sortedCategories));
+
               navigation.navigate('Main', {screen: 'Videos', initial: false});
             }
           } else if (
@@ -121,6 +168,26 @@ const LoginScreen = () => {
         dispatch(setLoading(false));
       }
     }
+  };
+
+  const sortCategories = (categoryArray: Category[]): Category[] => {
+    const sortedCategories = categoryArray.sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+
+    // Find and move "Introduction" category to the beginning
+    const introductionCategoryIndex = sortedCategories.findIndex(
+      category => category.name === 'Introduction',
+    );
+    if (introductionCategoryIndex !== -1) {
+      const introductionCategory = sortedCategories.splice(
+        introductionCategoryIndex,
+        1,
+      )[0];
+      sortedCategories.unshift(introductionCategory);
+    }
+
+    return sortedCategories;
   };
   const toggleSwitch = async () => {
     setIsEnabled(previousState => !previousState);
