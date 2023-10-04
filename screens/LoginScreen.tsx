@@ -43,6 +43,7 @@ interface Lesson {
 const LoginScreen = () => {
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -65,6 +66,34 @@ const LoginScreen = () => {
 
     getKeepSignedIn();
   }, []);
+
+  const handleForgottenPassword = async () => {
+    if (!email) {
+      Alert.alert('Invalid Login', 'Please enter a username and password.');
+      return false;
+    } else {
+      try {
+        const queryParams = new URLSearchParams({
+          email: email,
+        });
+        const response = await fetch(
+          `https://caioterra.com/ct_get/ct_resetpassword?${queryParams.toString()}`,
+          {
+            method: 'GET',
+          },
+        );
+        const responseData = await response.json();
+        if (responseData) {
+          Alert.alert('Success', 'Reset password link was sent to ' + email);
+          setEmail('');
+          setModalVisible(!modalVisible);
+        }
+      } catch (error) {
+        console.error('Error sending reset password: ', error);
+        Alert.alert('Error', `Error sending reset password: ${error}`);
+      }
+    }
+  };
 
   const handleLogin = async () => {
     if (!log || !pwd) {
@@ -226,10 +255,12 @@ const LoginScreen = () => {
                 returnKeyType="next"
                 placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
                 blurOnSubmit={false}
+                value={email}
+                onChangeText={text => setEmail(text)}
               />
               <Pressable
                 style={[CTAStyles.active, CTAStyles.shadowProp, styles.button]}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={handleForgottenPassword}>
                 <Text style={CTAStyles.text_light}>REQUEST PASSWORD RESET</Text>
               </Pressable>
             </View>
@@ -258,7 +289,9 @@ const LoginScreen = () => {
           <Pressable
             onPress={() => setModalVisible(true)}
             style={styles.forgot}>
-            <Text style={[CTAStyles.text_light, styles.label]}>Forgot password?</Text>
+            <Text style={[CTAStyles.text_light, styles.label]}>
+              Forgot password?
+            </Text>
           </Pressable>
           {/*<View style={styles.switchContainer}>*/}
           {/*  <Text style={CTAStyles.text_light}>Keep me signed in</Text>*/}
@@ -336,7 +369,8 @@ const styles = StyleSheet.create({
     width: 300,
   },
   label: {
-    paddingBottom: 20,
+    padding: 10,
+    textAlign: 'right',
   },
   logo: {
     padding: 0,
@@ -344,9 +378,13 @@ const styles = StyleSheet.create({
     height: 36,
   },
   forgot: {
-    color: '#fff',
-    width: '80%',
     marginTop: -10,
+    marginBottom: 10,
+    color: '#fff',
+    width: '81.5%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   switchContainer: {
     flexDirection: 'row',
