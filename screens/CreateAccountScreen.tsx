@@ -143,12 +143,11 @@ function CreateAccountScreen(): React.JSX.Element {
               </Text>
               <ScrollView indicatorStyle="white" style={styles.privacyPolicy}>
                 <View style={styles.policy}>
-
-                    <WebView
-                      style={styles.privacyPolicy}
-                      originWhitelist={['*']}
-                      source={{html: privacyPolicyHTML, baseUrl: ''}}
-                    />
+                  <WebView
+                    style={styles.privacyPolicy}
+                    originWhitelist={['*']}
+                    source={{html: privacyPolicyHTML, baseUrl: ''}}
+                  />
                 </View>
               </ScrollView>
               <Pressable
