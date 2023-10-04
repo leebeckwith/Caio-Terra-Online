@@ -4,6 +4,7 @@ import {useVideoModal} from '../components/VideoPlayerModalContext';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useSelector} from 'react-redux';
 import {getCredentials} from '../storage';
+import SInfo from 'react-native-sensitive-info';
 
 interface VideoData {
   id: number;
@@ -151,9 +152,8 @@ const VideoFilterViewScreen: React.FC = () => {
 
   const handleVideoPress = async (vimeoId: number, videoId: number) => {
     const {user_id} = await getCredentials();
-    // CTA App Vimeo Bearer token
-    const vimeoToken = '91657ec3585779ea01b973f69aae2c9c';
-    openVideoModal(vimeoId, vimeoToken, user_id, videoId);
+    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
+    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId);
   };
 
   return (

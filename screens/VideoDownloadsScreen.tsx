@@ -5,16 +5,12 @@ import {useVideoModal} from '../components/VideoPlayerModalContext';
 import RNFS, {unlink} from 'react-native-fs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CTAStyles from '../styles/styles';
-import SInfo from 'react-native-sensitive-info';
-import CryptoJS from 'react-native-crypto-js';
 
 const VideoDownloadsScreen = () => {
   const [downloadedFiles, setDownloadedFiles] = useState([]);
   const {openVideoModal} = useVideoModal();
 
   const handleVideoPress = async (video: string) => {
-    const gettingCTAPlayKey = await SInfo.getItem('cta-play-key', {});
-    console.log(gettingCTAPlayKey);
     const vimeoId = video.split('_')[0];
     try {
       openVideoModal(vimeoId, null, null, null, video);
@@ -114,20 +110,19 @@ const VideoDownloadsScreen = () => {
             const dateDifference = currentDate - videoDate;
             const daysRemaining = calculateRemainingTime(dateDifference);
 
-            // if (daysRemaining === '0:00:00') {
-            //   // Delete the video file
-            //   unlink(`${RNFS.DocumentDirectoryPath}/${videoFile}`)
-            //     .then(() => {
-            //       console.log('Video deleted:', videoFile);
-            //       const updatedMergedArray = mergedArray.filter(
-            //         item => item.videoFile !== videoFile,
-            //       );
-            //       setDownloadedFiles(updatedMergedArray);
-            //     })
-            //     .catch(error => {
-            //       console.error('Error deleting video:', error);
-            //     });
-            // }
+            if (daysRemaining === '0:00:00') {
+              unlink(`${RNFS.CachesDirectoryPath}/${videoFile}`)
+                .then(() => {
+                  console.log('Video deleted:', videoFile);
+                  const updatedMergedArray = mergedArray.filter(
+                    item => item.videoFile !== videoFile,
+                  );
+                  setDownloadedFiles(updatedMergedArray);
+                })
+                .catch(error => {
+                  console.error('Error deleting video:', error);
+                });
+            }
 
             return {
               id: videoId,

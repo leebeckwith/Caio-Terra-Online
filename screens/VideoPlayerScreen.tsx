@@ -20,7 +20,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Loader from '../components/Loader';
 import {useFavorites} from '../components/FavoriteContext';
 import {getCredentials} from '../storage';
-import {useSelector} from 'react-redux';
 import CTAStyles from '../styles/styles';
 
 interface VideoNote {
@@ -53,7 +52,6 @@ const VideoPlayer = ({route}: {route: any}) => {
     Orientation.getInitialOrientation(),
   );
   const [isLandscape, setIsLandscape] = useState(false);
-  const cachedVideosData = useSelector(state => state.cachedVideos);
   const {toggleFavorite} = useFavorites();
 
   // useDeviceOrientationChange(o => {
@@ -73,10 +71,7 @@ const VideoPlayer = ({route}: {route: any}) => {
     };
     const getVimeoVideo = async () => {
       try {
-        // Construct the Vimeo API URL for the specific video
         const vimeoApiUrl = `https://api.vimeo.com/videos/${vimeoId}`;
-
-        // Fetch the video data from the Vimeo API
         const response = await fetch(vimeoApiUrl, {
           headers: {
             Authorization: `Bearer ${vimeoToken}`,
@@ -321,6 +316,7 @@ const VideoPlayer = ({route}: {route: any}) => {
       )}
       {selectedVideo ? (
         <View>
+          {!videoPath && <Text style={styles.title}>{selectedTitle}</Text>}
           <View>
             <View>
               <Video

@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Cell, Section, TableView} from 'react-native-tableview-simple';
 import {clearCredentials} from '../storage';
 import {useDispatch} from 'react-redux';
 import {clearCachedVideos} from '../redux/cachedVideoSlice';
+import {clearCachedLessonVideos} from '../redux/cachedLessonVideoSlice';
+import {clearCachedCurriculumVideos} from '../redux/cachedCurriculumVideoSlice';
 import CTAStyles from '../styles/styles';
 
 function AccountScreen() {
@@ -31,6 +27,8 @@ function AccountScreen() {
             onPress: () => {
               clearCredentials();
               dispatch(clearCachedVideos());
+              dispatch(clearCachedLessonVideos());
+              dispatch(clearCachedCurriculumVideos());
               navigation.navigate('Login');
             },
           },
@@ -56,7 +54,7 @@ function AccountScreen() {
               title="Version"
               titleTextStyle={styles.text}
               detailTextStyle={styles.text}
-              detail="2.0.0-alpha"
+              detail="2.0.0 alpha"
             />
           </Section>
         </TableView>
