@@ -4,7 +4,6 @@ import {
   Modal,
   Pressable,
   SafeAreaView,
-  Switch,
   StyleSheet,
   Text,
   TextInput,
@@ -13,7 +12,6 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 import Loader from '../components/Loader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch, useSelector} from 'react-redux';
 import {setLoading} from '../redux/loadingSlice';
 import {setCachedVideos} from '../redux/cachedVideoSlice';
@@ -44,7 +42,6 @@ const LoginScreen = () => {
   const [log, setUsername] = useState('');
   const [pwd, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [isEnabled, setIsEnabled] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const loading = useSelector(state => state.loader.value);
@@ -52,19 +49,6 @@ const LoginScreen = () => {
 
   useEffect(() => {
     Orientation.lockToPortrait();
-    const getKeepSignedIn = async () => {
-      try {
-        const keepSignedIn = await AsyncStorage.getItem('keepSignedIn');
-        if (keepSignedIn !== null) {
-          setIsEnabled(JSON.parse(keepSignedIn));
-        }
-      } catch (error) {
-        console.error('Error reading "Keep me signed in" state: ', error);
-        Alert.alert('Error', `Error reading logged in state: ${error}`);
-      }
-    };
-
-    getKeepSignedIn();
   }, []);
 
   const handleForgottenPassword = async () => {
@@ -218,16 +202,6 @@ const LoginScreen = () => {
 
     return sortedCategories;
   };
-  const toggleSwitch = async () => {
-    setIsEnabled(previousState => !previousState);
-
-    try {
-      await AsyncStorage.setItem('keepSignedIn', JSON.stringify(!isEnabled));
-    } catch (error) {
-      console.error('Error storing "Keep me signed in" state: ', error);
-      Alert.alert('Error', `There was an error storing your login: ${error}`);
-    }
-  };
 
   return (
     <SafeAreaView>
@@ -242,8 +216,8 @@ const LoginScreen = () => {
           <Pressable>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>
-                Please enter your email address. You will receive a link to a
-                link to create a new password via email.
+                Please enter your email address. You will receive a link to
+                reset your password.
               </Text>
               <TextInput
                 autoFocus={true}
@@ -293,17 +267,6 @@ const LoginScreen = () => {
               Forgot password?
             </Text>
           </Pressable>
-          {/*<View style={styles.switchContainer}>*/}
-          {/*  <Text style={CTAStyles.text_light}>Keep me signed in</Text>*/}
-          {/*  <Switch*/}
-          {/*    trackColor={{false: '#333', true: '#00a6ff'}}*/}
-          {/*    thumbColor={isEnabled ? '#fff' : '#fff'}*/}
-          {/*    ios_backgroundColor="#222"*/}
-          {/*    onValueChange={toggleSwitch}*/}
-          {/*    style={styles.switch}*/}
-          {/*    value={isEnabled}*/}
-          {/*  />*/}
-          {/*</View>*/}
           <Pressable
             onPress={handleLogin}
             style={[

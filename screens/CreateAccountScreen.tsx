@@ -43,16 +43,45 @@ function CreateAccountScreen(): React.JSX.Element {
     fetchPrivacyPolicy();
   }, []);
 
+  const checkUserExists = async () => {
+    try {
+      const queryParams = new URLSearchParams({
+        email: email,
+      });
+
+      const response = await fetch(
+        `https://caioterra.com/ct_get/ct_userexists/?${queryParams.toString()}`,
+        {
+          method: 'GET',
+        },
+      );
+
+      const responseData = await response.json();
+      return responseData !== true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   const handleCreateAccount = async productId => {
-    if (!pwd || !email || !repeat_pwd) {
+    if (!email || !pwd || !repeat_pwd) {
       Alert.alert(
         'Error',
         'Please enter all information to create your account.',
       );
       return false;
     } else {
-      console.log(productId);
-      // enable Adapty payment and account activation
+      const userDoesNotExist = await checkUserExists();
+      if (userDoesNotExist) {
+        console.log(productId);
+        // enable Adapty payment and account activation
+      } else {
+        Alert.alert(
+          'Error',
+          "You can't use the information you provided to create a new account.",
+        );
+      }
     }
   };
 
@@ -69,21 +98,9 @@ function CreateAccountScreen(): React.JSX.Element {
             inputMode="email"
             style={[CTAStyles.cta_input, styles.input]}
             placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
-          {/*<TextInput*/}
-          {/*  placeholder="First Name"*/}
-          {/*  style={[CTAStyles.cta_input, styles.input]}*/}
-          {/*  onChangeText={text => setFirstName(text)}*/}
-          {/*  placeholderTextColor={'rgba(0, 0, 0, 0.5)'}*/}
-          {/*  value={firstName}*/}
-          {/*/>*/}
-          {/*<TextInput*/}
-          {/*  placeholder="Last Name"*/}
-          {/*  style={[CTAStyles.cta_input, styles.input]}*/}
-          {/*  onChangeText={text => setLastName(text)}*/}
-          {/*  placeholderTextColor={'rgba(0, 0, 0, 0.5)'}*/}
-          {/*  value={lastName}*/}
-          {/*/>*/}
           <Password
             label="Password"
             value={pwd}
@@ -107,7 +124,7 @@ function CreateAccountScreen(): React.JSX.Element {
             style={[
               styles.button,
               CTAStyles.shadowProp,
-              email && pwd && repeat_pwd
+              email && pwd && repeat_pwd && pwd === repeat_pwd
                 ? CTAStyles.active
                 : CTAStyles.inactive,
             ]}>
@@ -120,7 +137,7 @@ function CreateAccountScreen(): React.JSX.Element {
             style={[
               styles.button,
               CTAStyles.shadowProp,
-              email && pwd && repeat_pwd
+              email && pwd && repeat_pwd && pwd === repeat_pwd
                 ? CTAStyles.active
                 : CTAStyles.inactive,
             ]}>
@@ -205,6 +222,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
   },
   modalView: {
     width: '90%',
@@ -224,7 +242,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   privacyPolicy: {
-    height: '60%',
+    height: '75%',
     width: 320,
     paddingBottom: 20,
     flexDirection: 'row',
