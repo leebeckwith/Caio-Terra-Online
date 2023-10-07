@@ -31,7 +31,6 @@ function CreateAccountScreen(): React.JSX.Element {
         const data = await response.json();
 
         if (data && data.post_content) {
-          console.log(data.post_content);
           setPrivacyPolicyHTML(data.post_content);
         } else {
         }
