@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {ImageBackground, Platform, StyleSheet} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import LoginScreen from './LoginScreen';
-import CreateAccountScreen from './CreateAccountScreen';
+//import CreateAccountScreen from './CreateAccountScreen';
 import RNFS from 'react-native-fs';
 import VideoDownloadsScreen from './VideoDownloadsScreen';
 import {useFocusEffect} from '@react-navigation/native';
@@ -58,7 +58,7 @@ function LoginManagerScreen(): React.JSX.Element {
           tabBarActiveTintColor: '#fff',
         }}>
         <Tab.Screen name="Sign In" component={LoginScreen} />
-        <Tab.Screen name="Sign Up" component={CreateAccountScreen} />
+        {/*<Tab.Screen name="Sign Up" component={CreateAccountScreen} />*/}
         {showOfflineTab && (
           <Tab.Screen name="Offline" component={VideoDownloadsScreen} />
         )}

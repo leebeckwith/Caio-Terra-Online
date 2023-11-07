@@ -1,5 +1,4 @@
 PODS:
-  - Adapty (2.6.3)
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
@@ -379,9 +378,6 @@ PODS:
   - React-jsinspector (0.72.5)
   - React-logger (0.72.5):
     - glog
-  - react-native-adapty (2.6.0):
-    - Adapty (= 2.6.3)
-    - React
   - react-native-ios-files-app-save (0.1.6):
     - React-Core
   - react-native-netinfo (9.4.1):
@@ -576,7 +572,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-adapty (from `../node_modules/react-native-adapty`)
   - react-native-ios-files-app-save (from `../node_modules/react-native-ios-files-app-save`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-orientation-locker (from `../node_modules/react-native-orientation-locker`)
@@ -612,7 +607,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Adapty
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -674,8 +668,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-adapty:
-    :path: "../node_modules/react-native-adapty"
   react-native-ios-files-app-save:
     :path: "../node_modules/react-native-ios-files-app-save"
   react-native-netinfo:
@@ -742,7 +734,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adapty: 68a5ee8a57f076f011eb73c39d7fd06a421a7ecd
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -778,7 +769,6 @@ SPEC CHECKSUMS:
   React-jsiexecutor: ff70a72027dea5cc7d71cfcc6fad7f599f63987a
   React-jsinspector: aef73cbd43b70675f572214d10fa438c89bf11ba
   React-logger: 2e4aee3e11b3ec4fa6cfd8004610bbb3b8d6cca4
-  react-native-adapty: 4cf2cfc10b9c2c857d2a6568baa3c206fbf424c0
   react-native-ios-files-app-save: 565e39b6bfb8aa4e5c2d5b9ac55ce046efb3d04f
   react-native-netinfo: fefd4e98d75cbdd6e85fc530f7111a8afdf2b0c5
   react-native-orientation-locker: 851f6510d8046ea2f14aa169b1e01fcd309a94ba

@@ -9,10 +9,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+//import {useNavigation} from '@react-navigation/native';
 import Password from '../components/PasswordTextBox';
 import CTAStyles from '../styles/styles';
 import WebView from 'react-native-webview';
+//import {adapty} from 'react-native-adapty';
 
 function CreateAccountScreen(): React.JSX.Element {
   const [pwd, setPassword] = useState('');
@@ -20,9 +21,21 @@ function CreateAccountScreen(): React.JSX.Element {
   const [repeat_pwd, setRepeatPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [privacyPolicyHTML, setPrivacyPolicyHTML] = useState('');
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
   useEffect(() => {
+    // const initializeAdaptyPaywall = async () => {
+    //   try {
+    //     const id = 'cta_online_placement';
+    //     const locale = 'en';
+    //
+    //     const paywall = await adapty.getPaywall(id, locale);
+    //     const products = await adapty.getPaywallProducts(paywall);
+    //     console.log(products);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // };
     const fetchPrivacyPolicy = async () => {
       try {
         const response = await fetch(
@@ -40,6 +53,7 @@ function CreateAccountScreen(): React.JSX.Element {
     };
 
     fetchPrivacyPolicy();
+    //initializeAdaptyPaywall();
   }, []);
 
   const checkUserExists = async () => {
