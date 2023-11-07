@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 function App(): React.JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
-    //adapty.activate('public_live_JypviS8L.RoQCUaMMNOPiIJBMqtqN');
+    // adapty.activate('public_live_FTv8hcuz.5UL4MQ27hA1FqZHvZk52');
   }, []);
 
   return (
