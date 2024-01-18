@@ -7,7 +7,7 @@ const cachedLessonVideosSlice = createSlice({
     setCachedLessonVideos: (state, action) => {
       return action.payload;
     },
-    clearCachedLessonVideos: (state) => {
+    clearCachedLessonVideos: () => {
       return [];
     },
   },
