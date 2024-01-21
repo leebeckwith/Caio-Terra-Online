@@ -52,7 +52,6 @@ const VideoMatrixView: React.FC = () => {
       video[field].forEach(category => {
         const termKey = `${category.term_id}-${category.name.toLowerCase()}`;
         if (!categorizedVideos[termKey]) {
-          //console.log(field + ': ' + termKey);
           categorizedVideos[termKey] = [];
         }
         categorizedVideos[termKey].push(video);

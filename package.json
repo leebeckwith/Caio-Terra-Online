@@ -1,6 +1,6 @@
 {
   "name": "caioterraonline",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -33,7 +33,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-tableview-simple": "^4.4.0",
     "react-native-vector-icons": "^10.0.0",
-    "react-native-video": "^6.0.0-alpha.8",
+    "react-native-video": "^6.0.0-beta.4",
     "react-native-webview": "^13.6.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",

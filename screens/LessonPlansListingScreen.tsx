@@ -1,169 +1,220 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   View,
   Text,
-  TextInput,
   Image,
   FlatList,
   StyleSheet,
   Pressable,
+  ScrollView,
 } from 'react-native';
-import {useVideoModal} from '../components/VideoPlayerModalContext';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import {getCredentials} from '../storage';
-import CTAStyles from '../styles/styles';
-import SInfo from 'react-native-sensitive-info';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-interface VideoData {
+interface LessonData {
   id: number;
   vimeoid: number;
   title: string;
   thumburl: string;
-  link: string;
+  lesson_types: {term_id: number; name: string}[];
+  lesson_techniques: {term_id: number; name: string}[];
+  lesson_positions: {term_id: number; name: string}[];
 }
 
 const LessonPlansListing: React.FC = () => {
-  const [videos, setVideos] = useState<VideoData[]>([]);
-  const [filteredVideos, setFilteredVideos] = useState<VideoData[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [mappedVideos, setMappedVideos] = useState<VideoData[]>([]); // New state variable
-  const cachedVideosData = useSelector(state => state.cachedVideos);
+  const [lessonTypes, setLessonTypes] = useState<Record<string, LessonData[]>>({});
+  const [lessonTechniques, setLessonTechniques] = useState<
+    Record<string, LessonData[]>
+  >({});
+  const [lessonPositions, setLessonPositions] = useState<
+    Record<string, LessonData[]>
+  >({});
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const cachedLessonVideosData = useSelector(state => state.cachedLessonVideos);
-  const flatListRef = useRef<FlatList | null>(null);
-  const {openVideoModal} = useVideoModal();
+  const navigation = useNavigation();
+
+  const categorizeLessonsByField = (lessons: LessonData[], field: string) => {
+    const categorizedLessons: Record<string, LessonData[]> = {};
+
+    lessons.forEach(lesson => {
+      lesson[field].forEach(category => {
+        const termKey = `${category.term_id}-${category.name.toLowerCase()}`;
+        if (!categorizedLessons[termKey]) {
+          categorizedLessons[termKey] = [];
+        }
+        categorizedLessons[termKey].push(lesson);
+      });
+    });
+
+    return categorizedLessons;
+  };
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        setVideos(cachedLessonVideosData);
-        setFilteredVideos(cachedLessonVideosData);
+        if (cachedLessonVideosData && cachedLessonVideosData.length > 0) {
+          const categorizedByTypes: Record<string, LessonData[]> = categorizeLessonsByField(cachedLessonVideosData, 'lesson_types');
+          const categorizedByTechniques: Record<string, LessonData[]> = categorizeLessonsByField(cachedLessonVideosData, 'lesson_techniques');
+          const categorizedByPositions: Record<string, LessonData[]> = categorizeLessonsByField(cachedLessonVideosData, 'lesson_positions',);
+
+          setLessonTypes(categorizedByTypes);
+          setLessonTechniques(categorizedByTechniques);
+          setLessonPositions(categorizedByPositions);
+        }
       } catch (error) {
         console.error('Error fetching videos:', error);
         Alert.alert(
           'Error',
           `There was an error getting the lesson plans: ${error}`,
         );
+      } finally {
+        setExpandedCategory('lesson_types');
       }
     };
 
     fetchVideos();
   }, []);
 
-  const handleSearch = (text: string) => {
-    const filtered = videos.filter(video =>
-      video.title.toLowerCase().includes(text.toLowerCase()),
+  const toggleCategory = (categoryKey: string) => {
+    setExpandedCategory(prevCategoryKey =>
+      prevCategoryKey === categoryKey ? null : categoryKey,
     );
-    setSearchTerm(text);
-    setMappedVideos([]);
-    setFilteredVideos(filtered);
-    if (filtered.length > 0 && flatListRef.current) {
-      flatListRef.current.scrollToIndex({index: 0});
-    }
   };
 
-  const fetchPlanVideoDetailsById = async (id: number) => {
-    try {
-      const response = await fetch(
-        `https://caioterra.com/app-api/plan-videos.php?id=${id}`,
-      );
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const apiData = await response.json();
-      return apiData;
-    } catch (error) {
-      console.error('Error fetching plan video details:', error);
-      Alert.alert(
-        'Error',
-        `There was an error getting the plans details: ${error}`,
-      );
-      return [];
-    }
-  };
+  const renderLessonItem = (item: {item: LessonData}) => {
+    const {id, thumburl, title} = item.item;
 
-  const fetchAndSetPlanVideos = async (id: number) => {
-    const planVideoDetails = await fetchPlanVideoDetailsById(id);
-    const newIDs = planVideoDetails.map((item: any) => item.id);
-    const mappedCachedVideos = cachedVideosData.filter(item =>
-      newIDs.includes(item.id),
-    );
-    setMappedVideos(mappedCachedVideos);
-  };
-
-  const handleVideoPress = async (vimeoId: number, videoId: number) => {
-    const {user_id} = await getCredentials();
-    const CTAVimeoKey = await SInfo.getItem('cta-vimeo-key', {});
-    openVideoModal(vimeoId, CTAVimeoKey, user_id, videoId);
-  };
-
-  const VideoItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
     return (
-      <View style={styles.videoItemContainer}>
-        <View style={styles.wrapper}>
-          <Pressable onPress={() => handleVideoPress(item.vimeoid, item.id)}>
-            <Image
-              source={{uri: item.thumburl}}
-              style={styles.lessonThumbnail}
-            />
+      <Pressable>
+        <View style={styles.videoItemContainer}>
+          <Pressable onPress={() => handleVideoPress(id, title)}>
+            <Image source={{uri: thumburl}} style={styles.thumbnail} />
           </Pressable>
-          <Text style={styles.lessonTitle}>{item.title}</Text>
+          <Text style={styles.videoTitle}>{title}</Text>
         </View>
-      </View>
+      </Pressable>
     );
-  });
+  };
 
-  const CarouselItem: React.FC<{item: VideoData}> = React.memo(({item}) => {
+  const renderCategory = (
+    category: LessonData[],
+    termId: string,
+    categoryName: string,
+  ) => {
     return (
-      <View style={styles.carouselContent}>
-        <Pressable
-          onPress={() => fetchAndSetPlanVideos(item.id)}
-          style={[styles.thumbnailContainer]}>
-          <Image source={{uri: item.thumburl}} style={styles.thumbnail} />
-          <Text style={styles.titleOverlay}>{item.title}</Text>
-        </Pressable>
+      <View key={`category-${termId}-${categoryName}`}>
+        <Text style={styles.headerTitle}>
+          {termId.split('-').slice(1).join('-').toUpperCase()}
+        </Text>
+        <FlatList
+          data={category}
+          renderItem={renderLessonItem}
+          keyExtractor={item => item.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={true}
+          indicatorStyle={'white'}
+          contentContainerStyle={styles.carouselContainer}
+        />
       </View>
     );
-  });
+  };
+
+  // const handleSearch = (text: string) => {
+  //   const filtered = videos.filter(video =>
+  //     video.title.toLowerCase().includes(text.toLowerCase()),
+  //   );
+  //   setSearchTerm(text);
+  //   setMappedVideos([]);
+  //   setFilteredVideos(filtered);
+  //   if (filtered.length > 0 && flatListRef.current) {
+  //     flatListRef.current.scrollToIndex({index: 0});
+  //   }
+  // };
+
+  const handleVideoPress = async (videoId: number, videoTitle: string) => {
+    navigation.navigate('LessonDetails', {videoId, videoTitle});
+  };
 
   return (
-    <View style={styles.videoItemContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={[CTAStyles.cta_input, styles.searchInput]}
-          placeholder={`Search ${filteredVideos.length} lessons (click for details)...`}
-          placeholderTextColor={'rgba(0, 0, 0, 0.5)'}
-          onChangeText={handleSearch}
-          autoCapitalize="none"
-          value={searchTerm}
+    <View style={styles.container}>
+      <Pressable
+        onPress={() => toggleCategory('lesson_types')}
+        style={styles.categoryHeader}>
+        <Icon
+          name={expandedCategory === 'lesson_types' ? 'minus' : 'plus'}
+          size={18}
+          color="white"
+          style={styles.icon}
         />
-      </View>
-      <FlatList
-        ref={ref => (flatListRef.current = ref)}
-        horizontal
-        data={filteredVideos}
-        style={styles.carouselContainer}
-        contentContainerStyle={styles.carouselContentContainer}
-        showsHorizontalScrollIndicator={true}
-        indicatorStyle={'white'}
-        keyExtractor={(item, index) => `${index}-${item.id.toString()}`}
-        renderItem={({item}) => <CarouselItem item={item} />}
-      />
-      {mappedVideos.length > 0 && (
-        <FlatList
-          style={styles.lessonContainer}
-          data={mappedVideos}
-          renderItem={({item}) => <VideoItem item={item} />}
-          keyExtractor={item => item.id.toString()}
-          indicatorStyle={'white'}
-          showsVerticalScrollIndicator={true}
+        <Text style={styles.categoryName}>TYPES</Text>
+      </Pressable>
+      {expandedCategory === 'lesson_types' && (
+        <ScrollView style={styles.categoryView}>
+          {Object.keys(lessonTypes).map(termId =>
+            renderCategory(
+              lessonTypes[termId],
+              termId,
+              `${lessonTypes[termId][0].lesson_types[0].name}`,
+            ),
+          )}
+        </ScrollView>
+      )}
+      <Pressable
+        onPress={() => toggleCategory('lesson_positions')}
+        style={styles.categoryHeader}>
+        <Icon
+          name={expandedCategory === 'lesson_positions' ? 'minus' : 'plus'}
+          size={18}
+          color="white"
+          style={styles.icon}
         />
+        <Text style={styles.categoryName}>POSITIONS</Text>
+      </Pressable>
+      {expandedCategory === 'lesson_positions' && (
+        <ScrollView style={styles.categoryView}>
+          {Object.keys(lessonPositions).map(termId =>
+            renderCategory(
+              lessonPositions[termId],
+              termId,
+              `${lessonPositions[termId][0].lesson_positions[0].name}`,
+            ),
+          )}
+        </ScrollView>
+      )}
+      <Pressable
+        onPress={() => toggleCategory('lesson_techniques')}
+        style={styles.categoryHeader}>
+        <Icon
+          name={expandedCategory === 'lesson_techniques' ? 'minus' : 'plus'}
+          size={18}
+          color="white"
+          style={styles.icon}
+        />
+        <Text style={styles.categoryTitle}>TECHNIQUES</Text>
+      </Pressable>
+      {expandedCategory === 'lesson_techniques' && (
+        <ScrollView style={styles.categoryView}>
+          {Object.keys(lessonTechniques).map(termId =>
+            renderCategory(
+              lessonTechniques[termId],
+              termId,
+              `${lessonTechniques[termId][0].lesson_techniques[0].name}`,
+            ),
+          )}
+        </ScrollView>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+    paddingTop: 10,
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -174,25 +225,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     width: '100%',
   },
-  videoItemContainer: {
-    marginBottom: 10,
-  },
   title: {
+    width: '95%',
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
     marginTop: 8,
-    padding: 10,
+    marginBottom: 10,
+  },
+  videoItemContainer: {
+    marginRight: 10,
+    marginTop: 10,
+    width: 165,
   },
   thumbnail: {
-    width: 370,
-    height: '100%',
+    width: 160,
+    aspectRatio: 16 / 9,
+    height: 90,
   },
-  thumbnailContainer: {
-    position: 'relative',
-  },
-  wrapper: {
-    flexDirection: 'row',
+  videoTitle: {
+    color: '#fff',
+    fontSize: 9,
+    fontWeight: 'bold',
+    marginTop: 8,
   },
   icons: {
     textAlign: 'right',
@@ -200,31 +255,33 @@ const styles = StyleSheet.create({
     marginTop: 8,
     display: 'flex',
   },
-  categoryHeader: {
+  customHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 10,
+    justifyContent: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#000',
   },
-  categoryName: {
+  backButton: {
+    position: 'absolute',
+    left: 10,
+  },
+  headerTitle: {
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
-    textAlign: 'center',
+    marginTop: 10,
   },
-  carouselContainer: {
-    backgroundColor: '#000',
-    height: 250,
-  },
-  carouselContentContainer: {
-    paddingVertical: 10,
-  },
-  carouselContent: {
-    height: '100%',
-    borderRadius: 0,
-    flex: 1,
+  categoryContainer: {
+    backgroundColor: '#00a6ff',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 10,
+    padding: 10,
+  },
+  categoryTitle: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   titleOverlay: {
     position: 'absolute',
@@ -233,24 +290,24 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     color: '#fff',
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: 'bold',
-    padding: 8,
-    textAlign: 'center',
   },
-  iconOverlay: {
-    position: 'absolute',
+  carouselContainer: {
+    paddingBottom: 10,
+  },
+  categoryHeader: {
+    backgroundColor: '#00a6ff',
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    left: '50%',
-    top: '40%',
+    padding: 10,
+    marginBottom: 10,
   },
-  icon: {
-    marginBottom: 8,
-  },
-  instructionOverlay: {
-    color: '#fff',
-    fontSize: 12,
+  categoryView: {
+    maxHeight: 565,
+    minHeight: 300,
+    height: 'auto',
+    marginBottom: 10,
   },
   shadowProp: {
     shadowColor: '#000',
@@ -258,22 +315,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
   },
-  lessonContainer: {
-    height: 450,
-    marginTop: 20,
-  },
-  lessonTitle: {
-    width: '60%',
+  categoryName: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginTop: 0,
-    marginBottom: 10,
-    marginLeft: 10,
   },
-  lessonThumbnail: {
-    width: 100,
-    height: 60,
+  icon: {
+    marginRight: 5,
   },
 });
 

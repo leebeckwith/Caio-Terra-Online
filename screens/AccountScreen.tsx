@@ -54,7 +54,7 @@ function AccountScreen() {
               title="Version"
               titleTextStyle={styles.text}
               detailTextStyle={styles.text}
-              detail="2.0.0 alpha"
+              detail="2.0.1"
             />
           </Section>
         </TableView>

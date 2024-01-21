@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AccountScreen from './AccountScreen';
 import VideoManagerScreen from './VideoManagerScreen';
 import CurriculumListingScreen from './CurriculumListingScreen';
-import LessonPlansListingScreen from './LessonPlansListingScreen';
+import LessonPlanManagerScreen from './LessonPlanManagerScreen';
 import Orientation from 'react-native-orientation-locker';
 import {useNavigation} from '@react-navigation/native';
 import {clearCredentials} from '../storage';
@@ -78,7 +78,7 @@ function MainManagerScreen() {
           />
           <Tab.Screen
             name="Lessons"
-            component={LessonPlansListingScreen}
+            component={LessonPlanManagerScreen}
             options={{
               tabBarIcon: ({color, size}) => (
                 <Icon name="book" color={color} size={24} />
