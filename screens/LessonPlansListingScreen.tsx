@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import {getCredentials} from '../storage';
-import SInfo from 'react-native-sensitive-info';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface LessonData {
@@ -91,7 +89,7 @@ const LessonPlansListing: React.FC = () => {
     return (
       <Pressable>
         <View style={styles.videoItemContainer}>
-          <Pressable onPress={() => handleVideoPress(id)}>
+          <Pressable onPress={() => handleVideoPress(id, title)}>
             <Image source={{uri: thumburl}} style={styles.thumbnail} />
           </Pressable>
           <Text style={styles.videoTitle}>{title}</Text>
@@ -135,8 +133,8 @@ const LessonPlansListing: React.FC = () => {
   //   }
   // };
 
-  const handleVideoPress = async (videoId: number) => {
-    navigation.navigate('LessonDetails', {videoId});
+  const handleVideoPress = async (videoId: number, videoTitle: string) => {
+    navigation.navigate('LessonDetails', {videoId, videoTitle});
   };
 
   return (
@@ -285,6 +283,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  titleOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   carouselContainer: {
     paddingBottom: 10,
   },
@@ -300,6 +308,12 @@ const styles = StyleSheet.create({
     minHeight: 300,
     height: 'auto',
     marginBottom: 10,
+  },
+  shadowProp: {
+    shadowColor: '#000',
+    shadowOffset: {width: -3, height: 5},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   categoryName: {
     color: '#fff',
